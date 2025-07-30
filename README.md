@@ -2,7 +2,6 @@
 
 This project is focused on solving tasks from the [ARC (Abstraction and Reasoning Corpus)](https://github.com/fchollet/ARC) using a combination of **symbolic algorithms** (like A*, BFS, DSLs) and **neural models**, integrating them in a neuro-symbolic framework. The goal is to develop systems that generalize from few examples and mimic human-like reasoning.
 
-NOTE:- most files in here are inpdende
 
 ## 🧠 Project Structure
 
