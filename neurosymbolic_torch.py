@@ -7,21 +7,40 @@ import torch.nn.functional as F
 from torch.distributions import Categorical
 import json
 from itertools import product
-from neurosymbolic
-
-from  DSL import find_objects
+from A_arc import train 
 
 # --- Neural Feature Extractor (PyTorch) ---
+class FeatureExtractor(nn.Module):
+    """Creates a CNN model for feature extraction from grids"""
+    def __init__(self, input_channels=1):
+        super().__init__()
+        self.conv1 = nn.Conv2d(input_channels, 32, kernel_size=3)
+        self.pool1 = nn.MaxPool2d(2)
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=3)
+        self.pool2 = nn.MaxPool2d(2)
+        self.conv3 = nn.Conv2d(64, 128, kernel_size=3)
+        self.flatten = nn.Flatten()
+        self.fc1 = nn.Linear(128 * 4 * 4, 256)
+        self.dropout = nn.Dropout(0.3)
+        self.feature_vector = nn.Linear(256, 128)
 
+    def forward(self, x):
+        x = F.relu(self.pool1(self.conv1(x)))
+        x = F.relu(self.pool2(self.conv2(x)))
+        x = F.relu(self.conv3(x))
+        x = self.flatten(x)
+        x = F.relu(self.fc1(x))
+        x = self.dropout(x)
+        x = self.feature_vector(x)
+        return x
 
 # --- Symbolic Program Generator ---
-# (This section remains the same)
 PRIMITIVES = [
     'rotate', 'mirrorlr', 'mirrorud', 'lcrop', 'rcrop', 'ucrop', 'dcrop',
-    'recolor', 'select', 'fill', 'overlay', 'resize'
-]
+     'select'
+]#'fill','overlay ,'resize'
 
-# --- Policy Network (Replaces ProgramExecutor) ---
+# --- Policy Network ---
 class PolicyNetwork(nn.Module):
     """
     The policy network decides which action to take.
@@ -46,7 +65,7 @@ class PolicyNetwork(nn.Module):
 # --- Neural-Symbolic RL Solver ---
 class NeuralSymbolicSolverRL:
     def __init__(self, gamma=0.99):
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device("cuda" if torch.cuda.is_available() else ("mps" if torch.mps.is_available() else "cpu"))
         self.feature_extractor = FeatureExtractor().to(self.device)
         self.policy = PolicyNetwork(self.feature_extractor, len(PRIMITIVES)).to(self.device)
         self.optimizer = optim.Adam(self.policy.parameters(), lr=1e-4)
@@ -152,6 +171,7 @@ class NeuralSymbolicSolverRL:
         elif action == 'rcrop': current = current[:, :-1] if current.shape[1] > 1 else current
         elif action == 'ucrop': current = current[1:, :] if current.shape[0] > 1 else current
         elif action == 'dcrop': current = current[:-1, :] if current.shape[0] > 1 else current
+        elif
         return current
         
     def _calculate_discounted_returns(self, rewards):
@@ -180,21 +200,9 @@ class NeuralSymbolicSolverRL:
 
 # --- Main Execution ---
 if __name__ == "__main__":
-    # A dummy JSON file path for demonstration purposes
-    json_path = 'arc-prize-2025/arc-agi_training_challenges.json'
-    
-    try:
-        with open(json_path, 'r') as f:
-            train_data = json.load(f)
-    except FileNotFoundError:
-        print(f"Warning: JSON file not found. Using dummy data.")
-        train_data = {
-            "case_001": {"train": [{"input": [[5,0],[0,0]], "output": [[0,5],[0,0]]}]},
-            "case_002": {"train": [{"input": [[0,8],[0,0]], "output": [[0,0],[0,8]]}]}
-        }
 
     training_examples = []
-    for case_data in train_data.values():
+    for case_data in train.values():
         training_examples.extend(case_data['train'])
     
     solver_rl = NeuralSymbolicSolverRL()

@@ -6,9 +6,9 @@ import random
 from sklearn.ensemble import RandomForestRegressor  # Simple neurosymbolic model
 from   matplotlib  import colors 
 from dsl2 import convert_np_to_native
-from DSL import find_objects
-from neurosymbolic_torch import NeuralSymbolicSolverRL
-
+from dsl import find_objects
+# from neurosymbolic_torch import NeuralSymbolicSolverRL
+from A_arc import cmap,ids,train , new_func
 
 
 # Neural network for arrangement scoring
@@ -58,6 +58,7 @@ def extract_features(objects, arrangement, output_grid):
     features.append(edge_count / len(arrangement))
     
     return features
+
 
 # MCTS Node for arrangement search
 class MCTSNode:
@@ -209,17 +210,6 @@ def arrange_objects_mcts(input_grid, output_grid, iterations=500):
 
 
 if __name__ == '__main__':
-    cmap = colors.ListedColormap(
-        ['#000000', '#0074D9', '#FF4136', '#2ECC40', '#FFDC00',
-            '#AAAAAA', '#F012BE', '#FF851B', '#7FDBFF', '#870C25'])
-    norm = colors.Normalize(vmin=0, vmax=9)
-    ids=[]
-    train_path='arc-prize-2025/arc-agi_training_challenges.json'
-    with open(train_path, 'r') as f:
-        train = json.load(f)
-
-    for case_id in train:
-        ids.append(case_id) 
 
     for case_id in train:
         for i in range(2):
@@ -232,7 +222,7 @@ if __name__ == '__main__':
 
         # a=np.array(a)
         # b=np.array(b)
-
+    
 
 
         # Solve the puzzle using the new method

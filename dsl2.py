@@ -26,45 +26,7 @@ def convert_np_to_native(obj):
         return obj
         
 # --- Object Extraction (from your original code) ---
-def find_objects(grid):
-    """Extracts all connected components (objects) from a grid."""
-    if not grid or not any(grid):
-        return []
 
-    rows, cols = len(grid), len(grid[0])
-    visited = [[False] * cols for _ in range(rows)]
-    objects = []
-    
-    for r in range(rows):
-        for c in range(cols):
-            if not visited[r][c] and grid[r][c] != 0: # Assuming 0 is background
-                obj_color = grid[r][c]
-                component = []
-                q = deque([(r, c)])
-                visited[r][c] = True
-                min_r, max_r, min_c, max_c = r, r, c, c
-                
-                while q:
-                    curr_r, curr_c = q.popleft()
-                    component.append((curr_r, curr_c))
-                    min_r, max_r = min(min_r, curr_r), max(max_r, curr_r)
-                    min_c, max_c = min(min_c, curr_c), max(max_c, curr_c)
-                    
-                    for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
-                        nr, nc = curr_r + dr, curr_c + dc
-                        if (0 <= nr < rows and 0 <= nc < cols and 
-                            not visited[nr][nc] and grid[nr][nc] == obj_color):
-                            visited[nr][nc] = True
-                            q.append((nr, nc))
-                
-                # Create the object's grid
-                obj_h, obj_w = max_r - min_r + 1, max_c - min_c + 1
-                obj_grid = [[0] * obj_w for _ in range(obj_h)]
-                for comp_r, comp_c in component:
-                    obj_grid[comp_r - min_r][comp_c - min_c] = obj_color
-                
-                objects.append(obj_grid)
-    return objects
 
 
 # --- NEW: Helper function for transformations ---

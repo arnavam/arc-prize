@@ -6,12 +6,11 @@
 
 
 
-## collected resources
+## collected Ideas
 
 **DSLs**
 
-- object extraction
-- color change recognition from input1to input2  & input to output
+- color change recognition from input-1to input-2  & input to output
 
 **DSLs from Kaggle Solutions:**    
 - [ARCathon](https://github.com/arcathon/)

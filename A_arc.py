@@ -21,20 +21,6 @@ ids=[]
 for case_id in train:
     ids.append(case_id)
 
-a=train[ids[1]]['train'][2]['output']
-
-
-print(a)
-sns.heatmap(a,cmap=cmap)
-
-
-
-
-# for  case_id in train:
-#     train[case_id]
-# defining a handful of basic primitives
-
-
 
 def rotate(data):
 
@@ -102,26 +88,30 @@ def normalize(mat):
     return normalized_mat
 
 
-
-
-for i in range(2):
+def new_func(train, cmap, ids, data, i):
     for j in ('input','output'):
-        a=train[ids[1]]['train'][i]['input']
-        b=train[ids[1]]['train'][i]['output']
+        a=train[ids[1]][data][i]['input']
+        b=train[ids[1]][data][i]['output']
         print(a)
         sns.heatmap(a,cmap=cmap)
         plt.show()
+    return a,b
 
-a=np.array(a)
-b=np.array(b)
+if __name__ == '__main__':
+    data='train'
+    for i in range(2):
+        a, b = new_func(train, cmap, ids, data, i)
 
-if b.size <= a.size:
-    print('output')
-    x=normalize(b)
-    y=normalize(a)
-    ans=(conv(y,x))
-    
+    a=np.array(a)
+    b=np.array(b)
+
+    if b.size <= a.size:
+        print('output')
+        x=normalize(b)
+        y=normalize(a)
+        ans=(conv(y,x))
+        
 
 
-else :
-    print('input')
+    else :
+        print('input')
