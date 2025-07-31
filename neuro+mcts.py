@@ -1,23 +1,25 @@
 import numpy as np
 import json
 import math
-from collections import deque
+import seaborn as sns
 import random
 from sklearn.ensemble import RandomForestRegressor  # Simple neurosymbolic model
-from   matplotlib  import colors 
+from matplotlib  import colors 
+from matplotlib import pyplot as plt
 from dsl2 import convert_np_to_native
 from dsl import find_objects
-# from neurosymbolic_torch import NeuralSymbolicSolverRL
-from A_arc import cmap,ids,train , new_func
-
+from neurosymbolic_torch import NeuralSymbolicSolverRL,FeatureExtractor
+import torch
+model = FeatureExtractor(input_channels=1)
 
 # Neural network for arrangement scoring
 class ArrangementScorer:
     def __init__(self):
-        self.model = RandomForestRegressor(n_estimators=50, random_state=42)
+        self.model = RandomForestRegressor(n_estimators=100, random_state=42)
         self.is_trained = False
         
     def train(self, X, y):
+
         self.model.fit(X, y)
         self.is_trained = True
         
@@ -26,38 +28,6 @@ class ArrangementScorer:
             return random.random()  # Random score if not trained
         return self.model.predict([features])[0]
     
-
-# Feature extraction for neural network
-def extract_features(objects, arrangement, output_grid):
-    features = []
-    H, W = len(output_grid), len(output_grid[0])
-    
-    # 1. Coverage ratio
-    covered = sum(obj['size'][0] * obj['size'][1] for obj in objects)
-    total_area = H * W
-    features.append(covered / total_area)
-    
-    # 2. Positional variance
-    avg_x = sum(pos[1] for _, pos in arrangement.items()) / len(arrangement)
-    avg_y = sum(pos[0] for _, pos in arrangement.items()) / len(arrangement)
-    var_x = sum((pos[1] - avg_x)**2 for _, pos in arrangement.items())
-    var_y = sum((pos[0] - avg_y)**2 for _, pos in arrangement.items())
-    features.append(var_x / (W**2))
-    features.append(var_y / (H**2))
-    
-    # 3. Color distribution
-    output_colors = set(np.array(output_grid).flatten())
-    input_colors = set(obj['color'] for obj in objects)
-    features.append(len(input_colors & output_colors) / len(output_colors | input_colors))
-    
-    # 4. Edge alignment
-    edge_count = 0
-    for _, pos in arrangement.items():
-        if pos[0] == 0 or pos[0] == H-1 or pos[1] == 0 or pos[1] == W-1:
-            edge_count += 1
-    features.append(edge_count / len(arrangement))
-    
-    return features
 
 
 # MCTS Node for arrangement search
@@ -123,10 +93,14 @@ class MCTSNode:
                 placed = True  # Simple version - skip collision detection
                 attempts += 1
         
-        # Score the arrangement
-        features = extract_features(self.parent.objects if self.parent else self.objects,
-                                   temp_arrangement, self.output_grid)
-        return self.scorer.predict(features)
+
+
+
+        input_tensor = torch.tensor(self.output_grid, dtype=torch.float32).unsqueeze(0).unsqueeze(0)  
+        # shape: (batch_size=1, channels=1, height, width)
+
+        features = model(input_tensor)
+        return self.scorer.predict(features.detach().cpu().numpy().flatten())
     
     def backpropagate(self, score):
         node = self
@@ -141,32 +115,14 @@ def arrange_objects_mcts(input_grid, output_grid, iterations=500):
     objects = find_objects(input_grid)
     flat_output = np.array(output_grid).flatten()
     background = np.bincount(flat_output).argmax()
+    print(background)
     
     # 2. Initialize MCTS
     root = MCTSNode(objects, output_grid, background)
     root.expand()  # Initial expansion
     
     # 3. Train scorer with initial samples
-    X_train, y_train = [], []
-    for _ in range(100):
-        random_arrangement = {}
-        for obj in objects:
-            r = random.randint(0, len(output_grid) - obj['size'][0])
-            c = random.randint(0, len(output_grid[0]) - obj['size'][1])
-            random_arrangement[id(obj)] = (r, c)
-        
-        features = extract_features(objects, random_arrangement, output_grid)
-        # Simple scoring: coverage of non-background areas
-        coverage_score = 0
-        for obj in objects:
-            r, c = random_arrangement[id(obj)]
-            for i in range(obj['size'][0]):
-                for j in range(obj['size'][1]):
-                    if output_grid[r+i][c+j] != background:
-                        coverage_score += 1
-        y_train.append(coverage_score / (len(output_grid)*len(output_grid[0])))
-        X_train.append(features)
-    
+  
     root.scorer.train(X_train, y_train)
     
     # 4. Run MCTS
@@ -210,31 +166,50 @@ def arrange_objects_mcts(input_grid, output_grid, iterations=500):
 
 
 if __name__ == '__main__':
+    cmap = colors.ListedColormap(
+        ['#000000', '#0074D9', '#FF4136', '#2ECC40', '#FFDC00',
+            '#AAAAAA', '#F012BE', '#FF851B', '#7FDBFF', '#870C25'])
+    norm = colors.Normalize(vmin=0, vmax=9)
+    ids=[]
+    train_path='arc-prize-2025/arc-agi_training_challenges.json'
+    with open(train_path, 'r') as f:
+        train = json.load(f)
 
     for case_id in train:
+        ids.append(case_id) 
+    count=0
+    for case_id in train:
+        count +=1
+        if count ==2 :
+            break
         for i in range(2):
+
             for j in ('input','output'):
                 a=train[case_id]['train'][i]['input']
                 b=train[case_id]['train'][i]['output']
-                # print(a)
-                # sns.heatmap(a,cmap=cmap)
-                # plt.show()
+                print('input')
+                sns.heatmap(a,cmap=cmap)
+                plt.show()
 
         # a=np.array(a)
         # b=np.array(b)
-    
+
 
 
         # Solve the puzzle using the new method
-        solved_grid ,_= arrange_objects_mcts(a, b)
-        # solved_grid = convert_np_to_native(solved_grid)
-        solved_grid = convert_np_to_native(solved_grid[1])
+        solved_grid ,_= arrange_objects_mcts(a, b,10)
+        solved_grid = convert_np_to_native(solved_grid)
+        print('original')
 
-        print(solved_grid)
+        sns.heatmap(b,cmap=cmap)
+        plt.show()
 
-        print("\nSolved Grid:")
-        for row in solved_grid:
-            print(row )
+        print('predicted')
+        sns.heatmap(solved_grid,cmap=cmap)
+        plt.show()
+
+
+
             # Verify if the solution is correct
         is_correct = np.array_equal(solved_grid, b)
         print(f"\nSolution is correct: {is_correct}")

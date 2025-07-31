@@ -55,3 +55,40 @@ def find_objects(grid, connectivity=4):
     return objects
 
 
+
+###############################################################
+
+
+# Feature extraction for neural network
+def extract_features(objects, arrangement, output_grid):
+    features = []
+    H, W = len(output_grid), len(output_grid[0])
+    
+    # 1. Coverage ratio
+    covered = sum(obj['size'][0] * obj['size'][1] for obj in objects)
+    total_area = H * W
+    features.append(covered / total_area)
+    
+    # 2. Positional variance
+    avg_x = sum(pos[1] for _, pos in arrangement.items()) / len(arrangement)
+    avg_y = sum(pos[0] for _, pos in arrangement.items()) / len(arrangement)
+    var_x = sum((pos[1] - avg_x)**2 for _, pos in arrangement.items())
+    var_y = sum((pos[0] - avg_y)**2 for _, pos in arrangement.items())
+    features.append(var_x / (W**2))
+    features.append(var_y / (H**2))
+    
+    # 3. Color distribution
+    output_colors = set(np.array(output_grid).flatten())
+    input_colors = set(obj['color'] for obj in objects)
+    features.append(len(input_colors & output_colors) / len(output_colors | input_colors))
+    
+    # 4. Edge alignment
+    edge_count = 0
+    for _, pos in arrangement.items():
+        if pos[0] == 0 or pos[0] == H-1 or pos[1] == 0 or pos[1] == W-1:
+            edge_count += 1
+    features.append(edge_count / len(arrangement))
+    
+    return features
+
+# features = extract_features(objects, random_arrangement, output_grid)

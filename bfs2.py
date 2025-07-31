@@ -87,6 +87,21 @@ def conv(input_matrix, kernel):
                 output[i, j] = 1 # No match
     return output
 
+PRIMITIVE = {
+        "rotate": rotate,
+        "mirrorlr": mirrorlr,
+        "mirrorud": mirrorud,
+        "lcrop": lcrop,
+        "rcrop": rcrop,
+        "ucrop": ucrop,
+        "dcrop": dcrop,
+        # Use functools.partial to create one-argument functions from 'conv'.
+        # We "freeze" the 'kernel' argument with the start and goal nodes.
+        # "conv_with_input_kernel": functools.partial(conv, kernel=input_node),
+        "conv":conv
+    }
+
+
 
 # --- The BFS Solver (Updated) ---
 def solve_with_bfs(input_grid, output_grid):

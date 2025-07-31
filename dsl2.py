@@ -6,7 +6,7 @@ import json
 import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib import colors
-
+from dsl import find_objects
 def convert_np_to_native(obj):
     if isinstance(obj, list):
         return [convert_np_to_native(item) for item in obj]
@@ -25,8 +25,6 @@ def convert_np_to_native(obj):
     else:
         return obj
         
-# --- Object Extraction (from your original code) ---
-
 
 
 # --- NEW: Helper function for transformations ---

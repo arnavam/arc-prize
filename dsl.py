@@ -1,5 +1,8 @@
 from collections import deque
 
+import numpy as np
+
+
 def find_objects(grid, connectivity=4):
     if not grid or not grid[0]:
         return []
@@ -103,3 +106,93 @@ def concat_v(grids, background=0):
                 result[row_offset + r][c] = g[r][c]
         row_offset += h
     return result
+
+
+# --- Your Primitive Functions ---
+def rotate(data):
+    """Rotates the grid 90 degrees clockwise."""
+    return np.rot90(data, k=-1)
+
+def mirrorlr(data):
+    """Mirrors the grid left-to-right."""
+    return np.fliplr(data)
+
+def mirrorud(data):
+    """Mirrors the grid up-to-down."""
+    return np.flipud(data)
+
+def lcrop(data):
+    """Crops the leftmost column."""
+    if data.shape[1] > 1: return data[:, 1:]
+    return data
+
+def rcrop(data):
+    """Crops the rightmost column."""
+    if data.shape[1] > 1: return data[:, :-1]
+    return data
+
+def ucrop(data):
+    """Crops the top row."""
+    if data.shape[0] > 1: return data[1:, :]
+    return data
+
+def dcrop(data):
+    """Crops the bottom row."""
+    if data.shape[0] > 1: return data[:-1, :]
+    return data
+
+def normalize(mat):
+    """Normalizes color values to be contiguous integers starting from 0."""
+    mat = np.array(mat)
+    if mat.size == 0:
+        return mat
+    # Find unique values and map them to 0, 1, 2, ...
+    unique_vals, inverse = np.unique(mat, return_inverse=True)
+    normalized_mat = inverse.reshape(mat.shape)
+    return normalized_mat
+
+def color(matrix):
+    max_val = matrix.max()
+    transformed = (matrix % max_val) + 1
+    return transformed
+
+def conv(input_matrix, kernel):
+    """
+    Performs a 'valid' convolution. Returns a grid of 0s and 1s.
+    0 where the kernel matches, 1 otherwise.
+    """
+    # Safety check: if kernel is larger than the input, the operation is impossible.
+    if kernel.shape[0] > input_matrix.shape[0] or kernel.shape[1] > input_matrix.shape[1]:
+        return input_matrix # Return original matrix to avoid crashing the search
+
+    input_h, input_w = input_matrix.shape
+    kernel_h, kernel_w = kernel.shape
+
+    output_h = input_h - kernel_h + 1
+    output_w = input_w - kernel_w + 1
+    output = np.zeros((output_h, output_w), dtype=int)
+
+    for i in range(output_h):
+        for j in range(output_w):
+            region = input_matrix[i:i+kernel_h, j:j+kernel_w]
+            if np.array_equal(region, kernel):
+                output[i, j] = 0 # Match found
+            else:
+                output[i, j] = 1 # No match
+    return output
+
+PRIMITIVE = {
+        "rotate": rotate,
+        "mirrorlr": mirrorlr,
+        "mirrorud": mirrorud,
+        "lcrop": lcrop,
+        "rcrop": rcrop,
+        "ucrop": ucrop,
+        "dcrop": dcrop,
+        # Use functools.partial to create one-argument functions from 'conv'.
+        # We "freeze" the 'kernel' argument with the start and goal nodes.
+        # "conv_with_input_kernel": functools.partial(conv, kernel=input_node),
+        # "conv":conv
+    }
+
+

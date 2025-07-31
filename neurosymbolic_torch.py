@@ -8,37 +8,31 @@ from torch.distributions import Categorical
 import json
 from itertools import product
 from A_arc import train 
+from dsl import PRIMITIVE
+import functools ,collections,time
+PRIMITIVE_NAMES = list(PRIMITIVE.keys())
 
 # --- Neural Feature Extractor (PyTorch) ---
 class FeatureExtractor(nn.Module):
-    """Creates a CNN model for feature extraction from grids"""
     def __init__(self, input_channels=1):
         super().__init__()
-        self.conv1 = nn.Conv2d(input_channels, 32, kernel_size=3)
+        self.conv1 = nn.Conv2d(input_channels, 32, kernel_size=3, padding=1)
         self.pool1 = nn.MaxPool2d(2)
-        self.conv2 = nn.Conv2d(32, 64, kernel_size=3)
-        self.pool2 = nn.MaxPool2d(2)
-        self.conv3 = nn.Conv2d(64, 128, kernel_size=3)
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
+        self.pool2 = nn.AdaptiveAvgPool2d((1, 1))  # Safe pooling
         self.flatten = nn.Flatten()
-        self.fc1 = nn.Linear(128 * 4 * 4, 256)
-        self.dropout = nn.Dropout(0.3)
-        self.feature_vector = nn.Linear(256, 128)
+        self.fc = nn.Linear(64, 128)  # final feature dim
 
     def forward(self, x):
         x = F.relu(self.pool1(self.conv1(x)))
         x = F.relu(self.pool2(self.conv2(x)))
-        x = F.relu(self.conv3(x))
         x = self.flatten(x)
-        x = F.relu(self.fc1(x))
-        x = self.dropout(x)
-        x = self.feature_vector(x)
+        x = self.fc(x)
         return x
 
-# --- Symbolic Program Generator ---
-PRIMITIVES = [
-    'rotate', 'mirrorlr', 'mirrorud', 'lcrop', 'rcrop', 'ucrop', 'dcrop',
-     'select'
-]#'fill','overlay ,'resize'
+
+# # --- Symbolic Program Generator ---
+
 
 # --- Policy Network ---
 class PolicyNetwork(nn.Module):
@@ -62,12 +56,15 @@ class PolicyNetwork(nn.Module):
         action_logits = self.policy_head(combined)
         return F.softmax(action_logits, dim=-1)
 
+
+
+
 # --- Neural-Symbolic RL Solver ---
 class NeuralSymbolicSolverRL:
     def __init__(self, gamma=0.99):
         self.device = torch.device("cuda" if torch.cuda.is_available() else ("mps" if torch.mps.is_available() else "cpu"))
         self.feature_extractor = FeatureExtractor().to(self.device)
-        self.policy = PolicyNetwork(self.feature_extractor, len(PRIMITIVES)).to(self.device)
+        self.policy = PolicyNetwork(self.feature_extractor, len(PRIMITIVE_NAMES)).to(self.device)
         self.optimizer = optim.Adam(self.policy.parameters(), lr=1e-4)
         self.gamma = gamma # Discount factor for future rewards
         
@@ -99,11 +96,15 @@ class NeuralSymbolicSolverRL:
                 # Sample an action to explore
                 action_index = dist.sample()
                 saved_log_probs.append(dist.log_prob(action_index))
-                
-                # Execute the action
-                action = PRIMITIVES[action_index.item()]
-                current_grid_np = self.execute_action(current_grid_np, action)
-                
+
+                # convert name to number using primitive-name list.
+                primitive_name = PRIMITIVE_NAMES[action_index]
+                #execute the primitive from the globally defined primitives in dsl file
+
+                current_grid_np = PRIMITIVE[primitive_name](current_grid_np)
+
+
+
                 # Determine reward
                 if np.array_equal(current_grid_np, target_grid_np):
                     reward = 10.0  # High reward for solving
@@ -151,28 +152,24 @@ class NeuralSymbolicSolverRL:
                 action_probs = self.policy([current_grid_tensor, dummy_target_tensor])
                 # Choose the best action (greedy) instead of sampling
                 action_index = torch.argmax(action_probs).item()
-                action = PRIMITIVES[action_index]
+ 
+
+                # convert name to number using primitive-name list.
+                primitive_name = PRIMITIVE_NAMES[action_index]
+                #execute the primitive from the globally defined primitives in dsl file
                 
-                solution_program.append(action)
-                current_grid_np = self.execute_action(current_grid_np, action)
+
+
+                solution_program.append(primitive_name)
+                current_grid_np = PRIMITIVE[primitive_name](current_grid_np)
                 
                 # In a real scenario, you'd have a way to check if it's solved
                 # Here we just return the generated program after max_steps
                 
         return solution_program, current_grid_np
 
-    def execute_action(self, grid, action):
-        """Execute a single primitive action on a grid."""
-        current = grid.copy()
-        if action == 'rotate': current = np.rot90(current, k=-1)
-        elif action == 'mirrorlr': current = np.fliplr(current)
-        elif action == 'mirrorud': current = np.flipud(current)
-        elif action == 'lcrop': current = current[:, 1:] if current.shape[1] > 1 else current
-        elif action == 'rcrop': current = current[:, :-1] if current.shape[1] > 1 else current
-        elif action == 'ucrop': current = current[1:, :] if current.shape[0] > 1 else current
-        elif action == 'dcrop': current = current[:-1, :] if current.shape[0] > 1 else current
-        elif
-        return current
+
+
         
     def _calculate_discounted_returns(self, rewards):
         """Calculate the discounted reward-to-go for each step of an episode."""
@@ -197,6 +194,7 @@ class NeuralSymbolicSolverRL:
         # Add batch and channel dimensions (N, C, H, W)
         tensor = torch.from_numpy(padded).unsqueeze(0).unsqueeze(0)
         return tensor.to(self.device)
+
 
 # --- Main Execution ---
 if __name__ == "__main__":
