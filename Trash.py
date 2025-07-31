@@ -92,3 +92,29 @@ def extract_features(objects, arrangement, output_grid):
     return features
 
 # features = extract_features(objects, random_arrangement, output_grid)
+
+def expand(self):
+    if not self.objects:
+        return
+        
+    obj = self.objects[0]
+    H, W = len(self.output_grid), len(self.output_grid[0])
+    
+    # Generate candidate positions (grid-aligned)
+    positions = []
+    for r in range(H - obj['size'][0] + 1):
+        for c in range(W - obj['size'][1] + 1):
+            positions.append((r, c))
+    
+    # Random sampling for efficiency
+    if len(positions) > 20:
+        positions = random.sample(positions, 20)
+        
+    for pos in positions:
+        new_objects = self.objects[1:]
+        new_node = MCTSNode(new_objects, self.output_grid, 
+                            self.background, self)
+        new_node.arrangement = self.arrangement.copy()
+        new_node.arrangement[id(obj)] = pos
+        self.children.append(new_node)
+    

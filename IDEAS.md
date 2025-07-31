@@ -4,7 +4,14 @@
 - create a model which finds the best operation using where we could place that object 
 - a single algorithm ( presently MCTS ) that optimize for both and find best pathway.
 
+## other 
+- A model that creates its own DSLs
+- 2 CNNs o/p are mutlipled together to similar to a transformer to get relevant pos of i/p in o/p .
 
+- partial/full comparison
+    - Start with one-by-one + partial comparisons (faster for most tasks).
+    - Fall back to full-grid checks if partial matches succeed but the full solution fails.
+    - Use object masks to avoid redundant computations (critical for speed).
 
 ## collected Ideas
 

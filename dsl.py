@@ -189,7 +189,7 @@ PRIMITIVE = {
         "rcrop": rcrop,
         "ucrop": ucrop,
         "dcrop": dcrop,
-        # Use functools.partial to create one-argument functions from 'conv'.
+        "color":color,
         # We "freeze" the 'kernel' argument with the start and goal nodes.
         # "conv_with_input_kernel": functools.partial(conv, kernel=input_node),
         # "conv":conv

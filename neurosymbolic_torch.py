@@ -31,8 +31,6 @@ class FeatureExtractor(nn.Module):
         return x
 
 
-# # --- Symbolic Program Generator ---
-
 
 # --- Policy Network ---
 class PolicyNetwork(nn.Module):
@@ -58,6 +56,7 @@ class PolicyNetwork(nn.Module):
 
 
 
+    
 
 # --- Neural-Symbolic RL Solver ---
 class NeuralSymbolicSolverRL:
@@ -66,8 +65,55 @@ class NeuralSymbolicSolverRL:
         self.feature_extractor = FeatureExtractor().to(self.device)
         self.policy = PolicyNetwork(self.feature_extractor, len(PRIMITIVE_NAMES)).to(self.device)
         self.optimizer = optim.Adam(self.policy.parameters(), lr=1e-4)
+
         self.gamma = gamma # Discount factor for future rewards
+        self.memory=[] # stores (state, action, reward)
+
+    def select_action(self, input_grid, current_grid, max_steps_per_episode=10):
+        self.policy.train()  # Optional
+
+     
+        input_tensor = self._preprocess_to_tensor(input_grid)     # "state" / input
+        current_tensor = self._preprocess_to_tensor(current_grid) # "target" / current grid
+
+       
+        action_probs = self.policy([input_tensor, current_tensor])  # Shape: [num_actions]
         
+        # Create a categorical distribution over actions
+        dist = Categorical(action_probs)
+        action_index = dist.sample()
+
+        primitive_name = PRIMITIVE_NAMES[action_index.item()]
+        new_grid = PRIMITIVE[primitive_name](current_grid.copy())  # Safe to copy before changing
+
+        self.memory.append((input_grid.copy(), current_grid.copy(), action_index.item(), dist.log_prob(action_index)))
+        return new_grid, action_index.item()
+
+    def store_reward(self, reward):
+        # Just store reward for now (one per step)
+        self.memory[-1] = self.memory[-1] + (reward,)
+
+    def update_policy(self, gamma=0.99):
+        R = 0
+        returns = []
+        rewards = [entry[4] for entry in self.memory]
+
+        # Compute discounted returns
+        for r in reversed(rewards):
+            R = r + gamma * R
+            returns.insert(0, R)
+        returns = torch.tensor(returns)
+
+        loss = 0
+        for (state, action,_, log_prob, _), G in zip(self.memory, returns):
+            loss -= log_prob * G  # REINFORCE loss
+
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+        self.memory = [] 
+    
+
     def train(self, train_data, episodes=1000, max_steps_per_episode=10):
         """Train the agent using the REINFORCE algorithm."""
         self.policy.train()
@@ -118,7 +164,7 @@ class NeuralSymbolicSolverRL:
             if not saved_log_probs:
                 continue
 
-            returns = self._calculate_discounted_returns(rewards)
+            returns = self.policy(rewards)
             
             policy_loss = []
             for log_prob, R in zip(saved_log_probs, returns):
@@ -132,7 +178,7 @@ class NeuralSymbolicSolverRL:
             
             if episode % 100 == 0:
                 print(f"Episode {episode}, Last episode length: {len(rewards)}, Total Loss: {loss.item():.2f}")
-
+    
     def solve(self, input_grid, max_steps=10):
         """Solve a new problem by greedily following the learned policy."""
         self.policy.eval()
