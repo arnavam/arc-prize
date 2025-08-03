@@ -10,27 +10,54 @@ from matplotlib  import colors
 from matplotlib import pyplot as plt
 from dsl2 import convert_np_to_native
 from dsl import find_objects , PRIMITIVE
-from neurosymbolic_torch import NeuralSymbolicSolverRL,FeatureExtractor
+from neurosymbolic_reinforce import NeuralSymbolicSolverRL,FeatureExtractor
 import torch
 model = FeatureExtractor(input_channels=1)
 
-def shift_up(grid):
-    return np.roll(grid, shift=-1, axis=0)
+import numpy as np
 
-def shift_down(grid):
-    return np.roll(grid, shift=1, axis=0)
+def move_up(grid, position):
+    grid = grid.copy()
+    x, y = position
+    if x > 0 and grid[x - 1, y] == 0:
+        grid[x, y], grid[x - 1, y] = 0, grid[x, y]
+        return grid, (x - 1, y)
+    return grid, position
 
-def shift_left(grid):
-    return np.roll(grid, shift=-1, axis=1)
+def move_down(grid, position):
+    grid = grid.copy()
+    x, y = position
+    if x < grid.shape[0] - 1 and grid[x + 1, y] == 0:
+        grid[x, y], grid[x + 1, y] = 0, grid[x, y]
+        return grid, (x + 1, y)
+    return grid, position
 
-def shift_right(grid):
-    return np.roll(grid, shift=1, axis=1)
+def move_left(grid, position):
+    grid = grid.copy()
+    x, y = position
+    if y > 0 and grid[x, y - 1] == 0:
+        grid[x, y], grid[x, y - 1] = 0, grid[x, y]
+        return grid, (x, y - 1)
+    return grid, position
+
+def c(grid, position):
+    grid = grid.copy()
+    x, y = position
+    if y < grid.shape[1] - 1 and grid[x, y + 1] == 0:
+        grid[x, y], grid[x, y + 1] = 0, grid[x, y]
+        return grid, (x, y + 1)
+    return grid, position
+
+
+def idle (grid,object):
+    return grid
 
 ACTIONS = {
-    "shift_up": shift_up,
-    "shift_down": shift_down,
-    "shift_left": shift_left,
-    "shift_right": shift_right
+    "move_up": move_up,
+    "move_down": move_down,
+    "move_left": move_left,
+    "move_left": move_left ,
+    'idle':idle
 }
 
 
@@ -61,7 +88,6 @@ class Spacial_Network(nn.Module):
 
     
 
-# Neural network for arrangement scoring
 class ArrangementScorer:
     def __init__(self):
         self.model = RandomForestRegressor(n_estimators=100, random_state=42)
@@ -77,8 +103,7 @@ class ArrangementScorer:
             return random.random()  # Random score if not trained
         return self.model.predict([features])[0]
     
-
-
+    
 # MCTS Node for arrangement search
 class MCTSNode:
     def __init__(self, objects, output_grid, background, parent=None):
@@ -99,81 +124,77 @@ class MCTSNode:
     
     def is_terminal(self):
         return len(self.objects) == 0
-    
-def expand(self):
-    if not self.objects:
-        return
 
-    obj = self.objects[0]
-    H, W = len(self.output_grid), len(self.output_grid[0])
     
-    # Step 1: Generate all transformations of the object
-    transformations = PRIMITIVES(obj['grid'])
-    
-    for transformed_grid in transformations:
-        th, tw = transformed_grid.shape  # Transformed height/width
+    def expand(self,objects):
+        if not self.objects:
+            return
+
+        # Step 1: Randomly decide whether to place an object or not (50% chance)
+        if random.random() < 0.5:
+            # Choose not to place anything - create one child node with same objects
+            new_node = MCTSNode(
+                objects.copy(),  # Keep same objects
+                self.output_grid.copy(),
+                self.background,
+                parent=self
+            )
+            new_node.arrangement = self.arrangement.copy()
+            self.children.append(new_node)
+            return
+
+        # Step 2: Randomly select an object to place
+        obj = random.choice(self.objects)
+        obj_grid = obj['grid']
+        th, tw = len(obj_grid), len(obj_grid[0])  # Object height/width
         
-        # Step 2: Generate candidate positions (grid-aligned)
-        positions = [
+        H, W = len(self.output_grid), len(self.output_grid[0])
+        
+        # Step 3: Generate all possible valid positions
+        possible_positions = [
             (r, c) 
             for r in range(H - th + 1) 
             for c in range(W - tw + 1)
         ]
         
-        # Step 3: Random sampling for efficiency (optional)
-        if len(positions) > 20:
-            positions = random.sample(positions, 20)
+        # If no valid positions, skip this object
+        if not possible_positions:
+            return
         
-        # Step 4: For each position, query the model to check compatibility
-        for pos in positions:
-            r, c = pos
-            # Extract the region under the object
-            region_under = [
-                [self.output_grid[r + i][c + j] 
-                for j in range(tw)]
-                for i in range(th)
-            ]
-            
-            # Step 5: Use a pre-trained model to predict compatibility
-            # (Assuming `model.predict()` returns a score or True/False)
-            is_compatible = model.predict(
-                object=transformed_grid,
-                region=region_under,
-                background=self.background
-            )
-            
-            if is_compatible:  # Only proceed if the model approves
-                new_objects = self.objects[1:]
-                new_node = MCTSNode(
-                    new_objects, 
-                    self.output_grid, 
-                    self.background, 
-                    parent=self
-                )
-                new_node.arrangement = self.arrangement.copy()
-                new_node.arrangement[id(obj)] = {
-                    'position': pos,
-                    'grid': transformed_grid.tolist(),  # Store transformed grid
-                    'size': (th, tw)
-                }
-                self.children.append(new_node)
+        # Step 4: Randomly select one position to place it
+        r, c = random.choice(possible_positions)
+        
+        # Step 5: Create new node with this placement
+        new_objects = [o for o in self.objects if o != obj]  # Remove placed object
+        new_node = MCTSNode(
+            new_objects, 
+            self.output_grid.copy(), 
+            self.background, 
+            parent=self
+        )
+        new_node.arrangement = self.arrangement.copy()
+        new_node.arrangement[id(obj)] = {
+            'position': (r, c),
+            'grid': obj_grid,
+            'size': (th, tw)
+        }
+        
+        # Step 6: Actually place the object in the output grid
+        for i in range(th):
+            for j in range(tw):
+                if obj_grid[i][j] != 0:  # Assuming 0 is empty/transparent
+                    new_node.output_grid[r + i][c + j] = obj_grid[i][j]
+        
+        self.children.append(new_node)
 
-    def simulate(self):
-        # Create temporary arrangement with all objects placed
+    def simulate(self, neuro,spacial):
         temp_arrangement = self.arrangement.copy()
-        remaining_objects = self.objects.copy()
-        
-        # Place remaining objects randomly
-        H, W = len(self.output_grid), len(self.output_grid[0])
-        for obj in remaining_objects:
-            placed = False
-            attempts = 0
-            while not placed and attempts < 100:
-                r = random.randint(0, H - obj['size'][0])
-                c = random.randint(0, W - obj['size'][1])
-                temp_arrangement[id(obj)] = (r, c)
-                placed = True  # Simple version - skip collision detection
-                attempts += 1
+        for self.objects in self.objects:
+            obj_id = id(self.objects)
+            score = evaluate_placement(self, obj_id, neuro,spacial,self.node)  # Neuro-guided scoring
+            if score is not None:
+                temp_arrangement[obj_id]["score"] = score
+        return score
         
 
 
@@ -191,51 +212,69 @@ def expand(self):
             node.total_score += score
             node = node.parent
 
+def extract_region_under_object(output_grid, object_matrix, pos):
+    x, y = pos  # Position (x, y) in the output_grid
+    h, w = object_matrix.shape  # Height and width of the object
+    
+    # Extract the region from output_grid where the object is placed
+    region = output_grid[x:x+h, y:y+w]
+    
+    return region
+
+def get_object_position(node, obj):
+    obj_id = id(obj)
+    if obj_id in node.arrangement:
+        return node.arrangement[obj_id]
+    else:
+        return None  
+    
+def matrix_similarity(predicted, original, weight_pattern=0.5, weight_color=0.5):
+    if predicted.shape != original.shape:
+        return 0.0  # Completely different
+    
+    # Pattern match (exact values match at same positions)
+    pattern_match = (predicted == original).astype(np.float32)
+    pattern_score = pattern_match.mean()  # Fraction of matching positions
+    
+    # Color similarity (normalized value difference)
+    max_val = 9.0  # Assuming values range from 0 to 9
+    diff = np.abs(predicted - original)
+    color_similarity = 1 - (diff / max_val)  # 1 = perfect match, 0 = max difference
+    color_score = color_similarity.mean()
+    
+    # Weighted total score
+    total_score = weight_pattern * pattern_score + weight_color * color_score
+    return total_score
+
 
 # MCTS for object arrangement
 def arrange_objects_mcts(input_grid, output_grid, iterations=500):
     # 1. Extract objects and background
     objects = find_objects(input_grid)
+    output_grid=np.array(output_grid)
+    input_grid=np.array(input_grid)
     flat_output = np.array(output_grid).flatten()
     background = np.bincount(flat_output).argmax()
-    
+
     # 2. Initialize MCTS
     root = MCTSNode(objects, output_grid, background)
-    root.expand()  # Initial expansion
-    neuro = NeuralSymbolicSolverRL()
-    nueuro(object,output_grid)
-    # 3. Train scorer with initial samples
-    X_train, y_train = [], []
-    for _ in range(100):
-        random_arrangement = {}
-        for obj in objects:
-            r = random.randint(0, len(output_grid) - obj['size'][0])
-            c = random.randint(0, len(output_grid[0]) - obj['size'][1])
-            random_arrangement[id(obj)] = (r, c)
-        
+    root.expand(objects)  # Initial expansion
+    feature_extractor=FeatureExtractor()
+    neuro = NeuralSymbolicSolverRL(feature_extractor)
+    spacial = Spacial_Network(feature_extractor,num_action)
 
-        input_tensor = torch.tensor(output_grid, dtype=torch.float32).unsqueeze(0).unsqueeze(0)  
-        # shape: (batch_size=1, channels=1, height, width)
-        features = model(input_tensor).detach().cpu().numpy().flatten()
-
-
-        # Simple scoring: coverage of non-background areas
-        coverage_score = 0
-        for obj in objects:
-            r, c = random_arrangement[id(obj)]
-            for i in range(obj['size'][0]):
-                for j in range(obj['size'][1]):
-                    if output_grid[r+i][c+j] != background:
-                        coverage_score += 1
-        y_train.append(coverage_score / (len(output_grid)*len(output_grid[0])))
-        X_train.append(features)
+    ## select random object - simultinously or not?
+    objector = objects[1]
+    ## select a random pos
+    x=np.random.randint(output_grid.shape[0])
+    y=np.random.randint(output_grid.shape[1])
 
     
-    # root.scorer.train(X_train, y_train)
-    
+
+    node= root
     # 4. Run MCTS
     for _ in range(iterations):
-        node = root
+
         
         # Selection
         while node.children:
@@ -243,12 +282,16 @@ def arrange_objects_mcts(input_grid, output_grid, iterations=500):
         
         # Expansion
         if not node.is_terminal() and not node.children:
-            node.expand()
+
+            node.expand(objects)
+  
+
+            
             if node.children:
                 node = random.choice(node.children)
-        
+                
         # Simulation
-        score = node.simulate()
+        score = node.simulate(neuro,spacial)
         
         # Backpropagation
         node.backpropagate(score)
@@ -270,6 +313,18 @@ def arrange_objects_mcts(input_grid, output_grid, iterations=500):
                             output[r+i][c+j] = obj['grid'][i][j]
     
     return output, best_node.total_score / best_node.visits
+
+def evaluate_placement(output_grid, neuro, spacial, current_grid, node):
+    selection = get_object_position(node,id)
+    move=spacial.forward((current_grid,output_grid))
+    current_grid= ACTIONS[ACTION_NAMES[move]](current_grid,selection['position'])
+    selection['grid'] , action=neuro.select_action(selection['grid'],current_grid)
+            
+    frame = extract_region_under_object(output_grid,selection['grid'])
+    score1=matrix_similarity(selection['grid'],frame) ##not yet implemented
+    score2=matrix_similarity(current_grid,output_grid)
+    neuro.store_reward(score1)
+    spacial.store_reward(score2)
 
 
 
@@ -296,8 +351,8 @@ if __name__ == '__main__':
                 a=train[case_id]['train'][i]['input']
                 b=train[case_id]['train'][i]['output']
                 print('input')
-                sns.heatmap(a,cmap=cmap)
-                plt.show()
+                # sns.heatmap(a,cmap=cmap)
+                # plt.show()
 
         # a=np.array(a)
         # b=np.array(b)

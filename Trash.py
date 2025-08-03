@@ -118,3 +118,95 @@ def expand(self):
         new_node.arrangement[id(obj)] = pos
         self.children.append(new_node)
     
+
+# Neural network for arrangement scoring
+
+    
+
+
+
+
+    X_train, y_train = [], []
+    for _ in range(100):
+        random_arrangement = {}
+        for obj in objects:
+            r = random.randint(0, len(output_grid) - obj['size'][0])
+            c = random.randint(0, len(output_grid[0]) - obj['size'][1])
+            random_arrangement[id(obj)] = (r, c)
+        
+
+        input_tensor = torch.tensor(output_grid, dtype=torch.float32).unsqueeze(0).unsqueeze(0)  
+        # shape: (batch_size=1, channels=1, height, width)
+        features = model(input_tensor).detach().cpu().numpy().flatten()
+
+
+        # Simple scoring: coverage of non-background areas
+        coverage_score = 0
+        for obj in objects:
+            r, c = random_arrangement[id(obj)]
+            for i in range(obj['size'][0]):
+                for j in range(obj['size'][1]):
+                    if output_grid[r+i][c+j] != background:
+                        coverage_score += 1
+        y_train.append(coverage_score / (len(output_grid)*len(output_grid[0])))
+        X_train.append(features)
+
+    
+    # root.scorer.train(X_train, y_train)
+
+# using prob based pos
+
+        def select_action(self, input_grid, current_grid, ):
+        self.policy.train()  # Optional
+
+     
+        input_tensor = self._preprocess_to_tensor(input_grid)     # "state" / input
+        current_tensor = self._preprocess_to_tensor(current_grid) # "target" / current grid
+
+       
+        action_probs = self.policy([input_tensor, current_tensor])  # Shape: [num_actions]
+        
+        # Create a categorical distribution over actions
+        dist = Categorical(action_probs)
+        action_index = dist.sample()
+
+        primitive_name = PRIMITIVE_NAMES[action_index.item()]
+        new_grid = PRIMITIVE[primitive_name](current_grid.copy())  # Safe to copy before changing
+
+        self.states.append(input_grid.copy(), current_grid.copy())
+        self.actions.append(action_index.item())
+        self.log_probs.append(dist.log_prob(action_index))
+
+        return new_grid, action_index.item()
+    
+
+# def extract_region(grid, position, obj_shape):
+#     grid = np.atleast_2d(grid)  # Ensure grid is at least 2D (converts 0D/1D to 2D)
+#     r, c = position
+#     h, w = obj_shape
+    
+#     # Handle cases where the region is out of bounds
+#     grid_rows, grid_cols = grid.shape
+#     if r + h > grid_rows or c + w > grid_cols:
+#         raise ValueError("Requested region exceeds grid dimensions")
+
+#     return grid[r:r+h, c:c+w].copy()
+
+
+
+class ArrangementScorer:
+    def __init__(self):
+        self.model = RandomForestRegressor(n_estimators=100, random_state=42)
+        self.is_trained = False
+        
+    def train(self, X, y):
+
+        self.model.fit(X, y)
+        self.is_trained = True
+        
+    def predict(self, features):
+        if not self.is_trained:
+            return random.random()  # Random score if not trained
+        return self.model.predict([features])[0]
+    
+    

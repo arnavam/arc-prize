@@ -48,7 +48,7 @@ def find_objects(grid, connectivity=4):
                             for i in range(max_r - min_r + 1)]
                 
                 objects.append({
-                    'grid': obj_grid,
+                    'grid': np.array(obj_grid),
                     'color': obj_color,
                     'position': (min_r, min_c),
                     'size': (len(obj_grid), len(obj_grid[0]))
@@ -140,6 +140,8 @@ def dcrop(data):
     """Crops the bottom row."""
     if data.shape[0] > 1: return data[:-1, :]
     return data
+def idle(data):
+    return data
 
 def normalize(mat):
     """Normalizes color values to be contiguous integers starting from 0."""
@@ -181,6 +183,7 @@ def conv(input_matrix, kernel):
                 output[i, j] = 1 # No match
     return output
 
+
 PRIMITIVE = {
         "rotate": rotate,
         "mirrorlr": mirrorlr,
@@ -190,6 +193,7 @@ PRIMITIVE = {
         "ucrop": ucrop,
         "dcrop": dcrop,
         "color":color,
+        'idle':idle
         # We "freeze" the 'kernel' argument with the start and goal nodes.
         # "conv_with_input_kernel": functools.partial(conv, kernel=input_node),
         # "conv":conv

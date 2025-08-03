@@ -11,7 +11,7 @@ from A_arc import train
 from dsl import PRIMITIVE
 import functools ,collections,time
 PRIMITIVE_NAMES = list(PRIMITIVE.keys())
-
+import random
 # --- Neural Feature Extractor (PyTorch) ---
 class FeatureExtractor(nn.Module):
     def __init__(self, input_channels=1):
@@ -21,7 +21,9 @@ class FeatureExtractor(nn.Module):
         self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
         self.pool2 = nn.AdaptiveAvgPool2d((1, 1))  # Safe pooling
         self.flatten = nn.Flatten()
-        self.fc = nn.Linear(64, 128)  # final feature dim
+        self.fc = nn.Linear(64, 32)  # final feature dim
+        self.primitive_names= list(PRIMITIVE.keys())
+
 
     def forward(self, x):
         x = F.relu(self.pool1(self.conv1(x)))
@@ -42,7 +44,7 @@ class PolicyNetwork(nn.Module):
         super().__init__()
         self.feature_extractor = feature_extractor
         # Combined feature vector size is 128 (current) + 128 (target)
-        self.policy_head = nn.Linear(128 * 2, num_primitives)
+        self.policy_head = nn.Linear(32 * 2, num_primitives)
         
     def forward(self, inputs):
         current_grid_tensor, target_grid_tensor = inputs
@@ -60,59 +62,85 @@ class PolicyNetwork(nn.Module):
 
 # --- Neural-Symbolic RL Solver ---
 class NeuralSymbolicSolverRL:
-    def __init__(self, gamma=0.99):
+    def __init__(self,PRIMITIVE_NAMES,feature_extractor =FeatureExtractor(), gamma=0.99):
         self.device = torch.device("cuda" if torch.cuda.is_available() else ("mps" if torch.mps.is_available() else "cpu"))
-        self.feature_extractor = FeatureExtractor().to(self.device)
+        self.feature_extractor = feature_extractor
         self.policy = PolicyNetwork(self.feature_extractor, len(PRIMITIVE_NAMES)).to(self.device)
         self.optimizer = optim.Adam(self.policy.parameters(), lr=1e-4)
-
-        self.gamma = gamma # Discount factor for future rewards
-        self.memory=[] # stores (state, action, reward)
-
-    def select_action(self, input_grid, current_grid, max_steps_per_episode=10):
-        self.policy.train()  # Optional
-
-     
-        input_tensor = self._preprocess_to_tensor(input_grid)     # "state" / input
-        current_tensor = self._preprocess_to_tensor(current_grid) # "target" / current grid
-
-       
-        action_probs = self.policy([input_tensor, current_tensor])  # Shape: [num_actions]
         
-        # Create a categorical distribution over actions
-        dist = Categorical(action_probs)
-        action_index = dist.sample()
+        self.gamma = gamma # Discount factor for future rewards
+        self.memory=[()] # stores (state, action, reward)
+        self.states=[]
+        self.actions=[]
+        self.log_probs=[]
+        self.rewards=[]
 
-        primitive_name = PRIMITIVE_NAMES[action_index.item()]
-        new_grid = PRIMITIVE[primitive_name](current_grid.copy())  # Safe to copy before changing
 
-        self.memory.append((input_grid.copy(), current_grid.copy(), action_index.item(), dist.log_prob(action_index)))
-        return new_grid, action_index.item()
+        
 
+    def select_action(self, state):
+        """
+        Selects an action by sampling from the policy distribution 
+        and stores the log probability.
+        """
+        current, target = state
+        
+        # No need for torch.no_grad() here since we need the graph for log_prob
+        action_probs = self.policy([current, target])
+        
+        # Create a categorical distribution to sample from
+        m = Categorical(action_probs)
+        action = m.sample() # 🎲 Sample an action!
+        
+        # Store the state and the log probability of the sampled action
+        self.states.append(state)
+        self.log_probs.append(m.log_prob(action))
+        
+        return action.item()
+    
     def store_reward(self, reward):
-        # Just store reward for now (one per step)
-        self.memory[-1] = self.memory[-1] + (reward,)
+        self.rewards.append(reward)
 
     def update_policy(self, gamma=0.99):
-        R = 0
+        if not self.states:
+            return
+            
+        # Calculate returns
         returns = []
-        rewards = [entry[4] for entry in self.memory]
-
-        # Compute discounted returns
-        for r in reversed(rewards):
+        R = 0
+        for r in reversed(self.rewards):
             R = r + gamma * R
             returns.insert(0, R)
-        returns = torch.tensor(returns)
-
-        loss = 0
-        for (state, action,_, log_prob, _), G in zip(self.memory, returns):
-            loss -= log_prob * G  # REINFORCE loss
-
+        returns = torch.tensor(returns, dtype=torch.float32)
+        
+        # Normalize
+        returns = (returns - returns.mean()) / (returns.std() + 1e-7)
+        
+        # Compute loss
+        policy_loss = torch.stack([
+            -lp * R for lp, R in zip(self.log_probs, returns)
+        ]).sum()
+        
+        # Optimize
         self.optimizer.zero_grad()
-        loss.backward()
+        policy_loss.backward()
         self.optimizer.step()
-        self.memory = [] 
-    
+        
+        # Reset storage
+        self.states = []
+        self.actions = []
+        self.log_probs = []
+        self.rewards = []
+
+    def _preprocess_to_tensor(self, grid, size=30):
+        """Preprocess grid and convert to a tensor on the correct device."""
+        h, w = grid.shape
+        padded = np.zeros((size, size), dtype=np.float32)
+        padded[:h, :w] = grid
+        # Add batch and channel dimensions (N, C, H, W)
+        tensor = torch.from_numpy(padded).unsqueeze(0).unsqueeze(0)
+        return tensor.to(self.device)
+
 
     def train(self, train_data, episodes=1000, max_steps_per_episode=10):
         """Train the agent using the REINFORCE algorithm."""
@@ -232,18 +260,10 @@ class NeuralSymbolicSolverRL:
             returns = (returns - returns.mean()) / (returns.std() + 1e-9)
         return returns
     
-    def _preprocess_to_tensor(self, grid, size=30):
-        """Preprocess grid and convert to a tensor on the correct device."""
-        h, w = grid.shape
-        padded = np.zeros((size, size), dtype=np.float32)
-        padded[:h, :w] = grid
-        # Add batch and channel dimensions (N, C, H, W)
-        tensor = torch.from_numpy(padded).unsqueeze(0).unsqueeze(0)
-        return tensor.to(self.device)
-
 
 # --- Main Execution ---
 if __name__ == "__main__":
+    
 
     training_examples = []
     for case_data in train.values():
