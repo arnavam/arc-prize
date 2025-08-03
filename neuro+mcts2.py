@@ -1,4 +1,10 @@
+import os
+os.environ['PYTORCH_MPS_HIGH_WATERMARK_RATIO'] = '0.0'
+
 import numpy as np
+import torch
+torch.mps.empty_cache()
+
 import json
 import math
 import seaborn as sns
@@ -10,10 +16,9 @@ from matplotlib import pyplot as plt
 from dsl2 import convert_np_to_native
 from dsl import find_objects , PRIMITIVE
 from neurosymbolic_reinforce import NeuralSymbolicSolverRL ,FeatureExtractor
-from neurosymbolic_RL_A2C import NeuralSymbolicSolverRL_A2C as neural
-# from nuerosymb_q_learning import DQN_Solver as neural
+# from neurosymbolic_RL_A2C import NeuralSymbolicSolverRL_A2C as neural
+from nuerosymb_q_learning import DQN_Solver  as neural
 
-import torch
 import torch.nn as nn
 import torch.nn.functional as F
 REWARDS=[]
@@ -170,12 +175,12 @@ class MCTSNode:
                 reward = new_sim - old_sim
                 total_reward += reward
                 # Store experience for spacial agent
-                spacial.store_reward(reward)
+                # spacial.store_reward(reward)
                 state = (self.output_grid.copy(), target_grid.copy())
                 next_state = (new_grid.copy(), target_grid.copy())
 
                 # Pass the tuples to the store_experience method
-                # spacial.store_experience(state, action_idx, reward, next_state)
+                spacial.store_experience(state, action_idx, reward, next_state)
 
                 # print(action,total_reward)
 
@@ -219,13 +224,13 @@ class MCTSNode:
                 total_reward += reward
                 
                 # Store experience for neuro agent
-                neuro.store_reward(reward)
+                # neuro.store_reward(reward)
                 # Define the state and next_state as tuples
                 state = (current_grid.copy(), target_region.copy())
                 next_state = (new_grid.copy(), target_region.copy())
 
                 # Pass the tuples to the store_experience method
-                # neuro.store_experience(state, action_idx, reward, next_state)
+                neuro.store_experience(state, action_idx, reward, next_state)
 
                 # print(primitive,reward)
                 current_grid = new_grid
@@ -452,9 +457,9 @@ if __name__ == '__main__':
         ids.append(case_id) 
     count=0
     for case_id in train:
-        count +=1
-        if count ==2 :
-            break
+        # count +=1
+        # if count ==2 :
+            # break
         for i in range(2):
 
             for j in ('input','output'):
@@ -470,20 +475,21 @@ if __name__ == '__main__':
 
 
         # Solve the puzzle using the new method
-        solved_grid ,_= arrange_objects_mcts(a, b,save=False,load=False,iterations=10000)
+        solved_grid ,_= arrange_objects_mcts(a, b,save=True,load=True,iterations=10000)
         solved_grid = convert_np_to_native(solved_grid)
-        plt.plot(REWARDS)
 
         print('original',b)
         print('predicted',solved_grid)
-        print('original')
 
-        sns.heatmap(b,cmap=cmap)
-        plt.show()
+        # print('original')
+        # sns.heatmap(b,cmap=cmap)
+        # plt.show()
 
-        print('predicted')
-        sns.heatmap(solved_grid,cmap=cmap)
-        plt.show()
+        # print('predicted')
+        # sns.heatmap(solved_grid,cmap=cmap)
+        # plt.show()
+        
+        # plt.plot(REWARDS)
 
 
 

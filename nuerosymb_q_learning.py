@@ -1,5 +1,10 @@
+import os
+os.environ['PYTORCH_MPS_HIGH_WATERMARK_RATIO'] = '0.0'
+
 import numpy as np
 import torch
+torch.mps.empty_cache()
+
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F

@@ -3,7 +3,7 @@ from collections import deque
 import numpy as np
 
 
-def find_objects(grid, connectivity=4):
+def find_objects(grid, connectivity=8):
     if not grid or not grid[0]:
         return []
     

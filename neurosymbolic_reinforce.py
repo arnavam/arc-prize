@@ -1,6 +1,10 @@
+import os
+os.environ['PYTORCH_MPS_HIGH_WATERMARK_RATIO'] = '0.0'
 
 import numpy as np
 import torch
+torch.mps.empty_cache()
+
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
@@ -63,7 +67,7 @@ class PolicyNetwork(nn.Module):
 # --- Neural-Symbolic RL Solver ---
 class NeuralSymbolicSolverRL:
     def __init__(self,PRIMITIVE_NAMES,feature_extractor =FeatureExtractor(), gamma=0.99):
-        self.device = torch.device("cuda" if torch.cuda.is_available() else ("mps" if torch.mps.is_available() else "cpu"))
+        self.device = torch.device("cuda" if torch.cuda.is_available() else 'cpu')#("mps" if torch.mps.is_available() else "cpu"))
         self.feature_extractor = feature_extractor
         self.policy = PolicyNetwork(self.feature_extractor, len(PRIMITIVE_NAMES)).to(self.device)
         self.optimizer = optim.Adam(self.policy.parameters(), lr=1e-4)
