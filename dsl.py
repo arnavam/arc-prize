@@ -154,9 +154,15 @@ def normalize(mat):
     return normalized_mat
 
 def color(matrix):
-    max_val = matrix.max()
-    transformed = (matrix % max_val) + 1
-    return transformed
+    unique_vals = np.unique(matrix)
+    shifted_vals = np.roll(unique_vals, -1)  # shift left, wrap around
+    
+    mapping = dict(zip(unique_vals, shifted_vals))
+    
+    # Vectorized mapping using np.vectorize
+    transform = np.vectorize(mapping.get)
+    
+    return transform(matrix)
 
 def conv(input_matrix, kernel):
     """
