@@ -4,7 +4,7 @@ os.environ['PYTORCH_MPS_HIGH_WATERMARK_RATIO'] = '0.0'
 import numpy as np
 import torch
 torch.mps.empty_cache()
-
+torch.cuda.empty_cache()
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
@@ -52,7 +52,7 @@ class PolicyNetwork(nn.Module):
 
 class NeuralSymbolicSolverRL_A2C:
     def __init__(self, PRIMITIVE_NAMES, feature_extractor, gamma=0.99, lr=1e-4):
-        self.device = torch.device("cuda" if torch.cuda.is_available() else 'cpu')#("mps" if torch.mps.is_available() else "cpu"))
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.mps.is_available() else "cpu")#'cpu')#()
         self.gamma = gamma
         
         # Use the new PolicyNetwork with two heads
@@ -60,7 +60,7 @@ class NeuralSymbolicSolverRL_A2C:
         self.optimizer = optim.Adam(self.policy.parameters(), lr=lr)
 
         # Memory to store trajectories
-        self.states = []
+        # self.states = []
         self.log_probs = []
         self.rewards = []
         self.state_values = [] # Need to store critic's values
@@ -75,7 +75,7 @@ class NeuralSymbolicSolverRL_A2C:
         action = m.sample()
         
         # Store everything needed for the update
-        self.states.append(state)
+        # self.states.append(state)
         self.log_probs.append(m.log_prob(action))
         self.state_values.append(state_value)
         
@@ -125,10 +125,11 @@ class NeuralSymbolicSolverRL_A2C:
         self.optimizer.step()
 
         # --- Reset storage ---
-        self.states = []
+        # self.states = []
         self.log_probs = []
         self.rewards = []
         self.state_values = []
+        del returns, advantages, log_probs, state_values, actor_loss, critic_loss, total_loss
 
     def _preprocess_to_tensor(self, grid, size=30):
         """Preprocess grid and convert to a tensor on the correct device."""

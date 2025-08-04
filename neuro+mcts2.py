@@ -457,9 +457,9 @@ if __name__ == '__main__':
         ids.append(case_id) 
     count=0
     for case_id in train:
-        # count +=1
-        # if count ==2 :
-            # break
+        count +=1
+        if count ==2 :
+            break
         for i in range(2):
 
             for j in ('input','output'):
@@ -488,7 +488,7 @@ if __name__ == '__main__':
         # print('predicted')
         # sns.heatmap(solved_grid,cmap=cmap)
         # plt.show()
-        
+
         # plt.plot(REWARDS)
 
 
