@@ -1,11 +1,6 @@
-import os
-os.environ['PYTORCH_MPS_HIGH_WATERMARK_RATIO'] = '0.0'
 
 import numpy as np
 import torch 
-if torch.mps.is_available(): torch.mps.empty_cache() 
-elif torch.cuda.is_available(): torch.cuda.empty_cache()
-
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F

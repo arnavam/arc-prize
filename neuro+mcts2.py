@@ -3,14 +3,15 @@ os.environ['PYTORCH_MPS_HIGH_WATERMARK_RATIO'] = '0.0'
 
 import numpy as np
 import torch
-torch.mps.empty_cache()
+if torch.mps.is_available(): torch.mps.empty_cache() 
+elif torch.cuda.is_available(): torch.cuda.empty_cache()
+
 
 import json
 import math
 import seaborn as sns
 import random
 
-from sklearn.ensemble import RandomForestRegressor  # Simple neurosymbolic model
 from matplotlib  import colors 
 from matplotlib import pyplot as plt
 from dsl2 import convert_np_to_native
