@@ -20,7 +20,7 @@ def placement(output_grid, old_obj_info, new_obj_info, background=0):
     """
 
     new_grid = new_obj_info["grid"]
-    print(new_grid)
+    # print(new_grid)
     new_r, new_c = new_obj_info["position"]
     new_h, new_w = new_grid.shape
 
