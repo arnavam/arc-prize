@@ -191,8 +191,28 @@ def expand(self):
 #         raise ValueError("Requested region exceeds grid dimensions")
 
 #     return grid[r:r+h, c:c+w].copy()
+def get_object_position(node, obj):
+    obj_id = id(obj)
+    if obj_id in node.arrangement:
+        return node.arrangement[obj_id]
+    else:
+        return None  
+import numpy as np
 
 
+
+
+
+
+def extract_region(grid, position, obj_shape):
+    grid = np.atleast_2d(grid)
+    r, c = position
+    h, w = obj_shape
+
+    grid_rows, grid_cols = grid.shape
+    max_r = min(r + h, grid_rows)
+    max_c = min(c + w, grid_cols)
+    return grid[r:max_r, c:max_c]
 
 class ArrangementScorer:
     def __init__(self):
@@ -209,4 +229,43 @@ class ArrangementScorer:
             return random.random()  # Random score if not trained
         return self.model.predict([features])[0]
     
-    
+
+
+
+def matrix_similarity(a, b):
+    # Convert to binary masks
+    mask_a = (a != 0).astype(int)
+    mask_b = (b != 0).astype(int)
+
+    # Make sure a is smaller or equal (crop from larger to smaller)
+    if mask_a.shape[0] > mask_b.shape[0] or mask_a.shape[1] > mask_b.shape[1]:
+        mask_a, mask_b = mask_b, mask_a  # swap
+
+    h_a, w_a = mask_a.shape
+    h_b, w_b = mask_b.shape
+
+    max_iou = 0.0
+
+    # Slide mask_a over mask_b
+    for i in range(h_b - h_a + 1):
+        for j in range(w_b - w_a + 1):
+            window_b = mask_b[i:i+h_a, j:j+w_a]
+            intersection = np.sum(mask_a & window_b)
+            union = np.sum(mask_a | window_b)
+            if union > 0:
+                iou = intersection / union
+                max_iou = max(max_iou, iou)
+
+    return max_iou
+a = np.array([
+    [0, 0, 1],
+    [0, 1, 0],
+])
+
+b = np.array([
+    [0, 0, 1], 
+    [0, 1, 0],
+    [1, 0, 0]
+])
+similarity = matrix_similarity(a, b)
+print(similarity)

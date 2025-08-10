@@ -52,9 +52,8 @@ class PolicyNetwork(nn.Module):
 
 class NeuralSymbolicSolverRL_A2C:
     def __init__(self, PRIMITIVE_NAMES, feature_extractor, gamma=0.99, lr=1e-4):
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.mps.is_available() else "cpu")#'cpu')#()
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")#"mps" if torch.mps.is_available() else "cpu")#'cpu')#()
         self.gamma = gamma
-        
         # Use the new PolicyNetwork with two heads
         self.policy = PolicyNetwork(feature_extractor, len(PRIMITIVE_NAMES)).to(self.device)
         self.optimizer = optim.Adam(self.policy.parameters(), lr=lr)

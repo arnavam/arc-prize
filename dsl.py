@@ -194,10 +194,10 @@ PRIMITIVE = {
         "rotate": rotate,
         "mirrorlr": mirrorlr,
         "mirrorud": mirrorud,
-        "lcrop": lcrop,
-        "rcrop": rcrop,
-        "ucrop": ucrop,
-        "dcrop": dcrop,
+        # "lcrop": lcrop,
+        # "rcrop": rcrop,
+        # "ucrop": ucrop,
+        # "dcrop": dcrop,
         "color":color,
         'idle':idle
         # We "freeze" the 'kernel' argument with the start and goal nodes.

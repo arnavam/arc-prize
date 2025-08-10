@@ -15,6 +15,7 @@ from matplotlib  import colors
 from matplotlib import pyplot as plt
 from dsl2 import convert_np_to_native
 from dsl import find_objects , PRIMITIVE
+from env import placement
 from neurosymbolic_reinforce import NeuralSymbolicSolverRL ,FeatureExtractor
 # from neurosymbolic_RL_A2C import NeuralSymbolicSolverRL_A2C as neural
 from nuerosymb_q_learning import DQN_Solver  as neural
@@ -23,56 +24,40 @@ import torch.nn as nn
 import torch.nn.functional as F
 REWARDS=[]
 
-def move_up(grid, position):
-    grid = grid.copy()
+def move_up(position):
     x, y = position
-    if x > 0 and grid[x - 1, y] == 0:
-        grid[x, y], grid[x - 1, y] = 0, grid[x, y]
-        return grid, (x - 1, y)
-    return grid, position
+    return  (x - 1, y)
 
-def move_down(grid, position):
-    grid = grid.copy()
+
+def move_down(position):
     x, y = position
-    if x < grid.shape[0] - 1 and grid[x + 1, y] == 0:
-        grid[x, y], grid[x + 1, y] = 0, grid[x, y]
-        return grid, (x + 1, y)
-    return grid, position
 
-def move_left(grid, position):
-    grid = grid.copy()
+    return  (x + 1, y)
+
+def move_left(position):
     x, y = position
-    if y > 0 and grid[x, y - 1] == 0:
-        grid[x, y], grid[x, y - 1] = 0, grid[x, y]
-        return grid, (x, y - 1)
-    return grid, position
+    return  (x, y - 1)
 
-def c(grid, position):
-    grid = grid.copy()
+def move_right( position):
     x, y = position
-    if y < grid.shape[1] - 1 and grid[x, y + 1] == 0:
-        grid[x, y], grid[x, y + 1] = 0, grid[x, y]
-        return grid, (x, y + 1)
-    return grid, position
+
+    return (x, y + 1)
 
 
-def idle (grid,position):
-    return grid ,position
+def idle (position):
+    return position
 
 ACTIONS = {
     "move_up": move_up,
     "move_down": move_down,
     "move_left": move_left,
-    "move_left": move_left ,
+    "move_right": move_right ,
     'idle':idle
 }
 
 
 
-# This gives you a list of names to index from
-ACTION_NAMES = list(ACTIONS.keys())
-num_action=len(ACTIONS)
-PRIMITIVE_NAMES= list(PRIMITIVE.keys())
+
 
 
 
@@ -139,37 +124,40 @@ class MCTSNode:
                     )
                     self.children.append(new_node)
 
-    def simulate(self, neuro, spacial, target_grid, max_steps=3):
+    def simulate(self, neuro, spacial, target_grid, max_steps=4):
         """Run transformation and movement simulations"""
         total_reward = 0
         
         for obj_id, obj_info in self.arrangement.items():
         # if not obj_info["transformed"]:
-            # Transform object using neuro agent
-            current_grid = obj_info["grid"]
-            target_region = extract_target_region(target_grid, obj_info)
-              
+
 
             # Adjust position using spacial agent
-            current_pos = obj_info["position"]
             for _ in range(max_steps):
                 # Get movement action
-                action_idx = spacial.select_action([
-                    spacial._preprocess_to_tensor(self.output_grid),
-                    spacial._preprocess_to_tensor(target_grid)
-                ])
 
-                action = ACTION_NAMES[action_idx]
-                # Apply movement
-                new_grid, new_pos = ACTIONS[action](self.output_grid.copy(), current_pos)
-                # problm occur sometimes?
-                # Calculate reward
+
+                action_idx = spacial.select_action([
+                    self.output_grid,
+                    target_grid
+                ])
+                func=spacial.actions[spacial.action_names[action_idx]]
+                # print(func)
                 old_sim = matrix_similarity(
                     self.output_grid,
                     target_grid, 
                 )
+
+                new_obj_info = obj_info.copy()
+                new_obj_info['position']=func(obj_info['position'])
+                # Calculate reward
+                new_grid =placement(self.output_grid, obj_info, new_obj_info, background=0)
+                if  new_grid is None:
+                    max_steps+=1
+                    continue
+
                 new_sim = matrix_similarity(
-                    new_grid,
+                    self.output_grid,
                     target_grid
                 )
                 reward = new_sim - old_sim
@@ -184,71 +172,52 @@ class MCTSNode:
 
                 # print(action,total_reward)
 
-                current_pos = new_pos
+                current_pos = new_obj_info['position']
                 self.output_grid = new_grid
 
-            h, w = obj_info["grid"].shape
-            r, c = obj_info["position"]
-
-            # Ensure the slice won't exceed the output grid size
-            max_r = min(r + h, self.output_grid.shape[0])
-            max_c = min(c + w, self.output_grid.shape[1])
-
-            # Crop the object grid if it would overflow
-            obj_crop = obj_info["grid"][:max_r - r, :max_c - c]
-            region = self.output_grid[r:max_r, c:max_c]
-
-            self.output_grid[r:max_r, c:max_c] = np.where(
-                obj_crop != self.background,
-                obj_crop,
-                region
-            )
 
 
+            current_obj = obj_info["grid"]
+
+            target_region = extract_target_region(target_grid, obj_info)
             for _ in range(max_steps):
                 # Get transformation action
+                
                 action_idx = neuro.select_action([
-                    neuro._preprocess_to_tensor(current_grid),
-                    neuro._preprocess_to_tensor(target_region)
+                    current_obj,
+                    target_region
                 ])
-                # print(action_idx)
-                primitive = PRIMITIVE_NAMES[action_idx]
-                
-                # Apply transformation
-                new_grid = PRIMITIVE[primitive](current_grid.copy())
-                
+                func=neuro.actions[neuro.action_names[action_idx]]
+                new_obj_info =obj_info.copy()
+                new_obj_info['grid']=func(obj_info['grid'])
                 # Calculate reward
-                old_sim = matrix_similarity(current_grid, target_region)
-                new_sim = matrix_similarity(new_grid, target_region)
+                old_sim = matrix_similarity(current_obj, target_region)
+                new_grid =placement(self.output_grid, obj_info, new_obj_info, background=0)
+                if  new_grid is None:
+                    max_steps+=1
+                    continue
+
+
+                current_obj=extract_target_region(target_grid,new_obj_info)
+
+                new_sim = matrix_similarity(new_obj_info['grid'], current_obj)
                 reward = new_sim - old_sim
                 total_reward += reward
-                
-                # Store experience for neuro agent
-                # neuro.store_reward(reward)
+
                 # Define the state and next_state as tuples
-                state = (current_grid.copy(), target_region.copy())
-                next_state = (new_grid.copy(), target_region.copy())
+                state = (current_obj.copy(), target_region.copy())
+                next_state = (new_obj_info['grid'].copy(), target_region.copy())
 
                 # Pass the tuples to the store_experience method
                 neuro.store_experience(state, action_idx, reward, next_state)
 
                 # print(primitive,reward)
-                current_grid = new_grid
+                current_obj = new_obj_info['grid']
                 
              
             # Update object info
-            obj_info["grid"] = current_grid
-            obj_info["transformed"] = True
 
-            h, w = obj_info["grid"].shape
-            r, c = obj_info["position"]
-
-            self.output_grid[r:r+h, c:c+w] = np.where(
-                obj_info["grid"] != self.background,
-                obj_info["grid"],
-                self.output_grid[r:r+h, c:c+w]
-            )
-        print(total_reward)
+        print('total reward',total_reward)
         REWARDS.append(total_reward)
         return total_reward
             
@@ -288,42 +257,48 @@ def extract_target_region(target_grid, obj_info):
     return target_grid[r:r+obj_h, c:c+obj_w]
 
 
+def pad_matrix(a, target_shape, direction):
+    pad_height = target_shape[0] - a.shape[0]
+    pad_width = target_shape[1] - a.shape[1]
 
-def extract_region(grid, position, obj_shape):
-    grid = np.atleast_2d(grid)
-    r, c = position
-    h, w = obj_shape
-
-    grid_rows, grid_cols = grid.shape
-    max_r = min(r + h, grid_rows)
-    max_c = min(c + w, grid_cols)
-    return grid[r:max_r, c:max_c]
-
-def get_object_position(node, obj):
-    obj_id = id(obj)
-    if obj_id in node.arrangement:
-        return node.arrangement[obj_id]
+    # Default padding: [top, bottom], [left, right]
+    if direction == 'top':
+        padding = ((pad_height, 0), (0, 0))
+    elif direction == 'bottom':
+        padding = ((0, pad_height), (0, 0))
+    elif direction == 'left':
+        padding = ((0, 0), (pad_width, 0))
+    elif direction == 'right':
+        padding = ((0, 0), (0, pad_width))
     else:
-        return None  
-    
-def matrix_similarity(a, b): #param
+        raise ValueError("Direction must be one of: 'top', 'bottom', 'left', 'right'")
 
-    if a.shape != b.shape:
-        return 0.0
-    
-    value_sim = np.sum(a == b) / a.size  # Fraction of identical elements
-    
-    # Handle edge cases for small matrices (gradient requires ≥2 elements per axis)
-    if a.shape[0] >= 2 and a.shape[1] >= 2:
-        grad_a = np.abs(np.gradient(a)[0]) + np.abs(np.gradient(a)[1])  # Gradient magnitude for `a`
-        grad_b = np.abs(np.gradient(b)[0]) + np.abs(np.gradient(b)[1])  # Gradient magnitude for `b`
+    return np.pad(a, padding, mode='constant', constant_values=0)
+
+
+def matrix_similarity(a, b, direction=None):
+    if a.shape == b.shape:
+        # print(a.shape,b.shape)
+        padded_a = a
     else:
-        grad_a = np.zeros_like(a)
-        grad_b = np.zeros_like(b)
-    
-    struct_sim = 1.0 - np.abs(grad_a - grad_b).mean()
-    
-    return 0.7 * value_sim + 0.3 * struct_sim
+        # Make sure a is smaller or equal in shape
+        if a.shape[0] > b.shape[0] or a.shape[1] > b.shape[1]:
+            raise ValueError("Matrix 'a' must be smaller than or equal to 'b' in shape.")
+        
+        padded_a = pad_matrix(a, b.shape, direction)
+
+    # Ensure shapes now match
+    if padded_a.shape != b.shape:
+        raise ValueError("Shapes do not match after padding.")
+
+    # Pixel-by-pixel comparison
+    matches = np.sum(padded_a == b)
+    total = b.size
+    score = matches / total  # percentage match
+
+    return score  # Returns between 0.0 and 1.0
+
+
 
 
 
@@ -348,18 +323,15 @@ def arrange_objects_mcts(input_grid, output_grid,save=False,load=False, iteratio
 
     # model = FeatureExtractor(input_channels=1)
 
-    # neuro = NeuralSymbolicSolverRL_A2C(PRIMITIVE_NAMES,model)
-    # spacial = NeuralSymbolicSolverRL_A2C(ACTION_NAMES,model)
-
     neuro_feature_extractor = FeatureExtractor(input_channels=1)
     spacial_feature_extractor = FeatureExtractor(input_channels=1)
 
     # Initialize each agent with its own, un-shared model
-    neuro = neural(PRIMITIVE_NAMES, neuro_feature_extractor)
-    spacial = neural(ACTION_NAMES, spacial_feature_extractor)
+    neuro = neural(PRIMITIVE, neuro_feature_extractor)
+    spacial = neural(ACTIONS, spacial_feature_extractor)
     if load:
-     neuro.policy_net.load_state_dict(torch.load('neuro_model.pth'))
-     spacial.policy_net.load_state_dict(torch.load('spacial_model.pth'))
+     neuro.load()
+     spacial.load()
         # Save trained policy networks
 
     # MCTS loop
@@ -378,6 +350,7 @@ def arrange_objects_mcts(input_grid, output_grid,save=False,load=False, iteratio
         while node.children:
             count +=1
             node = max(node.children, key=lambda n: n.ucb_score())
+        print(count)
         
         # Expansion
         if not node.is_terminal():
@@ -387,7 +360,7 @@ def arrange_objects_mcts(input_grid, output_grid,save=False,load=False, iteratio
         
         # Simulation - only evaluate terminal nodes
         if node.is_terminal():
-            a=1
+            print('node reached terminal!!')
         reward = node.simulate(neuro, spacial, output_grid)
         
         # Track best terminal node
@@ -395,9 +368,9 @@ def arrange_objects_mcts(input_grid, output_grid,save=False,load=False, iteratio
         if node_score > best_score:
             best_score = node_score
             best_terminal_node = node
-        # else:
-        #     reward = 0  # Non-terminal nodes get neutral reward
-        
+
+        neuro.update_policy()
+        spacial.update_policy() 
         # Backpropagation
         current = node
         while current:
@@ -406,8 +379,7 @@ def arrange_objects_mcts(input_grid, output_grid,save=False,load=False, iteratio
             current = current.parent
     
     # Update policies
-    neuro.update_policy()
-    spacial.update_policy()
+
     
     # Fallback if no terminal node found
     if best_terminal_node is None:
@@ -420,8 +392,9 @@ def arrange_objects_mcts(input_grid, output_grid,save=False,load=False, iteratio
                 best_terminal_node = node
             stack.extend(node.children)
     if save:
-     torch.save(neuro.policy_net.state_dict(), 'neuro_model.pth')    
-     torch.save(spacial.policy_net.state_dict(), 'spacial_model.pth')
+     neuro.save()    
+     spacial.save()
+    
     print(count)
     return best_terminal_node.output_grid, best_terminal_node
 
@@ -465,7 +438,7 @@ if __name__ == '__main__':
             for j in ('input','output'):
                 a=train[case_id]['train'][i]['input']
                 b=train[case_id]['train'][i]['output']
-        # print('input')
+        print('input')
         # sns.heatmap(a,cmap=cmap)
         # plt.show()
 
@@ -475,19 +448,19 @@ if __name__ == '__main__':
 
 
         # Solve the puzzle using the new method
-        solved_grid ,_= arrange_objects_mcts(a, b,save=True,load=True,iterations=10000)
+        solved_grid ,_= arrange_objects_mcts(a, b,save=True,load=True,iterations=1000)
         solved_grid = convert_np_to_native(solved_grid)
 
         print('original',b)
         print('predicted',solved_grid)
 
-        # print('original')
-        # sns.heatmap(b,cmap=cmap)
-        # plt.show()
+        print('original')
+        sns.heatmap(b,cmap=cmap)
+        plt.show()
 
-        # print('predicted')
-        # sns.heatmap(solved_grid,cmap=cmap)
-        # plt.show()
+        print('predicted')
+        sns.heatmap(solved_grid,cmap=cmap)
+        plt.show()
 
         # plt.plot(REWARDS)
 

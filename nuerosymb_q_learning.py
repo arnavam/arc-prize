@@ -2,8 +2,9 @@ import os
 os.environ['PYTORCH_MPS_HIGH_WATERMARK_RATIO'] = '0.0'
 
 import numpy as np
-import torch
-torch.mps.empty_cache()
+import torch 
+if torch.mps.is_available(): torch.mps.empty_cache() 
+elif torch.cuda.is_available(): torch.cuda.empty_cache()
 
 import torch.nn as nn
 import torch.optim as optim
@@ -14,7 +15,6 @@ from itertools import product
 from A_arc import train 
 from dsl import PRIMITIVE
 import functools ,collections,time
-PRIMITIVE_NAMES = list(PRIMITIVE.keys())
 
 
 class QNetwork(nn.Module):
@@ -57,31 +57,30 @@ class ReplayMemory:
     def __len__(self):
         return len(self.memory)
     
-import torch
-import torch.optim as optim
-import random
+
 
 class DQN_Solver:
-    def __init__(self, ACTION_NAMES, feature_extractor, gamma=0.99, lr=1e-4, batch_size=128, memory_size=10000, target_update=10):
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    def __init__(self, ACTIONS, feature_extractor, device='cpu',gamma=0.99, lr=1e-4, batch_size=128, memory_size=10000, target_update=10):
+        self.device = torch.device(device if  getattr(torch, device).is_available() else "cpu")
         self.gamma = gamma
         self.batch_size = batch_size
-        self.action_names = ACTION_NAMES
-        self.num_actions = len(ACTION_NAMES)
+        self.actions=ACTIONS
+        self.action_names = list(ACTIONS.keys())
+        self.num_actions = len(self.action_names)
         
         # Main network (gets updated frequently)
-        self.policy_net = QNetwork(feature_extractor, self.num_actions).to(self.device)
+        self.policy = QNetwork(feature_extractor, self.num_actions).to(self.device)
         # Target network (provides stable targets, updated less often)
         self.target_net = QNetwork(feature_extractor, self.num_actions).to(self.device)
-        self.target_net.load_state_dict(self.policy_net.state_dict())
+        self.target_net.load_state_dict(self.policy.state_dict())
         self.target_net.eval() # Target network is only for inference
 
-        self.optimizer = optim.Adam(self.policy_net.parameters(), lr=lr)
+        self.optimizer = optim.Adam(self.policy.parameters(), lr=lr)
         self.memory = ReplayMemory(memory_size)
         self.update_counter = 0
         self.target_update_frequency = target_update
 
-    def select_action(self, state, epsilon=0.1):
+    def select_action(self, state, epsilon=0.4):
         """Epsilon-greedy action selection"""
         if random.random() < epsilon:
             # Exploration: choose a random action
@@ -90,16 +89,18 @@ class DQN_Solver:
             # Exploitation: choose the best action from the policy network
             with torch.no_grad():
                 current, target = state
-                # current_tensor = self._preprocess_to_tensor(current)
-                # target_tensor = self._preprocess_to_tensor(target)
-                current_tensor =current
-                target_tensor=target
+                current_tensor = self._preprocess_to_tensor(current)
+                target_tensor = self._preprocess_to_tensor(target)
+
                 
                 # Get Q-values and find the action with the highest value
-                q_values = self.policy_net([current_tensor, target_tensor])
-                return torch.argmax(q_values).item()
+                q_values = self.policy([current_tensor, target_tensor])
+                action_idx= torch.argmax(q_values).item()
+ 
+                return  action_idx
 
     def update_policy(self):
+
         """Train the model using a batch from the replay memory"""
         if len(self.memory) < self.batch_size:
             return # Don't train until we have enough experiences
@@ -112,7 +113,6 @@ class DQN_Solver:
         states, actions, rewards, next_states = batch
         
         # --- Prepare Tensors ---
-        # Convert all experiences to tensors
         current_grids = torch.cat([self._preprocess_to_tensor(s[0]) for s in states])
         target_grids = torch.cat([self._preprocess_to_tensor(s[1]) for s in states])
         next_current_grids = torch.cat([self._preprocess_to_tensor(ns[0]) for ns in next_states])
@@ -122,8 +122,7 @@ class DQN_Solver:
         rewards_tensor = torch.tensor(rewards, dtype=torch.float32, device=self.device)
 
         # --- Calculate Q-Values ---
-        # 1. Get Q-values for the actions that were actually taken
-        current_q_values = self.policy_net([current_grids, target_grids]).gather(1, actions_tensor)
+        current_q_values = self.policy([current_grids, target_grids]).gather(1, actions_tensor)
 
         # 2. Get the maximum Q-value for the next states from the target network
         with torch.no_grad():
@@ -135,18 +134,20 @@ class DQN_Solver:
         # --- Calculate Loss ---
         # Using Smooth L1 Loss is common in DQN for stability
         loss = F.smooth_l1_loss(current_q_values, target_q_values.unsqueeze(1))
-        
+        print(loss)
         # --- Optimize ---
         self.optimizer.zero_grad()
         loss.backward()
-        for param in self.policy_net.parameters():
+        for param in self.policy.parameters():
             param.grad.data.clamp_(-1, 1) # Gradient clipping
         self.optimizer.step()
 
         # --- Update Target Network ---
         self.update_counter += 1
         if self.update_counter % self.target_update_frequency == 0:
-            self.target_net.load_state_dict(self.policy_net.state_dict())
+            self.target_net.load_state_dict(self.policy.state_dict())
+
+
 
     def _preprocess_to_tensor(self, grid, size=30):
         # This is your existing preprocessing function
@@ -168,3 +169,10 @@ class DQN_Solver:
         """
         # Here it is using the memory module you created!
         self.memory.push((state, action, reward, next_state))
+    def load(self):
+        self.policy.load_state_dict(torch.load(f'{self.__class__.__name__}.pth'))
+    def save(self):
+        torch.save(self.policy.state_dict(), f'{self.__class__.__name__}.pth')    
+
+
+
