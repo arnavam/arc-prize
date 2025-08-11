@@ -57,6 +57,7 @@ class ReplayMemory:
 class DQN_Solver:
     def __init__(self, ACTIONS, feature_extractor, device='cpu',gamma=0.99, lr=1e-4, batch_size=128, memory_size=10000, target_update=10):
         self.device = torch.device(device if  getattr(torch, device).is_available() else "cpu")
+        print('device',device)
         self.gamma = gamma
         self.batch_size = batch_size
         self.actions=ACTIONS
@@ -129,7 +130,7 @@ class DQN_Solver:
         # --- Calculate Loss ---
         # Using Smooth L1 Loss is common in DQN for stability
         loss = F.smooth_l1_loss(current_q_values, target_q_values.unsqueeze(1))
-        print(loss)
+        # print(loss)
         # --- Optimize ---
         self.optimizer.zero_grad()
         loss.backward()

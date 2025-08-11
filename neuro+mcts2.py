@@ -1,6 +1,6 @@
 import os
 os.environ['PYTORCH_MPS_HIGH_WATERMARK_RATIO'] = '0.0'
-
+import time
 import numpy as np
 import torch
 if torch.mps.is_available(): torch.mps.empty_cache() 
@@ -303,7 +303,7 @@ def matrix_similarity(a, b, direction=None):
 
 
 
-def arrange_objects_mcts(input_grid, output_grid,save=False,load=False, iterations=500):
+def arrange_objects_mcts(input_grid, output_grid,device='cpu',save=False,load=False, iterations=500):
     # Initialize
     objects = find_objects(input_grid)
     output_grid=np.array(output_grid)
@@ -328,8 +328,8 @@ def arrange_objects_mcts(input_grid, output_grid,save=False,load=False, iteratio
     spacial_feature_extractor = FeatureExtractor(input_channels=1)
 
     # Initialize each agent with its own, un-shared model
-    neuro = neural(PRIMITIVE, neuro_feature_extractor)
-    spacial = neural(ACTIONS, spacial_feature_extractor)
+    neuro = neural(PRIMITIVE, neuro_feature_extractor,device=device)
+    spacial = neural(ACTIONS, spacial_feature_extractor,device=device)
     if load:
      neuro.load()
      spacial.load()
@@ -351,7 +351,7 @@ def arrange_objects_mcts(input_grid, output_grid,save=False,load=False, iteratio
         while node.children:
             count +=1
             node = max(node.children, key=lambda n: n.ucb_score())
-        print(count)
+        print('count', count )
         
         # Expansion
         if not node.is_terminal():
@@ -431,9 +431,9 @@ if __name__ == '__main__':
         ids.append(case_id) 
     count=0
     for case_id in train:
-        count +=1
-        if count ==2 :
-            break
+        # count +=1
+        # if count ==2 :
+        #     break
         for i in range(2):
 
             for j in ('input','output'):
@@ -449,19 +449,21 @@ if __name__ == '__main__':
 
 
         # Solve the puzzle using the new method
-        solved_grid ,_= arrange_objects_mcts(a, b,save=True,load=True,iterations=1000)
+        start_time = time.time()
+        solved_grid ,_= arrange_objects_mcts(a, b,device='cuda',save=True,load=True,iterations=10000)
         solved_grid = convert_np_to_native(solved_grid)
+        print(time.time()-start_time)
 
         print('original',b)
         print('predicted',solved_grid)
 
-        print('original')
-        sns.heatmap(b,cmap=cmap)
-        plt.show()
+        # print('original')
+        # sns.heatmap(b,cmap=cmap)
+        # plt.show()
 
-        print('predicted')
-        sns.heatmap(solved_grid,cmap=cmap)
-        plt.show()
+        # print('predicted')
+        # sns.heatmap(solved_grid,cmap=cmap)
+        # plt.show()
 
         # plt.plot(REWARDS)
 
