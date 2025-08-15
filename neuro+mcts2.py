@@ -6,14 +6,22 @@ import torch
 if torch.mps.is_available(): torch.mps.empty_cache() 
 elif torch.cuda.is_available(): torch.cuda.empty_cache()
 
+import logging
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,  # Set the minimum log level to DEBUG
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename='app.log',  # Log output to a file named app.log
+    filemode='w'  # Overwrite the log file each time the program runs
+)
+
+
 
 import json
 import math
-import seaborn as sns
 import random
 
 from matplotlib  import colors 
-from matplotlib import pyplot as plt
 from dsl2 import convert_np_to_native
 from dsl import find_objects , PRIMITIVE
 from env import placement
@@ -279,17 +287,26 @@ def pad_matrix(a, target_shape, direction):
 
 def matrix_similarity(a, b, direction=None):
     if a.shape == b.shape:
-        # print(a.shape,b.shape)
         padded_a = a
+
     else:
         # Make sure a is smaller or equal in shape
         if a.shape[0] > b.shape[0] or a.shape[1] > b.shape[1]:
-            raise ValueError("Matrix 'a' must be smaller than or equal to 'b' in shape.")
-        
-        padded_a = pad_matrix(a, b.shape, direction)
+            # Cut down `b` to the shape of `a`
+            min_rows = min(a.shape[0], b.shape[0])
+            min_cols = min(a.shape[1], b.shape[1])
+
+            a = a[:min_rows, :min_cols]
+            b = b[:min_rows, :min_cols]
+            padded_a = a
+        else:
+            padded_a = pad_matrix(a, b.shape, direction)
 
     # Ensure shapes now match
     if padded_a.shape != b.shape:
+        print(a)
+        print(b)
+
         raise ValueError("Shapes do not match after padding.")
 
     # Pixel-by-pixel comparison
@@ -430,6 +447,7 @@ if __name__ == '__main__':
     for case_id in train:
         ids.append(case_id) 
     count=0
+    win=0
     for case_id in train:
         # count +=1
         # if count ==2 :
@@ -450,12 +468,13 @@ if __name__ == '__main__':
 
         # Solve the puzzle using the new method
         start_time = time.time()
-        solved_grid ,_= arrange_objects_mcts(a, b,device='cuda',save=True,load=True,iterations=10000)
+        solved_grid ,_= arrange_objects_mcts(a, b,device='cuda',save=True,load=True,iterations=10)
         solved_grid = convert_np_to_native(solved_grid)
         print(time.time()-start_time)
+        logging.debug("Elapsed time: %f seconds", time.time() - start_time)
+        logging.debug(f'original,{b}')
+        logging.debug(f'predicted,{solved_grid}')
 
-        print('original',b)
-        print('predicted',solved_grid)
 
         # print('original')
         # sns.heatmap(b,cmap=cmap)
@@ -472,7 +491,9 @@ if __name__ == '__main__':
             # Verify if the solution is correct
         is_correct = np.array_equal(solved_grid, b)
         if is_correct:
-            print(f"\nSolution is correct: {is_correct}")   
+            print(f"\nSolution is correct: {is_correct}")
+            win +=1
+            logging.debug(f'win,{win}')
 
 
 
