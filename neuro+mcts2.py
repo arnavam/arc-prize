@@ -5,8 +5,10 @@ import numpy as np
 import torch
 if torch.mps.is_available(): torch.mps.empty_cache() 
 elif torch.cuda.is_available(): torch.cuda.empty_cache()
-
+import seaborn as sns
+import matplotlib.pyplot as plt
 import logging
+
 # Configure logging
 logging.basicConfig(
     level=logging.DEBUG,  # Set the minimum log level to DEBUG
@@ -106,7 +108,7 @@ class MCTSNode:
             th, tw = obj_grid.shape
             for _ in range(num_random_placements):
                 # Check if any valid placement is possible
-                    while self.output_grid.shape[0] - th < 0 or self.output_grid.shape[1] - tw < 0:
+                    if self.output_grid.shape[0] - th < 0 or self.output_grid.shape[1] - tw < 0:
                         continue
                 # Generate a random valid position
                     r = random.randrange(self.output_grid.shape[0] - th + 1)
@@ -434,6 +436,34 @@ def solve(input_grid, background, max_size=30,):
 
 
 
+def display(a, b, solved_grid):
+    cmap = 'coolwarm'  # Example colormap
+
+            # Create a 1x3 grid of subplots
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+            # Plot each heatmap on a separate subplot
+    sns.heatmap(a, cmap=cmap, ax=axes[0], cbar=False)
+    axes[0].set_title('Input')
+
+    sns.heatmap(b, cmap=cmap, ax=axes[1], cbar=False)
+    axes[1].set_title('Original')
+
+    sns.heatmap(solved_grid, cmap=cmap, ax=axes[2], cbar=False)
+    axes[2].set_title('Predicted')
+
+    timestamp = time.strftime("%Y%m%d-%H%M%S")
+    filename = f"heatmap_{timestamp}.png"
+
+    # Save the figure
+    plt.savefig(f'fig/{filename}')
+
+    # Optionally, print the filename to confirm
+    print(f"Figure saved as {filename}")
+
+    # Close the figure to free up memory
+    plt.close()
+
 if __name__ == '__main__':
     cmap = colors.ListedColormap(
         ['#000000', '#0074D9', '#FF4136', '#2ECC40', '#FFDC00',
@@ -449,7 +479,7 @@ if __name__ == '__main__':
     count=0
     win=0
     for case_id in train:
-        # count +=1
+        count +=1
         # if count ==2 :
         #     break
         for i in range(2):
@@ -457,42 +487,28 @@ if __name__ == '__main__':
             for j in ('input','output'):
                 a=train[case_id]['train'][i]['input']
                 b=train[case_id]['train'][i]['output']
-        print('input')
-        # sns.heatmap(a,cmap=cmap)
-        # plt.show()
 
-        # a=np.array(a)
-        # b=np.array(b)
 
 
 
         # Solve the puzzle using the new method
         start_time = time.time()
-        solved_grid ,_= arrange_objects_mcts(a, b,device='cuda',save=True,load=True,iterations=10)
+        solved_grid ,_= arrange_objects_mcts(a, b,device='cuda',save=True,load=False,iterations=10)
         solved_grid = convert_np_to_native(solved_grid)
         print(time.time()-start_time)
+        logging.debug(f"count: {count}")
         logging.debug("Elapsed time: %f seconds", time.time() - start_time)
         logging.debug(f'original,{b}')
         logging.debug(f'predicted,{solved_grid}')
-
-
-        # print('original')
-        # sns.heatmap(b,cmap=cmap)
-        # plt.show()
-
-        # print('predicted')
-        # sns.heatmap(solved_grid,cmap=cmap)
-        # plt.show()
-
-        # plt.plot(REWARDS)
-
-
 
             # Verify if the solution is correct
         is_correct = np.array_equal(solved_grid, b)
         if is_correct:
             print(f"\nSolution is correct: {is_correct}")
             win +=1
+            display(a, b, solved_grid)
+
+
             logging.debug(f'win,{win}')
 
 
