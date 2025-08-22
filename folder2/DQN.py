@@ -13,26 +13,27 @@ import functools ,collections,time
 
 
 class QNetwork(nn.Module):
-    def __init__(self, feature_extractor, num_actions):
+    def __init__(self, feature_extractor, num_actions,n):
         super().__init__()
         self.feature_extractor = feature_extractor
         
-        combined_feature_size = 32 * 2  # Based on your previous feature extractor
+        combined_feature_size = 32 * n  # Based on your previous feature extractor
         
         # A single head that outputs one Q-value per action
         self.q_head = nn.Linear(combined_feature_size, num_actions)
 
-    def forward(self, inputs):
-        current_grid_tensor, target_grid_tensor = inputs
-        current_feat = self.feature_extractor(current_grid_tensor)
-        target_feat = self.feature_extractor(target_grid_tensor)
-        
-        combined = torch.cat([current_feat, target_feat], dim=-1)
+    def forward(self, input_tensors):
+
+        features = [self.feature_extractor(tensor) for tensor in input_tensors]
+        # features = [tensor for tensor in input_tensors]
+
+        combined = torch.cat(features, dim=-1)
         
         # Output raw Q-values for each action
         q_values = self.q_head(combined)
         
         return q_values
+
 
 import random
 from collections import deque
@@ -55,21 +56,22 @@ class ReplayMemory:
 
 
 class DQN_Solver:
-    def __init__(self, ACTIONS, feature_extractor, device='cpu',gamma=0.99, lr=1e-4, batch_size=128, memory_size=10000, target_update=10):
+    def __init__(self,feature_extractor  ,num_actions,n, device='cpu',gamma=0.99, lr=1e-4, batch_size=128, memory_size=10000, target_update=10):
         self.device = torch.device(device if  getattr(torch, device).is_available() else "cpu")
         print('device',device)
         self.gamma = gamma
         self.batch_size = batch_size
-        self.actions=ACTIONS
-        self.action_names = list(ACTIONS.keys())
-        self.num_actions = len(self.action_names)
+        # self.actions=ACTIONS
+        # self.action_names = list(ACTIONS.keys())
+        self.num_actions = num_actions #len(self.action_names)
         
         # Main network (gets updated frequently)
-        self.policy = QNetwork(feature_extractor, self.num_actions).to(self.device)
+        self.policy = QNetwork(feature_extractor, self.num_actions,n).to(self.device)
+
         # Target network (provides stable targets, updated less often)
-        self.target_net = QNetwork(feature_extractor, self.num_actions).to(self.device)
+        self.target_net = QNetwork(feature_extractor, self.num_actions,n).to(self.device)
         self.target_net.load_state_dict(self.policy.state_dict())
-        self.target_net.eval() # Target network is only for inference
+        self.target_net.eval() # Target network is only for inference ?
 
         self.optimizer = optim.Adam(self.policy.parameters(), lr=lr)
         self.memory = ReplayMemory(memory_size)
@@ -84,17 +86,29 @@ class DQN_Solver:
         else:
             # Exploitation: choose the best action from the policy network
             with torch.no_grad():
-                current, target = state
-                current_tensor = self._preprocess_to_tensor(current)
-                target_tensor = self._preprocess_to_tensor(target)
-
+                state=[self._preprocess_to_tensor(i) for i in state]
                 
                 # Get Q-values and find the action with the highest value
-                q_values = self.policy([current_tensor, target_tensor])
+                q_values = self.policy(state)
                 action_idx= torch.argmax(q_values).item()
  
                 return  action_idx
-
+    def select_action_probs(self, state, epsilon=0.4):
+        """Epsilon-greedy action selection"""
+        if random.random() < epsilon:
+            # Exploration: choose a random action
+            return random.randrange(self.num_actions)
+        else:
+            # Exploitation: choose the best action from the policy network
+            with torch.no_grad():
+                state=[self._preprocess_to_tensor(i) for i in state]
+                
+                # Get Q-values and find the action with the highest value
+                q_values = self.policy(state)
+                # action_idx= torch.argmax(q_values).item()
+ 
+                return  q_values
+            
     def update_policy(self):
 
         """Train the model using a batch from the replay memory"""
@@ -146,9 +160,7 @@ class DQN_Solver:
 
 
     def _preprocess_to_tensor(self, grid, size=30):
-        # This is your existing preprocessing function
-        
-        # ✅ FIX: Ensure the grid is at least 2D
+        # Ensure the grid is at least 2D
         grid = np.atleast_2d(grid) 
         
         h, w = grid.shape # This line will now work correctly

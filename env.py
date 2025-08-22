@@ -1,26 +1,39 @@
 import numpy as np
 
+def matrix_similarity(a, b, direction=None):
+    if a.shape == b.shape:
+        padded_a = a
+
+    else:
+        # Make sure a is smaller or equal in shape
+        if a.shape[0] > b.shape[0] or a.shape[1] > b.shape[1]:
+            # Cut down `b` to the shape of `a`
+            min_rows = min(a.shape[0], b.shape[0])
+            min_cols = min(a.shape[1], b.shape[1])
+
+            a = a[:min_rows, :min_cols]
+            b = b[:min_rows, :min_cols]
+            padded_a = a
+        else:
+            padded_a = pad_matrix(a, b.shape, direction)
+
+    # Ensure shapes now match
+    if padded_a.shape != b.shape:
+        print(a)
+        print(b)
+
+        raise ValueError("Shapes do not match after padding.")
+
+    # Pixel-by-pixel comparison
+    matches = np.sum(padded_a == b)
+    total = b.size
+    score = matches / total  # percentage match
+
+    return score  # Returns between 0.0 and 1.0
+
 
 def placement(output_grid, old_obj_info, new_obj_info, background=0):
-    """
-    Attempts to move/transform an object on the grid safely:
-    - Checks if the new placement overlaps existing non-background pixels
-    - Allows truncation at edges (partial placement)
-    - If invalid (overlaps), returns None and does not modify grid
-    - If valid, clears old position and draws new shape, then returns updated new_obj_info
-
-    Parameters:
-        output_grid (ndarray): The grid.
-        old_obj_info (dict): Contains old "grid" and "position".
-        new_obj_info (dict): Contains new "grid" and "position".
-        background: Background value.
-
-    Returns:
-        new_obj_info if successful, None otherwise.
-    """
-
     new_grid = new_obj_info["grid"]
-    # print(new_grid)
     new_r, new_c = new_obj_info["position"]
     new_h, new_w = new_grid.shape
 
@@ -32,14 +45,11 @@ def placement(output_grid, old_obj_info, new_obj_info, background=0):
 
     if max_new_r <= start_r or max_new_c <= start_c:
         # New object is completely out of grid (no overlap)
-        # Placement is trivially valid, but nothing to draw
-        # You might consider returning None or allowing empty placement
-        pass  # allow
-
+        pass  # Allow placement (nothing to draw)
     else:
         # Crop the new object grid according to the overlap with output grid
-        obj_crop_r_start = start_r - new_r  # >=0
-        obj_crop_c_start = start_c - new_c  # >=0
+        obj_crop_r_start = start_r - new_r
+        obj_crop_c_start = start_c - new_c
         obj_crop_r_end = max_new_r - new_r
         obj_crop_c_end = max_new_c - new_c
         new_crop = new_grid[obj_crop_r_start:obj_crop_r_end, obj_crop_c_start:obj_crop_c_end]
@@ -50,11 +60,11 @@ def placement(output_grid, old_obj_info, new_obj_info, background=0):
         # Check overlap: if any pixel in new_crop != background AND grid_region != background, reject
         overlap_mask = (new_crop != background) & (grid_region != background)
         if np.any(overlap_mask):
-            return None  # Cannot place object here due to overlap
+            print('overlap happened')
+            return None  # Reject placement due to overlap
 
     # No overlap detected, proceed to clear old object and draw new one
-
-    # Clear old object (similar to before)
+    # Clear old object
     old_grid = old_obj_info["grid"]
     old_r, old_c = old_obj_info["position"]
     old_h, old_w = old_grid.shape
@@ -76,14 +86,20 @@ def placement(output_grid, old_obj_info, new_obj_info, background=0):
             region_to_clear
         )
 
-    # Draw new object (same as overlap check crop)
+    # Draw new object
     if max_new_r > start_r and max_new_c > start_c:
-        region_to_draw = output_grid[start_r:max_new_r, start_c:max_new_c]
-        output_grid[start_r:max_new_r, start_c:max_new_c] = np.where(
-            new_crop != background,
-            new_crop,
-            region_to_draw
-        )
+        # Recalculate new_crop if necessary (if not already calculated in overlap check)
+        if max_new_r <= start_r or max_new_c <= start_c:
+            # Object was completely out of bounds, nothing to draw
+            pass
+        else:
+            region_to_draw = output_grid[start_r:max_new_r, start_c:max_new_c]
+            output_grid[start_r:max_new_r, start_c:max_new_c] = np.where(
+                new_crop != background,
+                new_crop,
+                region_to_draw
+            )
 
-    # Update position in new_obj_info
     return output_grid
+
+

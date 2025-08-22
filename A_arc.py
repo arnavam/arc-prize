@@ -3,9 +3,41 @@ import json
 from matplotlib import colors
 import matplotlib.pyplot as plt
 import seaborn as sns
+import time
 
 
+cmap = colors.ListedColormap(
+    ['#000000', '#0074D9', '#FF4136', '#2ECC40', '#FFDC00',
+        '#AAAAAA', '#F012BE', '#FF851B', '#7FDBFF', '#870C25'])
+norm = colors.Normalize(vmin=0, vmax=9)
 
+def display(a, b, solved_grid):
+    cmap = 'coolwarm'  # Example colormap
+
+            # Create a 1x3 grid of subplots
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+            # Plot each heatmap on a separate subplot
+    sns.heatmap(a, cmap=cmap, ax=axes[0], cbar=False)
+    axes[0].set_title('Input')
+
+    sns.heatmap(b, cmap=cmap, ax=axes[1], cbar=False)
+    axes[1].set_title('Original')
+
+    sns.heatmap(solved_grid, cmap=cmap, ax=axes[2], cbar=False)
+    axes[2].set_title('Predicted')
+
+    timestamp = time.strftime("%Y%m%d-%H%M%S")
+    filename = f"heatmap_{timestamp}.png"
+
+    # Save the figure
+    plt.savefig(f'fig/{filename}')
+
+    # Optionally, print the filename to confirm
+    print(f"Figure saved as {filename}")
+
+    # Close the figure to free up memory
+    plt.close()
 
 
 train_path='arc-prize-2025/arc-agi_training_challenges.json'
@@ -13,10 +45,16 @@ with open(train_path, 'r') as f:
     train = json.load(f)
 
 
-cmap = colors.ListedColormap(
-    ['#000000', '#0074D9', '#FF4136', '#2ECC40', '#FFDC00',
-        '#AAAAAA', '#F012BE', '#FF851B', '#7FDBFF', '#870C25'])
-norm = colors.Normalize(vmin=0, vmax=9)
+
+def loader(train_path):
+
+    with open(train_path, 'r') as f:
+        train = json.load(f)
+    ids=[]
+    for case_id in train:
+        ids.append(case_id)
+    return train , ids 
+
 ids=[]
 for case_id in train:
     ids.append(case_id)

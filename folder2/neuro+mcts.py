@@ -10,7 +10,7 @@ from matplotlib  import colors
 from matplotlib import pyplot as plt
 from dsl2 import convert_np_to_native
 from dsl import find_objects , PRIMITIVE
-from neurosymbolic_reinforce import NeuralSymbolicSolverRL,FeatureExtractor
+from RL_alg.reinforce import NeuralSymbolicSolverRL,FeatureExtractor
 import torch
 model = FeatureExtractor(input_channels=1)
 

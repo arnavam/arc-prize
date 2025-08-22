@@ -8,7 +8,7 @@ elif torch.cuda.is_available(): torch.cuda.empty_cache()
 import seaborn as sns
 import matplotlib.pyplot as plt
 import logging
-
+from A_arc import  loader , display
 # Configure logging
 logging.basicConfig(
     level=logging.DEBUG,  # Set the minimum log level to DEBUG
@@ -25,46 +25,16 @@ import random
 
 from matplotlib  import colors 
 from dsl2 import convert_np_to_native
-from dsl import find_objects , PRIMITIVE
-from env import placement
-from neurosymbolic_reinforce import NeuralSymbolicSolverRL ,FeatureExtractor
+from dsl import find_objects , PRIMITIVE , ACTIONS
+from env import placement , matrix_similarity
+from RL_alg.reinforce import NeuralSymbolicSolverRL ,FeatureExtractor
 # from neurosymbolic_RL_A2C import NeuralSymbolicSolverRL_A2C as neural
-from nuerosymb_q_learning import DQN_Solver  as neural
+from RL_alg.DQN import DQN_Solver  as neural
 
 import torch.nn as nn
 import torch.nn.functional as F
 REWARDS=[]
 
-def move_up(position):
-    x, y = position
-    return  (x - 1, y)
-
-
-def move_down(position):
-    x, y = position
-
-    return  (x + 1, y)
-
-def move_left(position):
-    x, y = position
-    return  (x, y - 1)
-
-def move_right( position):
-    x, y = position
-
-    return (x, y + 1)
-
-
-def idle (position):
-    return position
-
-ACTIONS = {
-    "move_up": move_up,
-    "move_down": move_down,
-    "move_left": move_left,
-    "move_right": move_right ,
-    'idle':idle
-}
 
 
 
@@ -78,7 +48,7 @@ ACTIONS = {
 # MCTS Node for arrangement search
 class MCTSNode:
     def __init__(self, objects, output_grid, background, parent=None):
-        self.objects = objects  # Unplaced objects
+        self.objects = objects  
         self.arrangement = {}  # {object_id: {"position": (r,c), "grid": np.array, "transformed": False}}
         self.output_grid = output_grid
         self.background = background
@@ -287,41 +257,6 @@ def pad_matrix(a, target_shape, direction):
     return np.pad(a, padding, mode='constant', constant_values=0)
 
 
-def matrix_similarity(a, b, direction=None):
-    if a.shape == b.shape:
-        padded_a = a
-
-    else:
-        # Make sure a is smaller or equal in shape
-        if a.shape[0] > b.shape[0] or a.shape[1] > b.shape[1]:
-            # Cut down `b` to the shape of `a`
-            min_rows = min(a.shape[0], b.shape[0])
-            min_cols = min(a.shape[1], b.shape[1])
-
-            a = a[:min_rows, :min_cols]
-            b = b[:min_rows, :min_cols]
-            padded_a = a
-        else:
-            padded_a = pad_matrix(a, b.shape, direction)
-
-    # Ensure shapes now match
-    if padded_a.shape != b.shape:
-        print(a)
-        print(b)
-
-        raise ValueError("Shapes do not match after padding.")
-
-    # Pixel-by-pixel comparison
-    matches = np.sum(padded_a == b)
-    total = b.size
-    score = matches / total  # percentage match
-
-    return score  # Returns between 0.0 and 1.0
-
-
-
-
-
 def arrange_objects_mcts(input_grid, output_grid,device='cpu',save=False,load=False, iterations=500):
     # Initialize
     objects = find_objects(input_grid)
@@ -464,42 +399,38 @@ def display(a, b, solved_grid):
     # Close the figure to free up memory
     plt.close()
 
-if __name__ == '__main__':
-    cmap = colors.ListedColormap(
-        ['#000000', '#0074D9', '#FF4136', '#2ECC40', '#FFDC00',
-            '#AAAAAA', '#F012BE', '#FF851B', '#7FDBFF', '#870C25'])
-    norm = colors.Normalize(vmin=0, vmax=9)
-    ids=[]
-    train_path='arc-prize-2025/arc-agi_training_challenges.json'
-    with open(train_path, 'r') as f:
-        train = json.load(f)
 
-    for case_id in train:
-        ids.append(case_id) 
+
+if __name__ == '__main__':
+    train_path='arc-prize-2025/arc-agi_training_challenges.json'
+
+    train , ids = loader(train_path) 
     count=0
     win=0
     for case_id in train:
         count +=1
-        # if count ==2 :
-        #     break
+        if count ==2 :
+            break
         for i in range(2):
 
             for j in ('input','output'):
                 a=train[case_id]['train'][i]['input']
                 b=train[case_id]['train'][i]['output']
 
-
+        
 
 
         # Solve the puzzle using the new method
         start_time = time.time()
-        solved_grid ,_= arrange_objects_mcts(a, b,device='cuda',save=True,load=False,iterations=10)
+        solved_grid ,_= arrange_objects_mcts(a, b,device='cuda',save=True,load=True,iterations=10)
         solved_grid = convert_np_to_native(solved_grid)
         print(time.time()-start_time)
         logging.debug(f"count: {count}")
         logging.debug("Elapsed time: %f seconds", time.time() - start_time)
         logging.debug(f'original,{b}')
         logging.debug(f'predicted,{solved_grid}')
+        
+        display(a, b, solved_grid)
 
             # Verify if the solution is correct
         is_correct = np.array_equal(solved_grid, b)
