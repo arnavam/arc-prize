@@ -5,12 +5,13 @@ import torch.optim as optim
 import torch.nn.functional as F
 from torch.distributions import Categorical
 from RL_alg.BaseDQN import BaseDQN
-import random
+import random  
 class QNetwork(nn.Module):
     """
     The specific Q-Network architecture. This can be swapped out with other
     architectures without changing the core DQN logic.
     """
+
     def __init__(self, feature_extractor, num_actions, n=2):
         super().__init__()
         self.feature_extractor = feature_extractor

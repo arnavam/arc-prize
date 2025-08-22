@@ -25,25 +25,16 @@ import random
 
 from matplotlib  import colors 
 from dsl2 import convert_np_to_native
-from dsl import find_objects , PRIMITIVE , ACTIONS
+from dsl import find_objects , PRIMITIVE , ACTIONS , extract_target_region
 from env import placement , matrix_similarity
 from RL_alg.reinforce import NeuralSymbolicSolverRL ,FeatureExtractor
 # from neurosymbolic_RL_A2C import NeuralSymbolicSolverRL_A2C as neural
-from RL_alg.DQN import DQN_Solver  as neural
+from RL_alg.BaseDQN import BaseDQN  as neural
 
 import torch.nn as nn
 import torch.nn.functional as F
 REWARDS=[]
 
-
-
-
-
-
-
-
-
-    
     
 # MCTS Node for arrangement search
 class MCTSNode:
@@ -221,45 +212,12 @@ class MCTSNode:
             node.total_score += score
             node = node.parent
 
-def extract_target_region(target_grid, obj_info):
-    r, c = obj_info['position']
-    obj_h, obj_w = obj_info['grid'].shape
-    
-    # Handle edge cases where object extends beyond target grid
-    pad_h = max(0, r + obj_h - target_grid.shape[0])
-    pad_w = max(0, c + obj_w - target_grid.shape[1])
-    
-    if pad_h > 0 or pad_w > 0:
-        padded_target = np.pad(target_grid, 
-                              ((0, pad_h), (0, pad_w)),
-                              mode='constant',
-                              constant_values=0)#use background
-        return padded_target[r:r+obj_h, c:c+obj_w]
-    return target_grid[r:r+obj_h, c:c+obj_w]
-
-
-def pad_matrix(a, target_shape, direction):
-    pad_height = target_shape[0] - a.shape[0]
-    pad_width = target_shape[1] - a.shape[1]
-
-    # Default padding: [top, bottom], [left, right]
-    if direction == 'top':
-        padding = ((pad_height, 0), (0, 0))
-    elif direction == 'bottom':
-        padding = ((0, pad_height), (0, 0))
-    elif direction == 'left':
-        padding = ((0, 0), (pad_width, 0))
-    elif direction == 'right':
-        padding = ((0, 0), (0, pad_width))
-    else:
-        raise ValueError("Direction must be one of: 'top', 'bottom', 'left', 'right'")
-
-    return np.pad(a, padding, mode='constant', constant_values=0)
 
 
 def arrange_objects_mcts(input_grid, output_grid,device='cpu',save=False,load=False, iterations=500):
     # Initialize
     objects = find_objects(input_grid)
+
     output_grid=np.array(output_grid)
     input_grid=np.array(input_grid)
 

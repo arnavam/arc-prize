@@ -2,11 +2,11 @@ from RL_alg.BaseDQN import BaseDQN
 import numpy as np
 import time 
 import os
-from dsl import find_objects , COMB ,ACTIONS,PRIMITIVE
+from dsl import find_objects ,extract_target_region, COMB ,ACTIONS,PRIMITIVE
 from A_arc import  loader , display
 from RL_alg.reinforce import FeatureExtractor
 from RL_alg.DQNAction_Classifier import DQN_Solver_MultiHead
-from RL_alg.DQNLikelihood import Likelihood
+from RL_alg.ReinLikelihood import Likelihood
 
 from env import  placement
 from env import matrix_similarity
@@ -20,17 +20,18 @@ logging.basicConfig(
 )
 
 # Initialized parameters
+#----------------------------------
 action_names = list(COMB.keys())
 names1 = list(ACTIONS.keys())
 names2=list(PRIMITIVE.keys())
-
 num_actions = len(action_names)
 
-# Initialized models
 ft = FeatureExtractor(input_channels=1)
 neuro_classifer = DQN_Solver_MultiHead(ft, num_actions,3)
 Likeliehood = Likelihood(ft, 1,3)
 
+# Initialized Clas
+#--------------------------------------
 class GaussianMultiArmBandit:
     def __init__(self, num_arms):
         self.num_arms = num_arms
@@ -59,63 +60,77 @@ class GaussianMultiArmBandit:
         self.sum_r[arm] += reward
         self.sum_sq[arm] += reward**2
 
-def find_solution(current_grid, Placer, target_grid,objects):
-    prob = 0
-    obj_info = objects[0]
-    for obj in objects:
-        # Likeliehood predicts the relevance of an object
-        prob1 = Likeliehood.select_action([current_grid, obj['grid'], target_grid])
-        # print('prob',prob1)
-        if prob < prob1:
-            prob = prob1
-            obj_info = obj
 
+#Initialized functions
+#---------------------------------------------------------------------
 
-    # neuro_classifer predicts the best action for the chosen object
+def find_solution(current_grid, Placer_, target_grid,objects):
+
+ 
+    idx,prob1 = Likeliehood.select_action([current_grid, objects, target_grid])
+    obj_info  = objects[idx]
+
     action_idx ,pos_values= neuro_classifer.select_action([current_grid,  obj_info['grid'], obj_info['position'],target_grid])
-    # Apply the action using Placer
+
     pos_values = [int(pos_values[0] * target_grid.shape[1]), int(pos_values[1] * target_grid.shape[0])]
     print('target_shape',target_grid.shape)
     print('new pos_values',pos_values)
     func= action_names[action_idx]
-
+    is_place_action = False
     if func == 'idle' or obj_info['placed'] == False:
-        # print('placed')
+
         new_obj_info =obj_info.copy()
         obj_info['placed']=True
+        is_place_action = True
         new_obj_info['position'] = pos_values
-        
+
         objects.append(new_obj_info)
         obj_info = new_obj_info
-        new_grid =placement(current_grid, obj_info, new_obj_info, background=0)
-        print('old output_grid',current_grid)
-        print('obj_info',obj_info['grid'])
-        print('pos',obj_info['position'])
-        print('new output_grid',new_grid)
+    
     elif func in names2:
         
         new_obj_info =obj_info.copy()
         new_obj_info['grid']=COMB[func](obj_info['grid'])
-        new_grid =placement(current_grid, obj_info, new_obj_info, background=0)
 
     elif func in names1:
         new_obj_info = obj_info.copy()
-        new_obj_info['position']=COMB[func](obj_info['position'])   
-        new_grid =placement(current_grid, obj_info, new_obj_info, background=0)
+        new_obj_info['position']=COMB[func](obj_info['position']) 
+
+    new_grid =placement(current_grid, obj_info, new_obj_info, background=0)
+
     if new_grid is None:
         new_grid = current_grid
-    return new_grid
 
-def Gaussian_multi_armbandit(examples, max_iterations=1000, max_steps_per_episode=10):
-    """
-    Gaussian multi-armed bandit for selecting training examples.
-    Args:
-        examples: List of training examples, each with 'input' and 'output' grids.
-        max_iterations: Maximum number of bandit iterations.
-        max_steps_per_episode: Maximum steps to try for each example.
-    Returns:
-        solution: The solution that works for all examples, or None if not found.
-    """
+    reward = matrix_similarity(new_obj_info['grid'],extract_target_region(target_grid,new_obj_info))
+
+    h, w = target_grid.shape[:2]
+    norm_pos = (
+        new_obj_info['position'][0] / w,
+        new_obj_info['position'][1] / h
+    )
+    print(new_obj_info['position'])
+
+    neuro_classifer.store_experience(
+        state=(current_grid, obj_info['grid'], obj_info['position']),
+        action=action_idx,
+        reward=reward,
+        next_state=(new_grid, new_obj_info['grid'], new_obj_info['position']),
+        true_position=norm_pos,
+        is_place_action=is_place_action
+    )
+
+
+    # Update policy periodically
+    neuro_classifer.update_policy()
+
+    reward= matrix_similarity(new_grid,target_grid)
+    Likeliehood.store_experience(prob1,reward)
+
+    return new_grid ,reward
+
+def Gaussian_multi_armbandit(examples, max_iterations=1000, max_steps_per_episode=4):
+
+
     shape=len(examples[0]['output'])
     Placer = None#DQN_Solver(ft,shape,3)
     num_examples = len(examples)
@@ -140,21 +155,33 @@ def Gaussian_multi_armbandit(examples, max_iterations=1000, max_steps_per_episod
             obj_list[idx]=objects
             current_grid = np.zeros_like(target_grid)
             example['current_grid'] = current_grid 
-        
+
         objects=obj_list[idx]
         current_grid=example['current_grid']
         print('current_grid',current_grid,type(current_grid))
 
-
+        new_grid = current_grid
+        old_reward=0
+        sim_score=0
         for step in range(max_steps_per_episode):
-            new_grid = find_solution(current_grid, Placer, target_grid,objects)
+            new_grid ,new_reward= find_solution(new_grid, Placer, target_grid,objects)
+            
+            sim_score += new_reward-old_reward
+            old_reward=new_reward
+                    
+
             if np.array_equal(new_grid, target_grid):
+                #remove the current example from the iterations
+                #add solved +=1 
+                #if no more to remove say we solved everyone and use maybe testing example to test the solution
                 break
-            current_grid = new_grid
 
         example['current_grid']= current_grid
-        similarity = matrix_similarity(new_grid, target_grid)
-        bandit.update_arm(idx, similarity)
+
+        print(sim_score)
+        neuro_classifer.update_policy()
+        Likeliehood.update_policy()
+        bandit.update_arm(idx, sim_score)
         
         # Check every 10 iterations if the current solution works for all examples
     #     if iteration % 10 == 0:

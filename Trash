@@ -357,3 +357,8 @@ def placement(output_grid, old_obj_info, new_obj_info, background=0):
 
     # Update position in new_obj_info
     return output_grid
+
+print('old output_grid',current_grid)
+print('obj_info',obj_info['grid'])
+print('pos',obj_info['position'])
+print('new output_grid',new_grid)

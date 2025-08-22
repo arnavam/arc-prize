@@ -22,7 +22,7 @@ class QNetwork(nn.Module):
         
         # The size of the feature vector after being processed by the feature_extractor
         # Assuming the feature_extractor outputs a tensor of size 32.
-        combined_feature_size = 32 * n + 2
+        combined_feature_size = 32 * n 
         
         # Network layers
         self.layer1 = nn.Linear(combined_feature_size, 64)
@@ -42,12 +42,10 @@ class QNetwork(nn.Module):
         # Apply the feature extractor to each input tensor
         # The 'x' parameter seems intended to skip feature extraction for a specific tensor,
 
-        features = [
-            tensor if i == x else self.feature_extractor(tensor)
-            for i, tensor in enumerate(input_tensors)
-        ]
-        # for i in features:
-        #     print('features shape',i.shape)
+        features = [self.feature_extractor(tensor) for i, tensor in enumerate(input_tensors) if i != x]
+        for i in features:
+            print('features shape',i.shape)
+        
         # Concatenate the features from all inputs
         combined = torch.cat(features, dim=-1)
         
@@ -90,12 +88,24 @@ class DQN_Solver_MultiHead(BaseDQN):
         )
 
     def store_experience(self, state, action, reward, next_state, true_position, is_place_action):
-        """
-        Saves an experience tuple including the ground truth position and a flag
-        indicating if the position is relevant for this action.
-        """
-        self.memory.push((state, action, reward, next_state, true_position, is_place_action))
+        """Store experience with tensor conversion."""
+        # Convert to tensors before storing (target grid is not stored)
+        state_tensors = [ self._preprocess_to_tensor(i) for i in  state]
+        
+        next_state_tensors = [self._preprocess_to_tensor(i)  for i in state]
+        
+        action_tensor = torch.tensor(action, dtype=torch.long)
+        reward_tensor = torch.tensor(reward, dtype=torch.float32)
+        true_pos_tensor = torch.tensor(true_position, dtype=torch.float32)
+        is_place_tensor = torch.tensor(is_place_action, dtype=torch.bool)
+        print(true_pos_tensor.shape)
+        self.memory.push((state_tensors, action_tensor, reward_tensor, 
+                        next_state_tensors, true_pos_tensor, is_place_tensor))
+
+
     def select_action(self, state, epsilon=0.4):
+        self.target_grid_tensor = self._preprocess_to_tensor(state[3])
+        self.target_grid_shape = state[3].shape
         """Epsilon-greedy action selection."""
         if random.random() < epsilon:
             # Exploration: choose a random action
@@ -119,72 +129,66 @@ class DQN_Solver_MultiHead(BaseDQN):
                 print('action_idx,pos_values:',action_idx,pos_values)
                 return action_idx , pos_values
 
-            
     def update_policy(self):
-        """
-        Custom update logic for the multi-head network. It calculates a combined
-        loss from both the Q-learning objective and the position prediction,
-        using a mask to only apply the position loss on relevant actions.
-        """
+        """Optimized policy update with pre-tensorized experiences."""
         if len(self.memory) < self.batch_size:
             return
 
+        # Sample already tensorized experiences
         experiences = self.memory.sample(self.batch_size)
-        # Unpack 6 items, including the is_place_action flag
-        batch = list(zip(*experiences))
-        states, actions, rewards, next_states, true_positions, is_place_flags = batch
+        states, actions, rewards, next_states, true_positions, is_place_flags = zip(*experiences)
         
-        # Prepare Tensors
-        current_grids = torch.cat([self._preprocess_to_tensor(s[0]) for s in states])
-        target_grids = torch.cat([self._preprocess_to_tensor(s[1]) for s in states])
-        next_current_grids = torch.cat([self._preprocess_to_tensor(ns[0]) for ns in next_states])
-        next_target_grids = torch.cat([self._preprocess_to_tensor(ns[1]) for ns in next_states])
+        # ... (sampling from memory) ...
         
-        actions_tensor = torch.tensor(actions, dtype=torch.long, device=self.device).unsqueeze(1)
-        rewards_tensor = torch.tensor(rewards, dtype=torch.float32, device=self.device)
-        true_pos_tensor = torch.tensor(true_positions, dtype=torch.float32, device=self.device)
-        # Create the loss mask from the flags
-        loss_mask = torch.tensor(is_place_flags, dtype=torch.float32, device=self.device)
+        # --- FIX #1: Use torch.cat for states ---
+        # This correctly creates a 4D batch: [128, 1, H, W]
+        current_grids = torch.cat([s[0] for s in states], dim=0)
+        obj_grids = torch.cat([s[1] for s in states], dim=0)
+        obj_positions = torch.cat([s[2] for s in states], dim=0) # Also fix this one
 
+        next_current_grids = torch.cat([s[0] for s in next_states], dim=0)
+        next_obj_grids = torch.cat([s[1] for s in next_states], dim=0)
+        next_obj_positions = torch.cat([s[2] for s in next_states], dim=0)
 
-        # --- Calculate Predicted Values from Policy Network ---
-        pred_q_values_all, pred_pos_values = self.policy_net([current_grids, target_grids])
-        pred_q_values = pred_q_values_all.gather(1, actions_tensor)
+        # --- FIX #2: Correctly repeat the target_grid_tensor ---
+        # Remove the extra .unsqueeze(0) to create a proper 4D batch.
+        target_grids = self.target_grid_tensor.repeat(self.batch_size, 1, 1, 1)
 
-        # --- Calculate Target Q-Value ---
+        actions_tensor = torch.stack(actions).to(self.device)
+        rewards_tensor = torch.stack(rewards).to(self.device)
+        true_pos_tensor = torch.stack(true_positions).to(self.device)
+        loss_mask = torch.stack(is_place_flags).float().to(self.device)
+        
+        # Get Q-values and position predictions
+        pred_q_values_all, pred_pos_values = self.policy_net([
+            current_grids, obj_grids, obj_positions, target_grids
+        ])
+        pred_q_values = pred_q_values_all.gather(1, actions_tensor.unsqueeze(1))
+
+        # Compute target Q-values
         with torch.no_grad():
-            next_q_values, _ = self.target_net([next_current_grids, next_target_grids])
-            max_next_q = next_q_values.max(1)[0]
-        target_q_values = rewards_tensor + (self.gamma * max_next_q)
+            next_q_values, _ = self.target_net([
+                next_current_grids, next_obj_grids, next_obj_positions, target_grids
+            ])
+            target_q_values = rewards_tensor + (self.gamma * next_q_values.max(1)[0])
 
-        # --- Calculate COMBINED Loss with Masking ---
+        # Calculate losses
         loss_q = F.smooth_l1_loss(pred_q_values, target_q_values.unsqueeze(1))
         
-        # Calculate position loss for the whole batch, but don't reduce it to a single number yet
+        # Position loss with masking
         loss_pos_unmasked = F.mse_loss(pred_pos_values, true_pos_tensor, reduction='none').mean(dim=1)
-        
-        # Apply the mask to zero out irrelevant losses
         masked_loss_pos = loss_pos_unmasked * loss_mask
-        
-        # Calculate the final position loss, only averaging over the relevant samples
-        # Add a small epsilon to avoid division by zero if no 'place' actions are in the batch
         loss_pos = masked_loss_pos.sum() / (loss_mask.sum() + 1e-8)
         
         total_loss = loss_q + loss_pos
 
-        # --- Optimize ---
+        # Optimize
         self.optimizer.zero_grad()
         total_loss.backward()
         torch.nn.utils.clip_grad_value_(self.policy_net.parameters(), 1.0)
         self.optimizer.step()
         
-        # --- Update Target Network ---
+        # Update target network
         self.update_counter += 1
         if self.update_counter % self.target_update_frequency == 0:
             self.target_net.load_state_dict(self.policy_net.state_dict())
-
-    def load(self, path='DQN_Solver_MultiHead.pth'):
-        super().load(path)
-
-    def save(self, path='DQN_Solver_MultiHead.pth'):
-        super().save(path)
