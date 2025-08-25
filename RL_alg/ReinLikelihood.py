@@ -1,6 +1,7 @@
 import numpy as np
 
 import torch
+torch.autograd.set_detect_anomaly(True)
 import torch.nn as nn
 import torch.optim as optim
 import torch.distributions as D
@@ -8,17 +9,24 @@ import torch.nn.functional as F
 from torch.distributions import Categorical
 from RL_alg.BaseDQN import BaseDQN
 import random  
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,  # Set the minimum log level to DEBUG
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename='app.log',  # Log output to predicted_grid file named app.log
+    filemode='w'  # Overwrite the log file each time the program runs
+)
 
 class ObjectPolicy(nn.Module):
 
 
-    def __init__(self, feature_extractor, num_actions, n=3):
+    def __init__(self, feature_extractor, num_actions, no_of_inputs=3):
         super().__init__()
         self.feature_extractor = feature_extractor
         
         # The size of the feature vector after being processed by the feature_extractor
-        # Assuming the feature_extractor outputs a tensor of size 32.
-        combined_feature_size = 32 * n
+        combined_feature_size = 32 * no_of_inputs
         
         # Network layers
         self.layer1 = nn.Linear(combined_feature_size, 64)
@@ -44,20 +52,20 @@ class ObjectPolicy(nn.Module):
 
 # --- REINFORCE Agent ---
 class Likelihood:
-    def __init__(self, feature_extractor, output_dim,n=3, lr=1e-3, device="cpu"):
+    def __init__(self, feature_extractor, output_dim,no_of_inputs=3, lr=1e-3, device="cpu"):
         self.device = torch.device(device if torch.cuda.is_available() else "cpu")
-        self.policy_net = ObjectPolicy(feature_extractor, output_dim, n).to(self.device)
-        self.optimizer = optim.Adam(self.policy_net.parameters(), lr=lr)
+        self.policy = ObjectPolicy(feature_extractor, output_dim, no_of_inputs).to(self.device)
+        self.optimizer = optim.Adam(self.policy.parameters(), lr=lr)
         self.memory = []
         
     def select_action(self, input):
-
-        current_grid, objects, target_grid = input
-        current_grid = self._preprocess_to_tensor(current_grid)
+        predicted_grid, objects, target_grid = input
+        predicted_grid = self._preprocess_to_tensor(predicted_grid)
         target_grid = self._preprocess_to_tensor(target_grid)
+    
         scores=[]
         for obj in objects:
-            score= self.policy_net([current_grid,self._preprocess_to_tensor(obj['grid']),target_grid])
+            score= self.policy([predicted_grid,self._preprocess_to_tensor(obj['grid']),target_grid])
             score = score.squeeze() 
             scores.append(score)
 
@@ -81,16 +89,22 @@ class Likelihood:
         returns, G = [], 0
         for r in reversed(rewards):
             G = r + gamma * G
+
             returns.insert(0, G)
         returns = torch.tensor(returns, dtype=torch.float32).to(self.device)
 
         # normalize
         returns = (returns - returns.mean()) / (returns.std() + 1e-8)
 
+        if returns.isnan().any():
+            logging.debug("Warning: NaN values found in returns. Replacing with 0.")
+            returns = torch.nan_to_num(returns, nan=0.0)
+
         # compute loss
         loss = 0
         for (logp, _), R in zip(self.memory, returns):
             loss += -logp * R
+
 
         # backprop
         self.optimizer.zero_grad()
@@ -102,43 +116,34 @@ class Likelihood:
 
     def _preprocess_to_tensor(self, grid, dtype=torch.float32, size=30):
 
-        if isinstance(grid, torch.Tensor):
+        if isinstance(grid, torch.Tensor):  
+            tensor = grid.to(device=self.device, dtype=dtype)
+        else:
+            array = np.asarray(grid)
 
-            return grid.to(device=self.device, dtype=dtype)
+            # If it's object dtype, try to convert to numeric
+            if array.dtype == np.object_:
+                logging.debug("WARNING: NumPy array has dtype=object. Attempting to convert to numeric dtype...")
 
-        array = np.asarray(grid)
+                try:
+                    # Try float conversion by default
+                    array = array.astype(np.float32 if dtype.is_floating_point else np.int32)
+                except Exception as e:
+                    raise ValueError("ERROR: Failed to convert object array to numeric type.",array,"\nDetails:", e)
 
-        # If it's object dtype, try to convert to numeric
-        if array.dtype == np.object_:
-            print("WARNING: NumPy array has dtype=object. Attempting to convert to numeric dtype...")
-
+            # Convert to tensor
             try:
-                # Try float conversion by default
-                array = array.astype(np.float32 if dtype.is_floating_point else np.int32)
-                print(f"Successfully converted object array to dtype={array.dtype}")
+                tensor = torch.from_numpy(array).to(dtype)
             except Exception as e:
-                print("ERROR: Failed to convert object array to numeric type.",array)
-                print("Details:", e)
-                raise ValueError("Grid contains non-numeric data or inconsistent structure.")
-
-        # Convert to tensor
-        try:
-            tensor = torch.from_numpy(array).to(dtype)
-        except Exception as e:
-            print("ERROR: torch.from_numpy failed.")
-            print("Details:", e)
-            raise ValueError("Failed to convert numpy array to tensor.")
-        tensor = tensor.view(1, -1)
+                raise ValueError("ERROR: torch.from_numpy failed.",array,"Details:", e)
+            
+        if tensor.dim() == 2:
+            tensor = tensor.unsqueeze(0)     # shape becomes (1, 6, 6)
 
         return tensor.to(self.device)
     
 
-    def load(self, path):
-        """Loads the policy_net network's weights."""
-        self.policy_net.load_state_dict(torch.load(path))
-        print(f"Model loaded from {path}")
-
-    def save(self, path):
-        """Saves the policy_net network's weights."""
-        torch.save(self.policy_net.state_dict(), path)
-        print(f"Model saved to {path}")
+    def load(self):
+        self.policy.load_state_dict(torch.load(f'weights/{self.__class__.__name__}.pth'))
+    def save(self):
+        torch.save(self.policy.state_dict(), f'weights/{self.__class__.__name__}.pth')

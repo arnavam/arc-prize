@@ -1,10 +1,20 @@
 import numpy as np
 import torch 
+torch.autograd.set_detect_anomaly(True)
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from torch.distributions import Categorical
 from RL_alg.BaseDQN import BaseDQN
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,  # Set the minimum log level to DEBUG
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename='app.log',  # Log output to predicted_grid file named app.log
+    filemode='w'  # Overwrite the log file each time the program runs
+)
+
 
 import random
 from collections import deque
@@ -16,13 +26,13 @@ class QNetwork(nn.Module):
     The specific Q-Network architecture. This can be swapped out with other
     architectures without changing the core DQN logic.
     """
-    def __init__(self, feature_extractor, num_actions, n=2):
+    def __init__(self, feature_extractor, num_actions, no_of_inputs=2):
         super().__init__()
         self.feature_extractor = feature_extractor
         
         # The size of the feature vector after being processed by the feature_extractor
         # Assuming the feature_extractor outputs a tensor of size 32.
-        combined_feature_size = 32 * n 
+        combined_feature_size = 32 * no_of_inputs 
         
         # Network layers
         self.layer1 = nn.Linear(combined_feature_size, 64)
@@ -39,12 +49,13 @@ class QNetwork(nn.Module):
         Forward pass through the network.
         It processes a list of input tensors, combines them, and outputs Q-values.
         """
-        # Apply the feature extractor to each input tensor
         # The 'x' parameter seems intended to skip feature extraction for a specific tensor,
+        # for i in input_tensors:
+        #     print('features shape',i.shape)
 
         features = [self.feature_extractor(tensor) for i, tensor in enumerate(input_tensors) if i != x]
-        for i in features:
-            print('features shape',i.shape)
+        # for i in features:
+        #     print('features shape',i.shape)
         
         # Concatenate the features from all inputs
         combined = torch.cat(features, dim=-1)
@@ -61,20 +72,20 @@ class QNetwork(nn.Module):
 
 
 
-# --- NEW Child Class for Multi-Head DQN ---
-class DQN_Solver_MultiHead(BaseDQN):
+# ---  Multi-Head DQN ---
+class DQN_Classifier(BaseDQN):
     """
     A specific implementation for a multi-head DQN agent.
     It uses the QNetwork with the position head enabled and overrides the
     update logic to handle a combined loss with masking.
     """
-    def __init__(self, feature_extractor, num_actions, n=2, device='cpu', gamma=0.99, lr=1e-4, batch_size=128, memory_size=10000, target_update=10):
+    def __init__(self, feature_extractor, num_actions, no_of_inputs=2, device='cpu', gamma=0.99, lr=1e-4, batch_size=128, memory_size=1000, target_update=10):
         _device = torch.device(device if getattr(torch, device).is_available() else "cpu")
         print(f'Using device: {_device} for Multi-Head Solver')
 
         # 1. Create a QNetwork with use_pos_head=True
-        policy_net = QNetwork(feature_extractor, num_actions, n, ).to(_device)
-        target_net = QNetwork(feature_extractor, num_actions, n).to(_device)
+        policy_net = QNetwork(feature_extractor, num_actions,no_of_inputs ).to(_device)
+        target_net = QNetwork(feature_extractor, num_actions,no_of_inputs ).to(_device)
         target_net.load_state_dict(policy_net.state_dict())
         target_net.eval()
 
@@ -89,7 +100,7 @@ class DQN_Solver_MultiHead(BaseDQN):
 
     def store_experience(self, state, action, reward, next_state, true_position, is_place_action):
         """Store experience with tensor conversion."""
-        # Convert to tensors before storing (target grid is not stored)
+        # Convert to tensors before storing (target_net grid is not stored)
         state_tensors = [ self._preprocess_to_tensor(i) for i in  state]
         
         next_state_tensors = [self._preprocess_to_tensor(i)  for i in state]
@@ -98,7 +109,6 @@ class DQN_Solver_MultiHead(BaseDQN):
         reward_tensor = torch.tensor(reward, dtype=torch.float32)
         true_pos_tensor = torch.tensor(true_position, dtype=torch.float32)
         is_place_tensor = torch.tensor(is_place_action, dtype=torch.bool)
-        print(true_pos_tensor.shape)
         self.memory.push((state_tensors, action_tensor, reward_tensor, 
                         next_state_tensors, true_pos_tensor, is_place_tensor))
 
@@ -115,10 +125,10 @@ class DQN_Solver_MultiHead(BaseDQN):
 
             values = [random.random(), random.random()]
 
-            print('random values',action_idx,values)
+            logging.debug(f"'random values',{action_idx,values}")
             return action_idx , values
         else:
-            # Exploitation: choose the best action from the policy network
+            # Exploitation: choose the best action from the policy_net network
             with torch.no_grad():
                 # Preprocess state and get Q-values
                 state_tensors = [self._preprocess_to_tensor(s) for s in state]
@@ -126,11 +136,11 @@ class DQN_Solver_MultiHead(BaseDQN):
                 action_idx = torch.argmax(q_values).item()
                 pos_values = pos_values.tolist()[0]
 
-                print('action_idx,pos_values:',action_idx,pos_values)
+                logging.debug(f"'action_idx,pos_values:',{action_idx,pos_values}")
                 return action_idx , pos_values
 
     def update_policy(self):
-        """Optimized policy update with pre-tensorized experiences."""
+        """Optimized policy_net update with pre-tensorized experiences."""
         if len(self.memory) < self.batch_size:
             return
 
@@ -138,13 +148,17 @@ class DQN_Solver_MultiHead(BaseDQN):
         experiences = self.memory.sample(self.batch_size)
         states, actions, rewards, next_states, true_positions, is_place_flags = zip(*experiences)
         
-        # ... (sampling from memory) ...
-        
-        # --- FIX #1: Use torch.cat for states ---
-        # This correctly creates a 4D batch: [128, 1, H, W]
+
         current_grids = torch.cat([s[0] for s in states], dim=0)
-        obj_grids = torch.cat([s[1] for s in states], dim=0)
-        obj_positions = torch.cat([s[2] for s in states], dim=0) # Also fix this one
+
+        try:
+         obj_grids = torch.cat([s[1] for s in states], dim=0)
+        except Exception as e:
+            logging.warning(f"Concatenation failed: {e}")
+            for i, s in enumerate(states):
+                logging.warning(f"Tensor {i}: shape {s[1].shape}")
+
+        obj_positions = torch.cat([s[2] for s in states], dim=0)
 
         next_current_grids = torch.cat([s[0] for s in next_states], dim=0)
         next_obj_grids = torch.cat([s[1] for s in next_states], dim=0)
@@ -159,23 +173,38 @@ class DQN_Solver_MultiHead(BaseDQN):
         true_pos_tensor = torch.stack(true_positions).to(self.device)
         loss_mask = torch.stack(is_place_flags).float().to(self.device)
         
+
         # Get Q-values and position predictions
         pred_q_values_all, pred_pos_values = self.policy_net([
             current_grids, obj_grids, obj_positions, target_grids
         ])
+        if rewards_tensor.isnan().any():
+            ("Warning: NaN values found in rewards_tensor. Replacing with 0.")
+            rewards_tensor = torch.nan_to_num(rewards_tensor, nan=0.0)
+
         pred_q_values = pred_q_values_all.gather(1, actions_tensor.unsqueeze(1))
 
-        # Compute target Q-values
+        # Compute target_net Q-values
         with torch.no_grad():
             next_q_values, _ = self.target_net([
                 next_current_grids, next_obj_grids, next_obj_positions, target_grids
             ])
+
+
+            next_q_values = torch.clamp(next_q_values, min=-1e6, max=1e6)  
             target_q_values = rewards_tensor + (self.gamma * next_q_values.max(1)[0])
+
+
 
         # Calculate losses
         loss_q = F.smooth_l1_loss(pred_q_values, target_q_values.unsqueeze(1))
         
-        # Position loss with masking
+        # Check the loss itself
+        if loss_q.isnan():
+            logging.warning("loss_q is NaN! Halting or debugging.")
+            loss_q = torch.nan_to_num(loss_q, nan=0.0)
+
+            # import pdb; pdb.set_trace() # Uncomment for interactive debugging     # Position loss with masking
         loss_pos_unmasked = F.mse_loss(pred_pos_values, true_pos_tensor, reduction='none').mean(dim=1)
         masked_loss_pos = loss_pos_unmasked * loss_mask
         loss_pos = masked_loss_pos.sum() / (loss_mask.sum() + 1e-8)
@@ -188,7 +217,7 @@ class DQN_Solver_MultiHead(BaseDQN):
         torch.nn.utils.clip_grad_value_(self.policy_net.parameters(), 1.0)
         self.optimizer.step()
         
-        # Update target network
+        # Update target_net network
         self.update_counter += 1
         if self.update_counter % self.target_update_frequency == 0:
             self.target_net.load_state_dict(self.policy_net.state_dict())

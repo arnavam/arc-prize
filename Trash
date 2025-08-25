@@ -362,3 +362,23 @@ print('old output_grid',current_grid)
 print('obj_info',obj_info['grid'])
 print('pos',obj_info['position'])
 print('new output_grid',new_grid)
+
+
+        try:
+            current_grids = torch.cat([s[0] for s in states], dim=0)
+        except RuntimeError as e:
+            print("❌ torch.cat failed due to mismatched tensor shapes.\nException message:",e)
+            for i, s in enumerate(states):
+                print(f"Tensor {i} shape: {s[0].shape}")
+
+            expected_shape = torch.Size([1, 6, 6])
+            valid_tensors = [s[0] for s in states if s[0].shape == expected_shape]
+            skipped = len(states) - len(valid_tensors)
+            print(f"⚠️ Skipped {skipped} tensors due to shape mismatch.")
+
+            # Try again with valid tensors only
+            try:
+                current_grids = torch.cat(valid_tensors, dim=0)
+            except RuntimeError as e2:
+                print("❌ torch.cat still failed after filtering. This should not happen.")
+                raise e2 

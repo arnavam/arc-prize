@@ -12,59 +12,11 @@ from itertools import product
 from A_arc import train 
 from dsl import PRIMITIVE
 import functools ,collections,time
+from feature_extractor import FeatureExtractor
 PRIMITIVE_NAMES = list(PRIMITIVE.keys())
 import random
 # --- Neural Feature Extractor (PyTorch) ---
 
-
-class FeatureExtractor(nn.Module):
-    def __init__(self, input_channels=1):
-        super().__init__()
-        self.conv1 = nn.Conv2d(input_channels, 32, kernel_size=3, padding=1)
-        self.pool1 = nn.AdaptiveMaxPool2d((16, 16)) 
-        self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
-        self.pool2 = nn.AdaptiveAvgPool2d((1, 1))
-        self.flatten = nn.Flatten()
-        self.fc = nn.Linear(64, 32)
-
-    def forward(self, x):
-        # --- ROBUST BATCH PRESERVATION ---
-        # Get the batch size, which we assume is the first dimension.
-        batch_size = x.shape[0]
-        
-        # If input is 5D (e.g., from torch.stack), reshape it to a proper 4D batch.
-        if x.dim() == 5:
-            # Reshape [B, 1, C, H, W] -> [B, C, H, W]
-            x = x.view(batch_size, x.shape[2], x.shape[3], x.shape[4])
-            
-        # If input is a single item (from select_action), prepare it.
-        elif x.dim() < 4:
-            x = self.pad_and_batch(x)
-        # --- END OF BATCH HANDLING ---
-
-        # Now, 'x' is guaranteed to be a correct 4D batch (B, C, H, W).
-        x = F.relu(self.conv1(x))
-        x = self.pool1(x)
-        x = F.relu(self.conv2(x))
-        x = self.pool2(x)
-        x = self.flatten(x)
-        x = self.fc(x) # Output shape will be [B, 32]
-        
-        return x
-
-    def pad_and_batch(self, tensor):
-        """Processes a SINGLE tensor and returns a 4D tensor: (1, 1, H, W)."""
-        tensor = tensor.squeeze()
-        
-        if tensor.dim() == 0: tensor = tensor.unsqueeze(0).unsqueeze(0)
-        elif tensor.dim() == 1: tensor = tensor.unsqueeze(0)
-        elif tensor.dim() > 2:
-            while tensor.dim() > 2: tensor = tensor[0]
-        
-        if tensor.dim() != 2: raise ValueError(f"Tensor must be reducible to 2D.")
-        
-        padded = F.pad(tensor, (1, 1, 1, 1), mode='constant', value=0)
-        return padded.unsqueeze(0).unsqueeze(0) 
 # --- Policy Network ---
 class PolicyNetwork(nn.Module):
     """

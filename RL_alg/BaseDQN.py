@@ -4,7 +4,14 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from torch.distributions import Categorical
+import logging
 
+logging.basicConfig(
+    level=logging.DEBUG,  # Set the minimum log level to DEBUG
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename='app.log',  # Log output to predicted_grid file named app.log
+    filemode='w'  # Overwrite the log file each time the program runs
+)
 import random
 from collections import deque
 
@@ -48,18 +55,7 @@ class BaseDQN:
         self.target_update_frequency = target_update
 
     def select_action(self, state, epsilon=0.4):
-        """Epsilon-greedy action selection."""
-        if random.random() < epsilon:
-            # Exploration: choose a random action
-            return random.randrange(self.policy_net.q_head.out_features)
-        else:
-            # Exploitation: choose the best action from the policy network
-            with torch.no_grad():
-                # Preprocess state and get Q-values
-                state_tensors = [self._preprocess_to_tensor(s) for s in state]
-                q_values = self.policy_net(state_tensors)
-                action_idx = torch.argmax(q_values).item()
-                return action_idx
+            pass
 
     def update_policy(self):
         """Train the model using a batch from the replay memory."""
@@ -73,21 +69,20 @@ class BaseDQN:
         
         # Prepare Tensors for the batch
         # This part is specific to your state structure ([grid1, grid2])
-        current_grids = torch.cat([self._preprocess_to_tensor(s[0]) for s in states])
-        target_grids = torch.cat([self._preprocess_to_tensor(s[1]) for s in states])
-        next_current_grids = torch.cat([self._preprocess_to_tensor(ns[0]) for ns in next_states])
-        next_target_grids = torch.cat([self._preprocess_to_tensor(ns[1]) for ns in next_states])
+        processed_components = [ torch.cat([self._preprocess_to_tensor(item) for item in component])  for component in states ]
+        next_processed_components = [ torch.cat([self._preprocess_to_tensor(item) for item in component])  for component in next_states ]
+
         
         actions_tensor = torch.tensor(actions, dtype=torch.long, device=self.device).unsqueeze(1)
         rewards_tensor = torch.tensor(rewards, dtype=torch.float32, device=self.device)
 
         # --- Calculate Q-Values ---
         # 1. Get the Q-values for the actions that were actually taken
-        current_q_values = self.policy_net([current_grids, target_grids]).gather(1, actions_tensor)
+        current_q_values = self.policy_net(processed_components).gather(1, actions_tensor)
 
         # 2. Get the maximum Q-value for the next states from the target network
         with torch.no_grad():
-            next_q_values = self.target_net([next_current_grids, next_target_grids]).max(1)[0]
+            next_q_values = self.target_net(next_processed_components).max(1)[0]
         
         # --- Calculate Target Q-Value (Bellman Equation) ---
         target_q_values = rewards_tensor + (self.gamma * next_q_values)
@@ -112,33 +107,29 @@ class BaseDQN:
 
     def _preprocess_to_tensor(self, grid, dtype=torch.float32, size=30):
 
-        if isinstance(grid, torch.Tensor):
+        if isinstance(grid, torch.Tensor):  
+            tensor = grid.to(device=self.device, dtype=dtype)
+        else:
+            array = np.asarray(grid)
 
-            return grid.to(device=self.device, dtype=dtype)
+            # If it's object dtype, try to convert to numeric
+            if array.dtype == np.object_:
+                logging.debug("WARNING: NumPy array has dtype=object. Attempting to convert to numeric dtype...")
 
-        array = np.asarray(grid)
+                try:
+                    # Try float conversion by default
+                    array = array.astype(np.float32 if dtype.is_floating_point else np.int32)
+                except Exception as e:
+                    raise ValueError("ERROR: Failed to convert object array to numeric type.",array,"\nDetails:", e)
 
-        # If it's object dtype, try to convert to numeric
-        if array.dtype == np.object_:
-            print("WARNING: NumPy array has dtype=object. Attempting to convert to numeric dtype...")
-
+            # Convert to tensor
             try:
-                # Try float conversion by default
-                array = array.astype(np.float32 if dtype.is_floating_point else np.int32)
-                print(f"Successfully converted object array to dtype={array.dtype}")
+                tensor = torch.from_numpy(array).to(dtype)
             except Exception as e:
-                print("ERROR: Failed to convert object array to numeric type.",array)
-                print("Details:", e)
-                raise ValueError("Grid contains non-numeric data or inconsistent structure.")
-
-        # Convert to tensor
-        try:
-            tensor = torch.from_numpy(array).to(dtype)
-        except Exception as e:
-            print("ERROR: torch.from_numpy failed.")
-            print("Details:", e)
-            raise ValueError("Failed to convert numpy array to tensor.")
-        tensor = tensor.view(1, -1)
+                raise ValueError("ERROR: torch.from_numpy failed.",array,"Details:", e)
+            
+        if tensor.dim() == 2:
+            tensor = tensor.unsqueeze(0)     # shape becomes (1, 6, 6)
 
         return tensor.to(self.device)
 
@@ -147,14 +138,9 @@ class BaseDQN:
         """Saves an experience tuple to the replay memory."""
         self.memory.push((state, action, reward, next_state))
 
-    def load(self, path):
-        """Loads the policy network's weights."""
-        self.policy_net.load_state_dict(torch.load(path))
-        self.target_net.load_state_dict(self.policy_net.state_dict()) # Sync target net
-        print(f"Model loaded from {path}")
 
-    def save(self, path):
-        """Saves the policy network's weights."""
-        torch.save(self.policy_net.state_dict(), path)
-        print(f"Model saved to {path}")
+    def load(self):
+        self.policy_net.load_state_dict(torch.load(f'weights/{self.__class__.__name__}.pth'))
+    def save(self):
+        torch.save(self.policy_net.state_dict(), f'weights/{self.__class__.__name__}.pth')
 

@@ -6,7 +6,6 @@ import json
 import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib import colors
-from dsl import find_objects
 
 def convert_np_to_native(obj):
     if isinstance(obj, list):
@@ -25,26 +24,153 @@ def convert_np_to_native(obj):
         return obj.item()
     else:
         return obj
-        
-
-
-# --- NEW: Helper function for transformations ---
-def generate_transformations(obj_grid):
-    """
-    Generates all 8 unique transformations (rotations and flips) for an object grid.
-    """
-    transforms = set()
-    current = np.array(obj_grid)
     
-    for _ in range(2): # Original and flipped
-        for _ in range(4): # 4 rotations
-            current = np.rot90(current)
-            # Convert to tuple of tuples to make it hashable for the set
-            transforms.add(tuple(map(tuple, current)))
-        current = np.fliplr(current)
+
+def find_objects(grid, max_objects=10):
+    # 1. Ensure the input is a NumPy array from the start.
+    if not isinstance(grid, np.ndarray):
+        grid_np = np.array(grid)
+    else:
+        # Create a copy to avoid modifying the original array passed to the function.
+        grid_np = grid.copy() 
+    print('grid_np',grid_np)
+    if grid_np.ndim == 3:
+        # If the grid is 3D, try to squeeze it into a 2D grid.
+        # This works if the shape is (rows, cols, 1).
+        print(f"Warning: Input grid is 3D with shape {grid_np.shape}. Attempting to squeeze it to 2D.")
+        grid_np = np.squeeze(grid_np)
+
+    # After squeezing, verify it is now 2D. If not, we can't proceed.
+    if grid_np.ndim != 2:
+        raise ValueError(f"Input grid must be 2-dimensional, but has {grid_np.ndim} dimensions.")
+
+    if grid_np.size == 0:
+        return []
+    
+    rows, cols = grid_np.shape
+    objects = []
+    # Start with the entire grid as one object
+    initial_object = {
+        'grid': np.array([row[:] for row in grid]),
+        'color': 'mixed',  # Special value indicating multiple colors
+        'position': (0, 0),
+        'placed':False,
+        'size': (rows, cols)
+    }
+    
+    queue = [initial_object]
+    
+    while queue and len(objects) < max_objects:
+        current_obj = queue.pop(0)
         
-    # Convert back to list of lists
-    return [list(map(list, t)) for t in transforms]
+        # If the object is uniform color or we've reached the limit, add to results
+        if is_uniform(current_obj['grid']) or len(objects) + len(queue) >= max_objects - 1:
+            if is_uniform(current_obj['grid']):
+                current_obj['color'] = current_obj['grid'][0][0]
+            objects.append(current_obj)
+            continue
+        
+        # Otherwise, split into connected components by color
+        color_components = split_by_color(current_obj['grid'])
+        
+        for component in color_components:
+            if len(objects) + len(queue) + len(color_components) - 1 >= max_objects:
+                # If adding these would exceed max, just add as is
+                if is_uniform(component['grid']):
+                    component['color'] = component['grid'][0][0]
+                objects.append(component)
+            else:
+                queue.append(component)
+    print(len(objects))
+    return objects[:max_objects]  # Ensure we don't exceed max_objects
+
+def is_uniform(grid):
+    first_color = grid[0][0]
+    return np.all(grid == first_color)
+
+def split_by_color(grid):
+    rows, cols = grid.shape
+    visited = np.zeros((rows, cols), dtype=bool)
+    components = []
+    
+    for r in range(rows):
+        for c in range(cols):
+            if not visited[r][c]:
+                color = grid[r][c]
+                component = []
+                queue = deque([(r, c)])
+                visited[r][c] = True
+                
+                while queue:
+                    cr, cc = queue.popleft()
+                    component.append((cr, cc))
+                    
+                    for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0)]:  # 4-connectivity
+                        nr, nc = cr + dr, cc + dc
+                        if (0 <= nr < rows and 0 <= nc < cols 
+                            and not visited[nr][nc] 
+                            and grid[nr][nc] == color):
+                            visited[nr][nc] = True
+                            queue.append((nr, nc))
+                
+                if component:
+                    # Extract bounding box
+                    min_r = min(x[0] for x in component)
+                    max_r = max(x[0] for x in component)
+                    min_c = min(x[1] for x in component)
+                    max_c = max(x[1] for x in component)
+                    
+                    # Create object grid
+                    obj_grid = grid[min_r:max_r+1, min_c:max_c+1].copy()
+                    
+                    components.append({
+                        'grid': obj_grid,
+                        'color': color,
+                        'position': (min_r, min_c),
+                        'placed':False,
+                        'size': (obj_grid.shape[0], obj_grid.shape[1])
+                    })
+    
+    return components
+#-----------------------------------------------------------
+def extract_target_region(target_grid, obj_info):
+    r, c = obj_info['position']
+    obj_h, obj_w = obj_info['grid'].shape
+    
+    # Handle edge cases where object extends beyond target grid
+    pad_h = max(0, r + obj_h - target_grid.shape[0])
+    pad_w = max(0, c + obj_w - target_grid.shape[1])
+    
+    if pad_h > 0 or pad_w > 0:
+        padded_target = np.pad(target_grid, 
+                              ((0, pad_h), (0, pad_w)),
+                              mode='constant',
+                              constant_values=0)#use background
+        return padded_target[r:r+obj_h, c:c+obj_w]
+    return target_grid[r:r+obj_h, c:c+obj_w]
+
+
+def pad_matrix(a, target_shape, direction):
+    pad_height = target_shape[0] - a.shape[0]
+    pad_width = target_shape[1] - a.shape[1]
+
+    # Default padding: [top, bottom], [left, right]
+    if direction == 'top':
+        padding = ((pad_height, 0), (0, 0))
+    elif direction == 'bottom':
+        padding = ((0, pad_height), (0, 0))
+    elif direction == 'left':
+        padding = ((0, 0), (pad_width, 0))
+    elif direction == 'right':
+        padding = ((0, 0), (0, pad_width))
+    else:
+        raise ValueError("Direction must be one of: 'top', 'bottom', 'left', 'right'")
+
+    return np.pad(a, padding, mode='constant', constant_values=0)
+
+
+#-------------------------------------------------
+
 
 
 # --- NEW: Helper function to score a potential move ---
@@ -80,99 +206,6 @@ def calculate_fit_score(canvas, target_grid, obj_grid, pos):
                 score += 1 # Add a point for each correctly placed pixel
                 
     return score
-
-
-# --- NEW: Main Solver Function ---
-def solve_with_transformations(input_grid, output_grid):
-    """
-    Solves a puzzle by iteratively placing transformed input objects onto a canvas.
-    """
-    # 1. Extract unique objects from the input to create a "palette"
-    input_objects = find_objects(input_grid)
-    
-    # 2. Generate all transformations for each unique object
-    transformed_palette = []
-    for obj in input_objects:
-        transformed_palette.extend(generate_transformations(obj))
-        
-    # 3. Initialize a blank canvas of the output size
-    # Assuming the background color is 0
-    output_h, output_w = len(output_grid), len(output_grid[0])
-    canvas = [[0] * output_w for _ in range(output_h)]
-    
-    # 4. Iteratively find the best move and "freeze" it onto the canvas
-    while True:
-        best_move_this_iteration = {'score': 0, 'obj': None, 'pos': None}
-        
-        # Iterate through every available piece and every possible position
-        for obj_to_place in transformed_palette:
-            obj_h, obj_w = len(obj_to_place), len(obj_to_place[0])
-            for r in range(output_h - obj_h + 1):
-                for c in range(output_w - obj_w + 1):
-                    pos = (r, c)
-                    score = calculate_fit_score(canvas, output_grid, obj_to_place, pos)
-                    
-                    if score > best_move_this_iteration['score']:
-                        best_move_this_iteration = {'score': score, 'obj': obj_to_place, 'pos': pos}
-                        
-        # 5. If a good move was found, apply it to the canvas
-        if best_move_this_iteration['score'] > 0:
-            best_obj = best_move_this_iteration['obj']
-            r_start, c_start = best_move_this_iteration['pos']
-            
-            # "Freeze" the piece onto the canvas
-            for r_offset in range(len(best_obj)):
-                for c_offset in range(len(best_obj[0])):
-                    if best_obj[r_offset][c_offset] != 0:
-                         canvas[r_start + r_offset][c_start + c_offset] = best_obj[r_offset][c_offset]
-        else:
-            # If no move improves the score, we are done
-            break
-            
-    return canvas
-
-
-# --- Example Usage ---
-if __name__ == '__main__':
-    cmap = colors.ListedColormap(
-        ['#000000', '#0074D9', '#FF4136', '#2ECC40', '#FFDC00',
-            '#AAAAAA', '#F012BE', '#FF851B', '#7FDBFF', '#870C25'])
-    norm = colors.Normalize(vmin=0, vmax=9)
-    ids=[]
-    train_path='arc-prize-2025/arc-agi_training_challenges.json'
-    with open(train_path, 'r') as f:
-        train = json.load(f)
-
-    for case_id in train:
-        ids.append(case_id) 
-
-    for case_id in train:
-        for i in range(2):
-            for j in ('input','output'):
-                a=train[case_id]['train'][i]['input']
-                b=train[case_id]['train'][i]['output']
-                # print(a)
-                # sns.heatmap(a,cmap=cmap)
-                # plt.show()
-
-        # a=np.array(a)
-        # b=np.array(b)
-
-
-
-        # Solve the puzzle using the new method
-        solved_grid = solve_with_transformations(a, b)
-        solved_grid = convert_np_to_native(solved_grid)
-
-
-
-
-        print("\nSolved Grid:")
-        for row in solved_grid:
-            print(row )
-            # Verify if the solution is correct
-        is_correct = (np.array(solved_grid) == np.array(b)).all()
-        print(f"\nSolution is correct: {is_correct}")
 
 
 

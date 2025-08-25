@@ -87,7 +87,6 @@ def solve_with_bfs(input_grid, output_grid):
                 # We can just ignore these failures and continue.
                 continue
 
-    # print("❌ No solution found within the search limit.")
     return None
 
 
@@ -110,7 +109,7 @@ def apply_path(grid, path):
 
 if __name__ == '__main__':
     eval_path = 'arc-prize-2025/arc-agi_evaluation_challenges.json'
-    output_path = 'submission.json'
+    output_path = 'arc-prize-2025/submission.json'
 
     try:
         with open(eval_path, 'r') as f:
