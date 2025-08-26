@@ -32,8 +32,7 @@ def find_objects(grid, max_objects=10):
         grid_np = np.array(grid)
     else:
         # Create a copy to avoid modifying the original array passed to the function.
-        grid_np = grid.copy() 
-    print('grid_np',grid_np)
+        grid_np = grid.copy()
     if grid_np.ndim == 3:
         # If the grid is 3D, try to squeeze it into a 2D grid.
         # This works if the shape is (rows, cols, 1).

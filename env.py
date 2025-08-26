@@ -1,4 +1,15 @@
 import numpy as np
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,  # Set the minimum log level to DEBUG
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename='app.log',  # Log output to current_grid file named app.log
+    filemode='w'  # Overwrite the log file each time the program runs
+)
+
+#--------------------------------------------------
+
 
 def matrix_similarity(a, b, direction=None):
     if a.shape == b.shape:
@@ -19,8 +30,8 @@ def matrix_similarity(a, b, direction=None):
 
     # Ensure shapes now match
     if padded_a.shape != b.shape:
-        print(a)
-        print(b)
+        logging.warning(a)
+        logging.warning(b)
 
         raise ValueError("Shapes do not match after padding.")
 
@@ -31,6 +42,7 @@ def matrix_similarity(a, b, direction=None):
 
     return score  # Returns between 0.0 and 1.0
 
+#--------------------------------------------------
 
 def placement(output_grid, old_obj_info, new_obj_info, background=0):
     new_grid = new_obj_info["grid"]

@@ -1,8 +1,13 @@
 ## Present Idea
 
-- create a model for finding best place in o/p where object fits
-- create a model which finds the best operation using where we could place that object 
-- a single algorithm ( presently MCTS ) that optimize for both and find best pathway.
+- pre-training the RL model using supervised alg with simple dataset to give it a basic understanding of its role
+    -   could also be usefull assess performance of model in terms of its hyperparameters
+- add remove dsl & also some other dsls
+- use masked obj extraction to also indicate location of objects and no need to worry about shape problem
+- positional encoding
+- use masked fitting where object shape can be incredebly complex in shape
+
+---
 
 ## other 
 - A model that creates its own DSLs

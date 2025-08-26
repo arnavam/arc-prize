@@ -17,16 +17,16 @@ class FeatureExtractor(nn.Module):
     def forward(self, x):
 
 
-        x = add_channel_dim(x)
+        x = self.add_channel_dim(x)
         x = F.relu(self.conv1(x))     # [B, 32, H, W]
         x = self.pool1(x)             # [B, 32, 1, 1]
         x = self.flatten(x)           # [B, 32]
         x = self.fc(x)                # [B, 32]
         return x
 
-def add_channel_dim(tensor):
-    if tensor.ndim == 4:
-        return tensor
-    if tensor.ndim != 3:
-        raise ValueError(f"Expected 3D tensor, got {tensor.ndim}D tensor instead.{tensor.shape}{tensor}")
-    return tensor.unsqueeze(1)  # Add a channel dimension at position 1
+    def add_channel_dim(self,tensor):
+        if tensor.ndim == 4:
+            return tensor
+        if tensor.ndim != 3:
+            raise ValueError(f"Expected 3D tensor, got {tensor.ndim}D tensor instead.{tensor.shape}{tensor}")
+        return tensor.unsqueeze(1)  # Add a channel dimension at position 1

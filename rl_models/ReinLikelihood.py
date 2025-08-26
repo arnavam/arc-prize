@@ -7,7 +7,7 @@ import torch.optim as optim
 import torch.distributions as D
 import torch.nn.functional as F
 from torch.distributions import Categorical
-from RL_alg.BaseDQN import BaseDQN
+from rl_models.BaseDQN import BaseDQN
 import random  
 import logging
 
@@ -73,8 +73,8 @@ class Likelihood:
 
         probs = torch.softmax(scores , dim=0)         # [n]
 
-        # Sample from categorical distribution
-        dist = D.Categorical(probs)
+        
+        dist = D.Categorical(probs) # Sample from categorical distribution
         action = dist.sample()
         return action.item(), dist.log_prob(action)
 
@@ -93,8 +93,8 @@ class Likelihood:
             returns.insert(0, G)
         returns = torch.tensor(returns, dtype=torch.float32).to(self.device)
 
-        # normalize
-        returns = (returns - returns.mean()) / (returns.std() + 1e-8)
+       
+        returns = (returns - returns.mean()) / (returns.std() + 1e-8) # normalize
 
         if returns.isnan().any():
             logging.debug("Warning: NaN values found in returns. Replacing with 0.")
@@ -147,3 +147,7 @@ class Likelihood:
         self.policy.load_state_dict(torch.load(f'weights/{self.__class__.__name__}.pth'))
     def save(self):
         torch.save(self.policy.state_dict(), f'weights/{self.__class__.__name__}.pth')
+
+    def show_structure(self):
+        for name, param in self.policy.state_dict().items():
+            print(name, param.shape)

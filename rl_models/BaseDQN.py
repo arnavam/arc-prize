@@ -141,6 +141,11 @@ class BaseDQN:
 
     def load(self):
         self.policy_net.load_state_dict(torch.load(f'weights/{self.__class__.__name__}.pth'))
+        self.policy_net.load_state_dict(torch.load(f'weights/{self.__class__.__name__}.pth'))
+
     def save(self):
         torch.save(self.policy_net.state_dict(), f'weights/{self.__class__.__name__}.pth')
 
+    def show(self):
+        for name, param in self.policy_net.state_dict().items():
+            print(name, param.shape)

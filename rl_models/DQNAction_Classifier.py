@@ -5,7 +5,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from torch.distributions import Categorical
-from RL_alg.BaseDQN import BaseDQN
+from rl_models.BaseDQN import BaseDQN
 import logging
 
 logging.basicConfig(

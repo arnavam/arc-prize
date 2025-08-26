@@ -12,7 +12,7 @@ from itertools import product
 from A_arc import train 
 from dsl import PRIMITIVE
 import functools ,collections,time
-from feature_extractor import FeatureExtractor
+from rl_models.feature_extractor import FeatureExtractor
 PRIMITIVE_NAMES = list(PRIMITIVE.keys())
 import random
 # --- Neural Feature Extractor (PyTorch) ---

@@ -89,7 +89,7 @@ def dcrop(data):
     """Crops the bottom row."""
     if data.shape[0] > 1: return data[:-1, :]
     return data
-def idle(data):
+def place(data):
     return data
 
 def normalize(mat):
@@ -138,6 +138,9 @@ def conv(input_matrix, kernel):
                 output[i, j] = 1 # No match
     return output
 
+def remove(data):
+    data=np.zeros_like(data) 
+    return data
 
 PRIMITIVE = {
         "rotate": rotate,
@@ -147,13 +150,17 @@ PRIMITIVE = {
         # "rcrop": rcrop,
         # "ucrop": ucrop,
         # "dcrop": dcrop,
+        'remove':remove,
+
         "color":color,
-        'idle':idle
+        'place':place,
         # We "freeze" the 'kernel' argument with the start and goal nodes.
         # "conv_with_input_kernel": functools.partial(conv, kernel=input_node),
         # "conv":conv
+
     }
 
+#remove , 
 
 def move_up(position):
     x, y = position
@@ -175,7 +182,7 @@ def move_right( position):
     return (x, y + 1)
 
 
-def idle (position):
+def place (position):
     return position
 
 ACTIONS = {
@@ -183,7 +190,6 @@ ACTIONS = {
     "move_down": move_down,
     "move_left": move_left,
     "move_right": move_right ,
-    'idle':idle
 }
 
 COMB = PRIMITIVE | ACTIONS
