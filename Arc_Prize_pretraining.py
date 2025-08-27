@@ -5,6 +5,7 @@ import torch.nn as nn
 import matplotlib.pyplot as plt
 import copy
 import pickle
+import time
 
 from A_arc import display,clear
 from rl_models.DQNAction_Classifier import DQN_Classifier
@@ -137,13 +138,14 @@ def generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5, training_eg
 
         if new_target_grid is not  None:
             i+=1
-            logging.debug(f'dataset: {new_target_grid},{target_grid},{obj['grid']},{obj_idx},{i}')
+            logging.debug(f"dataset: {new_target_grid},{target_grid},{obj['grid']},{obj_idx},{i}")
             display(new_target_grid,target_grid,obj['grid'],'train_examples')
             datasets.append((new_target_grid,objects,target_grid))
             labels.append(obj_idx)
             funcs.append(func_idx)
 
     return datasets,labels, funcs
+
 
 
 
@@ -176,8 +178,10 @@ if __name__ == '__main__':
     # Then train over those
     for epoch in range(100):
         for datasets, labels , funcs in tasks1:
+            start_time=time.time()
             loss,acc=likelihood_predictor.train_supervised(datasets,labels)
-            print(f"Step {epoch+1}: losses = {loss:.4f}, Accuracy = {acc:.2%}")
+            print(f"Step {epoch+1}: losses = {loss:.4f}, Accuracy = {acc:.2%} , time= {time.time()-start_times}")
+            
             l_losses.append(loss)
             l_accs.append(acc)
             loss,acc= nuero_classifier.train_supervised(datasets,labels,funcs)
