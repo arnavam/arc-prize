@@ -2,7 +2,7 @@ from rl_models.BaseDQN import BaseDQN
 import numpy as np
 import time 
 import os
-from dsl import COMB ,ACTIONS,PRIMITIVE
+from dsl import COMB ,SHIFT,TRANSFORM
 from dsl2 import find_objects , extract_target_region
 from A_arc import  loader , display
 from rl_models.reinforce import FeatureExtractor
@@ -25,8 +25,8 @@ logging.basicConfig(
 # Initialized parameters
 #----------------------------------
 action_names = list(COMB.keys())
-Shift = list(ACTIONS.keys())
-Transform=list(PRIMITIVE.keys())
+Shift = list(SHIFT.keys())
+Transform=list(TRANSFORM.keys())
 num_actions = len(action_names)
 
 
@@ -247,7 +247,7 @@ if __name__ == "__main__":
         print(examples)
         logging.debug(f"Processing task {case_id} with {len(examples)} examples")
 
-        predicted , success = Arc_Prize_Solver(examples,load=True,save=False,max_iterations=100)
+        predicted , success = Arc_Prize_Solver(examples,load=False,save=True ,max_iterations=100)
 
         if success:
             a = task['train'][0]['input']

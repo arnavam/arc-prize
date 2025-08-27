@@ -28,5 +28,5 @@ class FeatureExtractor(nn.Module):
         if tensor.ndim == 4:
             return tensor
         if tensor.ndim != 3:
-            raise ValueError(f"Expected 3D tensor, got {tensor.ndim}D tensor instead.{tensor.shape}{tensor}")
+            raise ValueError(f"Expected 3D tensor, got {tensor.ndim}D tensor instead: {tensor.shape}{tensor}")
         return tensor.unsqueeze(1)  # Add a channel dimension at position 1

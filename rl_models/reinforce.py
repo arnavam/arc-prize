@@ -10,10 +10,10 @@ from torch.distributions import Categorical
 import json
 from itertools import product
 from A_arc import train 
-from dsl import PRIMITIVE
+from dsl import TRANSFORM
 import functools ,collections,time
 from rl_models.feature_extractor import FeatureExtractor
-PRIMITIVE_NAMES = list(PRIMITIVE.keys())
+PRIMITIVE_NAMES = list(TRANSFORM.keys())
 import random
 # --- Neural Feature Extractor (PyTorch) ---
 

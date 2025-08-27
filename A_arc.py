@@ -4,14 +4,22 @@ from matplotlib import colors
 import matplotlib.pyplot as plt
 import seaborn as sns
 import time
-
+import os
+def clear(folder_path):
+    for filename in os.listdir(folder_path):
+        file_path = os.path.join(folder_path, filename)
+        try:
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+        except Exception as e:
+            print(f"Error deleting {file_path}: {e}")
 
 cmap = colors.ListedColormap(
     ['#000000', '#0074D9', '#FF4136', '#2ECC40', '#FFDC00',
         '#AAAAAA', '#F012BE', '#FF851B', '#7FDBFF', '#870C25'])
 norm = colors.Normalize(vmin=0, vmax=9)
 
-def display(a, b, solved_grid):
+def display(a, b, solved_grid,folder='train_ouputs'):
     cmap = 'coolwarm'  # Example colormap
 
             # Create a 1x3 grid of subplots
@@ -22,7 +30,7 @@ def display(a, b, solved_grid):
     axes[0].set_title('Input')
 
     sns.heatmap(b, cmap=cmap, ax=axes[1], cbar=False)
-    axes[1].set_title('Original')
+    axes[1].set_title('Target')
 
     sns.heatmap(solved_grid, cmap=cmap, ax=axes[2], cbar=False)
     axes[2].set_title('Predicted')
@@ -31,7 +39,7 @@ def display(a, b, solved_grid):
     filename = f"heatmap_{timestamp}.png"
 
     # Save the figure
-    plt.savefig(f'fig/{filename}')
+    plt.savefig(f'{folder}/{filename}')
 
     # Optionally, print the filename to confirm
     print(f"Figure saved as {filename}")

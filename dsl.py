@@ -142,7 +142,7 @@ def remove(data):
     data=np.zeros_like(data) 
     return data
 
-PRIMITIVE = {
+TRANSFORM = {
         "rotate": rotate,
         "mirrorlr": mirrorlr,
         "mirrorud": mirrorud,
@@ -150,7 +150,7 @@ PRIMITIVE = {
         # "rcrop": rcrop,
         # "ucrop": ucrop,
         # "dcrop": dcrop,
-        'remove':remove,
+        # 'remove':remove,
 
         "color":color,
         'place':place,
@@ -185,11 +185,11 @@ def move_right( position):
 def place (position):
     return position
 
-ACTIONS = {
+SHIFT = {
     "move_up": move_up,
     "move_down": move_down,
     "move_left": move_left,
     "move_right": move_right ,
 }
 
-COMB = PRIMITIVE | ACTIONS
+COMB = TRANSFORM | SHIFT

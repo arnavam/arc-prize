@@ -35,7 +35,8 @@ class QNetwork(nn.Module):
         combined_feature_size = 32 * no_of_inputs 
         
         # Network layers
-        self.layer1 = nn.Linear(combined_feature_size, 64)
+        self.layer1 = nn.Linear(combined_feature_size, 128)
+        self.layer2 = nn.Linear(128,64)
         self.layer21 = nn.Linear(64, 32)
         self.layer22 = nn.Linear(64, 32)
 
@@ -62,6 +63,8 @@ class QNetwork(nn.Module):
         
         # Pass through the fully connected layers to get Q-values
         out1 = F.relu(self.layer1(combined))
+        out1 = F.relu(self.layer2(out1))
+
         out2= F.relu(self.layer21(out1))
         q_values = self.q_head(out2)
         
@@ -74,11 +77,7 @@ class QNetwork(nn.Module):
 
 # ---  Multi-Head DQN ---
 class DQN_Classifier(BaseDQN):
-    """
-    A specific implementation for a multi-head DQN agent.
-    It uses the QNetwork with the position head enabled and overrides the
-    update logic to handle a combined loss with masking.
-    """
+
     def __init__(self, feature_extractor, num_actions, no_of_inputs=2, device='cpu', gamma=0.99, lr=1e-4, batch_size=128, memory_size=1000, target_update=10):
         _device = torch.device(device if getattr(torch, device).is_available() else "cpu")
         print(f'Using device: {_device} for Multi-Head Solver')
@@ -221,3 +220,47 @@ class DQN_Classifier(BaseDQN):
         self.update_counter += 1
         if self.update_counter % self.target_update_frequency == 0:
             self.target_net.load_state_dict(self.policy_net.state_dict())
+
+    def train_supervised(self, inputs, obj_labels,func_labels):
+
+
+        criterion = nn.CrossEntropyLoss()
+        self.optimizer.zero_grad()
+
+        all_scores = []
+
+        for (current_grid, objects, target_grid ) ,obj_label in zip(inputs,obj_labels):
+            current_grid_t = self._preprocess_to_tensor(current_grid)
+            target_grid_t = self._preprocess_to_tensor(target_grid)
+
+            scores_per_sample = []
+            obj=objects[obj_label]
+            obj_grid_t = self._preprocess_to_tensor(obj['grid'])
+
+  
+            obj_pos_t = self._preprocess_to_tensor(obj['position'])
+
+                # Feed forward through the policy_net
+            q_values, _ = self.policy_net([current_grid_t, obj_grid_t, obj_pos_t, target_grid_t])
+            scores_per_sample.append(q_values.squeeze())
+
+            all_scores.append(torch.stack(scores_per_sample))
+
+        # Stack into batch
+        scores_batch = torch.stack(all_scores).to(self.device)   
+        # print('score_batch :',scores_batch.shape,scores_batch)
+        func_labels = torch.tensor(func_labels, dtype=torch.long, device=self.device)
+        # print('func_labels: ',func_labels.shape,func_labels)
+
+        scores_batch = scores_batch.squeeze(1)  # shape: [4, 10]
+
+        loss = criterion(scores_batch, func_labels)
+        loss.backward()
+        self.optimizer.step()
+
+        # Accuracy
+        with torch.no_grad():
+            preds = scores_batch.argmax(dim=1)
+            acc = (preds == func_labels).float().mean().item()
+
+        return loss.item(), acc

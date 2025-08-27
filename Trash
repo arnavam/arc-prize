@@ -166,7 +166,7 @@ def expand(self):
        
         action_probs = self.policy([input_tensor, current_tensor])  # Shape: [num_actions]
         
-        # Create a categorical distribution over actions
+        # Create a categorical distribution over SHIFT
         dist = Categorical(action_probs)
         action_index = dist.sample()
 

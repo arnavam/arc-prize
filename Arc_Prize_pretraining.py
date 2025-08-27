@@ -3,22 +3,38 @@ import random
 import torch
 import torch.nn as nn
 import matplotlib.pyplot as plt
+import copy
+import pickle
 
+from A_arc import display,clear
 from rl_models.DQNAction_Classifier import DQN_Classifier
 from rl_models.feature_extractor import FeatureExtractor
 from rl_models.ReinLikelihood import Likelihood
 # --- Helper Functions for Data Generation ---
-from dsl import COMB
+from dsl import COMB , SHIFT , TRANSFORM
+from env import placement
 
-num_actions = len(list(COMB.keys()))
-criterion = nn.CrossEntropyLoss()
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,  # Set the minimum log level to DEBUG
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename='Arc_Prize_pretraining.log',  # Log output to current_grid file named app.log
+    filemode='w'  # Overwrite the log file each time the program runs
+)
+
+Shift = SHIFT.keys()
+Transform = TRANSFORM.keys()
+func_names=list(COMB.keys())
+num_actions = len(func_names)
+
 
 def create_random_object(max_size=3, max_color=9):
 
     size = (random.randint(1, max_size), random.randint(1, max_size))
     color = random.randint(1, max_color)
     obj_grid = np.full(size, color)
-    return {'grid': obj_grid, 'color': color, 'size': size}
+    return {'grid': obj_grid, 'color': color, 'size': size,'position':(0,0)}
     # return obj_grid
 
 def find_empty_spot(grid, obj_size):
@@ -41,12 +57,12 @@ def place_object(grid, obj, pos):
 
 # --- Task-Specific Generation Functions ---
 
-def generate_simple_task(grid_size=(10, 10), num_bg_objects=5, training_eg=4):
+def generate_simple_task(grid_size=(10, 10), num_bg_objects=3, training_eg=4):
 
     datasets = []
     objects=[]
     labels=[]
-
+    funcs=[]
     target_grid = np.zeros(grid_size, dtype=int)
 
     for _ in range(num_bg_objects):
@@ -57,155 +73,125 @@ def generate_simple_task(grid_size=(10, 10), num_bg_objects=5, training_eg=4):
         obj_idx= random.randint(0,num_bg_objects-1)
         obj=objects[obj_idx]
         current_grid=target_grid
-
         pos = find_empty_spot(target_grid, obj['size'])
         if pos:
             target_grid = place_object(target_grid, obj, pos)
             datasets.append((current_grid,objects,target_grid))
             labels.append(obj_idx)
-            
+            funcs.append(func_names.index('place'))
 
         else:
             training_eg +=1
 
-    return datasets , labels
+    return datasets , labels , funcs
 
-
-def generate_movement_task(grid_size=(10, 10), num_total_objects=4):
-    """
-    Generates a task where an object is in the wrong place and must be moved.
-    """
+def generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5, training_eg=4):
+    datasets = []
+    objects=[]
+    labels=[]
+    funcs=[]
     target_grid = np.zeros(grid_size, dtype=int)
-    placed_objects = []
-    object_positions = {}
 
-    # 1. Populate the target grid
-    for _ in range(num_total_objects):
-        obj = create_random_object()
+    i = 0
+    while i < num_bg_objects:
+        
+        obj=create_random_object()
         pos = find_empty_spot(target_grid, obj['size'])
+
         if pos:
             target_grid = place_object(target_grid, obj, pos)
-            placed_objects.append(obj)
-            object_positions[obj['color']] = pos # Store original position
+            obj['position']=pos
+            objects.append(obj)
+            i+=1
+            
+    i = 0
+    while i < training_eg:
+
+        new_target_grid=None
+
+        obj_idx = random.randint(0, num_bg_objects - 1)
+        obj=objects[obj_idx]
+
+        func = random.choice(func_names)
+        func_idx = func_names.index(func)
+        new_obj = copy.deepcopy(obj)
+
         
-    if len(placed_objects) < 2: return None, None # Need at least two to move
+        if func in ['place', 'remove']:
+            continue 
+    #     new_obj_info.update({
+    #         'placed': True,
+    #         'position': pos_values
+    #     })
+    #         is_place_action = True
+    #         objects.append(new_obj_info)
+    #         obj_info = new_obj_info
 
-    # 2. Choose one object to be moved
-    object_to_move = random.choice(placed_objects)
+        elif func in Transform:
+            new_obj['grid'] = COMB[func](obj['grid'])
+            new_target_grid = placement(target_grid.copy(), obj, new_obj, background=0)
 
-    # 3. Create the current_grid by moving the object
-    current_grid = target_grid.copy()
-    # Erase from its correct final position
-    y_t, x_t = object_positions[object_to_move['color']]
-    h, w = object_to_move['size']
-    current_grid[y_t:y_t+h, x_t:x_t+w] = 0
-    
-    # Find a new, incorrect spot to place it
-    new_pos = find_empty_spot(current_grid, object_to_move['size'])
-    if not new_pos: return None, None # Failed to find a new spot
-    current_grid = place_object(current_grid, object_to_move, new_pos)
-    
-    # 4. Candidate objects are ALL objects present in the current_grid
-    # Note: We just use the original list of objects, which is simpler here
-    candidate_objects = placed_objects
-    random.shuffle(candidate_objects)
-    
-    correct_action_index = candidate_objects.index(object_to_move)
+        elif func in Shift:
+            new_obj['position'] = COMB[func](obj['position'])
+            new_target_grid = placement(target_grid.copy(), obj, new_obj, background=0)
 
-    inputs = (current_grid, candidate_objects, target_grid)
-    return inputs, correct_action_index
+        if new_target_grid is not  None:
+            i+=1
+            logging.debug(f'dataset: {new_target_grid},{target_grid},{obj['grid']},{obj_idx},{i}')
+            display(new_target_grid,target_grid,obj['grid'],'train_examples')
+            datasets.append((new_target_grid,objects,target_grid))
+            labels.append(obj_idx)
+            funcs.append(func_idx)
+
+    return datasets,labels, funcs
+
+
 
 # --- Main  Function ---
 
-
-
-def train_supervised(model, inputs, correct_action_indices):
-    """
-    Performs a single step of supervised training.
-    
-    Args:
-        inputs (list): A list of tuples, where each tuple is (current_grid, objects, target_grid).
-        correct_action_indices (torch.Tensor): A tensor of correct object indices (the labels).
-    """
-    model.optimizer.zero_grad()
-    
-    all_scores = []
-    for current_grid, objects, target_grid in inputs:
-
-        current_grid_t = model._preprocess_to_tensor(current_grid)
-        target_grid_t = model._preprocess_to_tensor(target_grid)
-        
-        scores_per_sample = []
-        for obj in objects:
-            obj_grid_t = model._preprocess_to_tensor(obj['grid'])
-
-            score = model.policy([current_grid_t, obj_grid_t, target_grid_t])
-            scores_per_sample.append(score.squeeze())
-
-        all_scores.append(torch.stack(scores_per_sample))
-
-    scores_batch = torch.stack(all_scores).to(model.device)
-    correct_action_indices = torch.tensor(correct_action_indices, dtype=torch.long, device=model.device)
-
-    loss = criterion(scores_batch, correct_action_indices)
-    
-    loss.backward()
-    model.optimizer.step()
-    
-    with torch.no_grad():
-        preds = scores_batch.argmax(dim=1)
-        acc = (preds == correct_action_indices).float().mean().item()
-
-    return loss.item(), acc
-
-    # --- NEW METHOD for Supervised Prediction ---
-def predict_supervised(model, input_data):
-    """
-    Makes a deterministic prediction based on the highest score.
-    """
-    current_grid, objects, target_grid = input_data
-    
-    # Set the model to evaluation mode
-    model.policy.eval()
-    with torch.no_grad():
-        current_grid_t = model._preprocess_to_tensor(current_grid)
-        target_grid_t = model._preprocess_to_tensor(target_grid)
-        
-        scores = []
-        for obj in objects:
-            obj_grid_t = model._preprocess_to_tensor(obj['grid'])
-            score = model.policy([current_grid_t, obj_grid_t, target_grid_t])
-            scores.append(score.squeeze())
-        
-        scores_t = torch.stack(scores)
-        # Choose the action with the highest score
-        best_action = torch.argmax(scores_t).item()
-    
-    # Set the model back to training mode
-    model.policy.train()
-    return best_action
-
-
 if __name__ == '__main__':
+    clear('train_examples')
 
     ft1 = FeatureExtractor(input_channels=1)
     likelihood_predictor = Likelihood(feature_extractor=ft1, output_dim=1,no_of_inputs=3)
-    likelihood_predictor.load()
     likelihood_predictor.show_structure()
-    tasks = [generate_simple_task(grid_size=(10, 10), num_bg_objects=5 , training_eg=8) for _ in range(100)]
-    losses=[]
-    accs=[]
+    nuero_classifier = DQN_Classifier(ft1,len(COMB),3)
+    # likelihood_predictor.load()
+    # nuero_classifier.load()
+    tasks1 = [generate_intermediate_task(grid_size=(10, 10), num_bg_objects=10 , training_eg=16) for _ in range(10)]
+    tasks2= [generate_simple_task(grid_size=(10, 10), num_bg_objects=4 , training_eg=16) for _ in range(10)]
+
+    tasks1.extend(tasks2)
+    random.shuffle(tasks1)
+# Save
+    with open("generated_training_data.pkl", "wb") as f:
+        pickle.dump(tasks1, f)
+
+    # Load
+    # with open("data.pkl", "rb") as f:
+    #     tasks1 = pickle.load(f)
+
+    l_losses=[]
+    l_accs=[]
     # Then train over those
-    for epoch in range(1):
-        for datasets, labels in tasks:
-            loss,acc=train_supervised(likelihood_predictor,datasets,labels)
-            print(f"Step {epoch+1}: Loss = {loss:.4f}, Accuracy = {acc:.2%}")
-            losses.append(loss)
-            accs.append(acc)
+    for epoch in range(100):
+        for datasets, labels , funcs in tasks1:
+            loss,acc=likelihood_predictor.train_supervised(datasets,labels)
+            print(f"Step {epoch+1}: losses = {loss:.4f}, Accuracy = {acc:.2%}")
+            l_losses.append(loss)
+            l_accs.append(acc)
+            loss,acc= nuero_classifier.train_supervised(datasets,labels,funcs)
+
     likelihood_predictor.save()
-    plt.plot(accs, label='Accuracy')
-    plt.plot(losses, label='Loss')
+    plt.plot(l_accs, label='Accuracy')
+    plt.plot(l_losses, label='l_losses')
     plt.xlabel("Step")
     plt.legend()
     plt.show()
 
+    nuero_classifier.save()
+    plt.plot(l_accs, label='Accuracy')
+    plt.plot(l_losses, label='losses')
+    plt.xlabel("Step")
+    plt.legend()
+    plt.show()

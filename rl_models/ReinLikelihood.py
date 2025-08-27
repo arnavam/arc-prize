@@ -29,7 +29,9 @@ class ObjectPolicy(nn.Module):
         combined_feature_size = 32 * no_of_inputs
         
         # Network layers
-        self.layer1 = nn.Linear(combined_feature_size, 64)
+        self.layer1 = nn.Linear(combined_feature_size, 128)
+        self.layer2 = nn.Linear(128, 64)
+
         self.q_head = nn.Linear(64, num_actions)
 
     def forward(self, input_tensors, x=-1):
@@ -45,7 +47,8 @@ class ObjectPolicy(nn.Module):
         
         # Pass through the fully connected layers to get Q-values
         out1 = F.relu(self.layer1(combined))
-        q_values = self.q_head(out1)
+        out2= F.relu(self.layer2(out1))
+        q_values = self.q_head(out2)
         return q_values
 
 
@@ -57,7 +60,7 @@ class Likelihood:
         self.policy = ObjectPolicy(feature_extractor, output_dim, no_of_inputs).to(self.device)
         self.optimizer = optim.Adam(self.policy.parameters(), lr=lr)
         self.memory = []
-        
+        criterion = nn.CrossEntropyLoss()
     def select_action(self, input):
         predicted_grid, objects, target_grid = input
         predicted_grid = self._preprocess_to_tensor(predicted_grid)
@@ -151,3 +154,68 @@ class Likelihood:
     def show_structure(self):
         for name, param in self.policy.state_dict().items():
             print(name, param.shape)
+
+
+
+
+    def train_supervised(self , inputs, labels): #labels -> crct obj index
+        criterion = nn.CrossEntropyLoss()
+        self.optimizer.zero_grad()
+        
+        all_scores = []
+        for current_grid, objects, target_grid in inputs:
+
+            current_grid_t = self._preprocess_to_tensor(current_grid)
+            target_grid_t = self._preprocess_to_tensor(target_grid)
+            
+            scores_per_sample = []
+            for obj in objects:
+                obj_grid_t = self._preprocess_to_tensor(obj['grid'])
+
+                score = self.policy([current_grid_t, obj_grid_t, target_grid_t])
+                scores_per_sample.append(score.squeeze())
+
+            # display(current_grid,target_grid,objects[max(enumerate(scores_per_sample), key=lambda x: x[1])[0]])
+
+            all_scores.append(torch.stack(scores_per_sample))
+
+        scores_batch = torch.stack(all_scores).to(self.device)
+        labels = torch.tensor(labels, dtype=torch.long, device=self.device)
+
+        loss = criterion(scores_batch, labels)
+        
+        loss.backward()
+        self.optimizer.step()
+        
+        with torch.no_grad():
+            preds = scores_batch.argmax(dim=1)
+            acc = (preds == labels).float().mean().item()
+
+        return loss.item(), acc
+
+        
+    def predict_supervised(self, input_data):
+        """
+        Makes a deterministic prediction based on the highest score.
+        """
+        current_grid, objects, target_grid = input_data
+        
+        # Set the self to evaluation mode
+        self.policy.eval()
+        with torch.no_grad():
+            current_grid_t = self._preprocess_to_tensor(current_grid)
+            target_grid_t = self._preprocess_to_tensor(target_grid)
+            
+            scores = []
+            for obj in objects:
+                obj_grid_t = self._preprocess_to_tensor(obj['grid'])
+                score = self.policy([current_grid_t, obj_grid_t, target_grid_t])
+                scores.append(score.squeeze())
+            
+            scores_t = torch.stack(scores)
+            # Choose the action with the highest score
+            best_action = torch.argmax(scores_t).item()
+        
+        # Set the self back to training mode
+        self.policy.train()
+        return best_action
