@@ -1,11 +1,33 @@
 ## Present Idea
 
-- pre-training the RL model using supervised alg with simple dataset to give it a basic understanding of its role
-    -   could also be usefull assess performance of model in terms of its hyperparameters
-- add remove dsl & also some other dsls
-- use masked obj extraction to also indicate location of objects and no need to worry about shape problem
+- reduce tre training loss
+- make more robust scoring by adding  error of  miss placing + error not placing
+- use early-stopping
+- use diff RL algorithms or variants .
+- create a resoning type advanced datasts ( like if yello move top etc..)
+- add remove dsl , pre-train using that  & also some other dsls
+
 - positional encoding
 - use masked fitting where object shape can be incredebly complex in shape
+- maybe a bit more refined  
+- make the pretraining more robust by evaluating on unseen data.
+- make evaluation on unseen target i.e, the target shouldnt shown or replace with current during placement
+- if no of combination and placment runs out we need to create another task. 
+- None values during placement in supervised_learning
+## cause of concern 
+- overlapping  of image for some reason ( might be from intermediate but could also be from beginner)
+- task of placing being created in intermediate side
+- nan values being created using RL training
+
+## optmizations to perform
+- make a main class for all RL modules
+- optimized dqn action classifer update policy method by reducing the code.
+
+## finished
+
+- the pretraining data sometimes produce same i/p & o/p target & produce two moves all at once 
+- no rotation / mirroring pre-training output generated. ( most likely prblm with placement)
+- use masked obj extraction to also indicate location of objects and no need to worry about shape problem
 
 ---
 

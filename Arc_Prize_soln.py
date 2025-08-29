@@ -1,18 +1,18 @@
-from rl_models.BaseDQN import BaseDQN
+from dl_models.BaseDQN import BaseDQN
 import numpy as np
 import time 
 import os
 from dsl import COMB ,SHIFT,TRANSFORM
-from dsl2 import find_objects , extract_target_region
-from A_arc import  loader , display
-from rl_models.reinforce import FeatureExtractor
-from rl_models.DQNAction_Classifier import DQN_Classifier
-from rl_models.ReinLikelihood import Likelihood
+from helper import find_objects , extract_target_region
+from helper_arc import  loader , display
+from dl_models.feature_extractor import FeatureExtractor
+from dl_models.DQNAction_Classifier import DQN_Classifier
+from dl_models.ReinLikelihood import Likelihood
 import torch
-import torch
+import copy
 torch.autograd.set_detect_anomaly(True)
-from env import  placement
-from env import matrix_similarity
+from helper_env import  placement , place_object
+from helper_env import matrix_similarity
 import logging
 
 logging.basicConfig(
@@ -81,7 +81,7 @@ def Arc_Prize_Solver(examples,load,save,max_iterations=100, max_steps_per_episod
 
 
     ft1 = FeatureExtractor(input_channels=1)
-    neuro_classifer = DQN_Classifier(feature_extractor=ft1, num_actions=num_actions,no_of_inputs=3)
+    action_classifier = DQN_Classifier(feature_extractor=ft1, num_actions=num_actions,no_of_inputs=3)
 
     ft2 = FeatureExtractor(input_channels=1)
     likelihood_predictor = Likelihood(feature_extractor= ft2, output_dim=1,no_of_inputs=3)
@@ -89,7 +89,7 @@ def Arc_Prize_Solver(examples,load,save,max_iterations=100, max_steps_per_episod
     Placer = None #DQN_Solver(ft,len(examples[0]['output']),3)
 
     if load == True:
-        # neuro_classifer.load()
+        # action_classifier.load()
         likelihood_predictor.load()
     
     logging.debug(f'output shape & no of examples{len(examples[0]['output']),len(examples)}')
@@ -101,12 +101,12 @@ def Arc_Prize_Solver(examples,load,save,max_iterations=100, max_steps_per_episod
     objects = None
     obj_list={}
     count =0
-    for iteration in range(max_iterations):
+    for  _ in range(max_iterations):
         count+=1
         idx = bandit.select_example()
         if idx == -1:
             if  save ==True:
-                neuro_classifer.save()
+                action_classifier.save()
                 likelihood_predictor.save()
             return example['predicted_grid'] , True
         
@@ -135,7 +135,7 @@ def Arc_Prize_Solver(examples,load,save,max_iterations=100, max_steps_per_episod
         old_reward=0
         sim_score=0
         for step in range(max_steps_per_episode):
-            new_grid ,new_reward= find_solution(new_grid,likelihood_predictor,neuro_classifer,Placer, target_grid,objects)
+            new_grid ,new_reward= find_solution(new_grid,likelihood_predictor,action_classifier,Placer, target_grid,objects)
             
             sim_score += new_reward-old_reward
             old_reward=new_reward
@@ -151,14 +151,14 @@ def Arc_Prize_Solver(examples,load,save,max_iterations=100, max_steps_per_episod
             example['predicted_grid']= predicted_grid
 
             print(sim_score)
-            neuro_classifer.update_policy()
+            action_classifier.update_policy()
             likelihood_predictor.update_policy()
             bandit.update_arm(idx, sim_score)
         
 
     logging.info("No solution found within iterations")
     if  save ==True:
-        neuro_classifer.save()
+        action_classifier.save()
         likelihood_predictor.save()
     return predicted_grid , False  # No solution found
 
@@ -166,13 +166,13 @@ def Arc_Prize_Solver(examples,load,save,max_iterations=100, max_steps_per_episod
 
 
 
-def find_solution(old_predicted_grid, likelihood_predictor,neuro_classifer, Placer_, target_grid,objects):
+def find_solution(old_predicted_grid, likelihood_predictor,action_classifier, Placer_, target_grid,objects):
 
  
-    idx,prob1 = likelihood_predictor.select_action([old_predicted_grid, objects, target_grid])
-    obj_info  = objects[idx]
+    obj_idx,obj_prob = likelihood_predictor.select_action([old_predicted_grid, objects, target_grid])
+    obj_info  = objects[obj_idx]
 
-    action_idx ,(x,y)= neuro_classifer.select_action([old_predicted_grid,  obj_info['grid'], obj_info['position'],target_grid])
+    action_idx ,(x,y) = action_classifier.select_action([old_predicted_grid,  obj_info['grid'], obj_info['position'],target_grid])
 
     pos_values = [int(x * target_grid.shape[1]), int(y * target_grid.shape[0])]
 
@@ -180,7 +180,7 @@ def find_solution(old_predicted_grid, likelihood_predictor,neuro_classifer, Plac
 
     func = action_names[action_idx]
     is_place_action = False
-    new_obj_info =obj_info.copy()
+    new_obj_info = copy.deepcopy(obj_info)
 
     if func == 'place' or obj_info['placed'] == False:
 
@@ -191,22 +191,28 @@ def find_solution(old_predicted_grid, likelihood_predictor,neuro_classifer, Plac
         new_obj_info['position'] = pos_values
 
         objects.append(new_obj_info)
-        obj_info = new_obj_info
-    
+        
+        # new_predicted_grid=place_object(old_predicted_grid,new_obj_info['grid'],pos_values)
+        new_obj_info=copy.deepcopy(obj_info)
+
     elif func in Transform:
         
         new_obj_info['grid']=COMB[func](obj_info['grid'])
 
+
     elif func in Shift:
-        new_obj_info['position']=COMB[func](obj_info['position']) 
+        new_obj_info['position']=COMB[func](obj_info['position'])
 
     new_predicted_grid =placement(old_predicted_grid, obj_info, new_obj_info, background=0)
 
-    reward = matrix_similarity(new_obj_info['grid'],extract_target_region(target_grid,new_obj_info))
 
+    reward = matrix_similarity(new_obj_info['grid'],extract_target_region(target_grid,new_obj_info))
+    logging.debug(f"place: {obj_info['grid']}{new_predicted_grid}")
     if new_predicted_grid is None:
+        logging.debug('new_matrix')
         new_predicted_grid = old_predicted_grid
         reward = 0
+    else : logging.debug('performed')
 
 
     h, w = target_grid.shape[:2]
@@ -216,7 +222,7 @@ def find_solution(old_predicted_grid, likelihood_predictor,neuro_classifer, Plac
     )
     logging.debug(f'new obj position{norm_pos}')
 
-    neuro_classifer.store_experience(
+    action_classifier.store_experience(
         state=(old_predicted_grid, obj_info['grid'], obj_info['position']),
 
         action=action_idx,
@@ -229,7 +235,7 @@ def find_solution(old_predicted_grid, likelihood_predictor,neuro_classifer, Plac
 
  
     reward= matrix_similarity(new_predicted_grid,target_grid)
-    likelihood_predictor.store_experience(prob1,reward)
+    likelihood_predictor.store_experience(obj_prob,reward)
 
     return new_predicted_grid ,reward
 
@@ -247,12 +253,12 @@ if __name__ == "__main__":
         print(examples)
         logging.debug(f"Processing task {case_id} with {len(examples)} examples")
 
-        predicted , success = Arc_Prize_Solver(examples,load=False,save=True ,max_iterations=100)
-
+        predicted , success = Arc_Prize_Solver(examples,load=True,save=False ,max_iterations=100)
+        display(a,b,predicted)
         if success:
             a = task['train'][0]['input']
             b= task['train'][0]['output']
-            display(a,b,predicted)
+            
             print(f"Task {case_id} solved")
         else:
             print(f"Task {case_id} not solved")

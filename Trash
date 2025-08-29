@@ -381,4 +381,13 @@ print('new output_grid',new_grid)
                 current_grids = torch.cat(valid_tensors, dim=0)
             except RuntimeError as e2:
                 print("❌ torch.cat still failed after filtering. This should not happen.")
-                raise e2 
+                raise e2
+            
+        try:
+            scores_batch = torch.stack(all_scores).to(self.device)
+        except Exception as e:
+            print(f"[ERROR] torch.stack failed in Likelihood computation")
+            print(f"Number of scores: {len(all_scores)}")
+            for idx, s in enumerate(all_scores):
+                print(f"  Tensor {idx}: shape = {s.shape}, values = {s.detach().cpu().numpy()}")
+            raise e
