@@ -10,30 +10,30 @@ from typing import List, Tuple, Any
 import itertools
 from collections import Counter
 from helper_env import place_object , coordinate_converter
-func_counter = Counter()
+action_counter = Counter()
 
 from helper_arc import display,clear
 from dl_models.DQNAction_Classifier import DQN_Classifier
-from dl_models.feature_extractor import FeatureExtractor
+from dl_models.Feature_Extractor import FeatureExtractor
 from dl_models.ReinLikelihood import Likelihood
 # --- Helper Functions for Data Generation ---
-from dsl import COMB , SHIFT , TRANSFORM
+from dsl import ALL_ACTIONS , SHIFT_ACTIONS , TRANSFORM_ACTIONS
 from helper_env import placement
 
 import logging
 # logging.getLogger('matplotlib.font_manager').setLevel(logging.WARNING)
-logging.basicConfig(
-    level=logging.DEBUG,  # Set the minimum log level to DEBUG
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    filename='Arc_Prize_pretraining.log',  # Log output to current_grid file named app.log
-    filemode='w'  # Overwrite the log file each time the program runs
-)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler('log/Arc_Prize_pretraining.log', mode='w')
+# handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+logger.addHandler(handler)
+logger.propagate = False
 
 
-Shift = SHIFT.keys()
-Transform = TRANSFORM.keys()
-func_names=list(COMB.keys())
-num_actions = len(func_names)
+Shift_Actions = SHIFT_ACTIONS.keys()
+Transform_Actions = TRANSFORM_ACTIONS.keys()
+action_names=list(ALL_ACTIONS.keys())
+num_actions = len(action_names)
 
 
 
@@ -46,7 +46,7 @@ def create_random_object(max_size=3, max_color=9):
     # Randomly choose distinct colors
     colors = random.sample(range(1, max_color + 1), num_colors)
     
-    # Create grid with randomly assigned colors from the chosen set
+    # create grid with randomly assigned colors from the chosen set
     obj_grid = np.random.choice(colors, size=size)
     # print(obj_grid)
     return {
@@ -73,12 +73,11 @@ def find_empty_spot(grid, obj_size):
 
 
 # --- Task-Specific Generation Functions ---
-
 def generate_simple_task(grid_size=(10, 10), num_bg_objects=3, training_eg=4):
     datasets = []
     objects=[]
     obj_labels=[]
-    func_labels=[]
+    action_labels=[]
     target_grid = np.zeros(grid_size, dtype=int)
 
     for _ in range(num_bg_objects):
@@ -103,7 +102,7 @@ def generate_simple_task(grid_size=(10, 10), num_bg_objects=3, training_eg=4):
         
             datasets.append((current_grid,objects,target_grid.copy(),position))
             obj_labels.append(obj_idx)       
-            func_labels.append(func_names.index('place'))
+            action_labels.append(action_names.index('place'))
 
             obj['position']=position
             
@@ -112,7 +111,7 @@ def generate_simple_task(grid_size=(10, 10), num_bg_objects=3, training_eg=4):
 
             i +=1
 
-    return datasets , obj_labels , func_labels
+    return datasets , obj_labels , action_labels
 
 
 
@@ -122,7 +121,7 @@ def generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5, training_eg
     datasets = []
     objects=[]
     obj_labels=[]
-    func_labels=[]
+    action_labels=[]
     target_grid = np.zeros(grid_size, dtype=int)
     i = 0
     while i < num_bg_objects:
@@ -131,34 +130,34 @@ def generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5, training_eg
         position = find_empty_spot(target_grid, obj['size'])
 
         if position:
-            logging.debug('generated_ineter')
+            logger.debug('generated_ineter')
             target_grid = place_object(target_grid, obj['grid'], position)
             obj['position']=position
             objects.append(obj)
             i+=1
 
-    gen = infinite_random_pairs(num_bg_objects,len(func_names) )
+    gen = infinite_random_pairs(num_bg_objects,len(action_names) )
     i = 0
     while i < training_eg:
 
         new_target_grid=None
 
-        obj_idx,func_idx=next(gen)
+        obj_idx,action_idx=next(gen)
         obj=objects[obj_idx]
 
-        func_name = func_names[func_idx]
+        action_name = action_names[action_idx]
         new_obj = copy.deepcopy(obj)
 
 
-        if func_name in ['place', 'remove']:
+        if action_name in ['place', 'remove']:
             continue 
 
-        elif func_name in Transform:
-            new_obj['grid'] = COMB[func_name](obj['grid'])
+        elif action_name in Transform_Actions:
+            new_obj['grid'] = ALL_ACTIONS[action_name](obj['grid'])
             new_target_grid = placement(target_grid.copy(), obj, new_obj, background=0)
 
-        elif func_name in Shift:
-            new_obj['position'] = COMB[func_name](obj['position'])
+        elif action_name in Shift_Actions:
+            new_obj['position'] = ALL_ACTIONS[action_name](obj['position'])
             new_target_grid = placement(target_grid.copy(), obj, new_obj, background=0)
 
         if new_target_grid is not  None:
@@ -166,9 +165,9 @@ def generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5, training_eg
             datasets.append((new_target_grid,objects,target_grid.copy(),new_obj['position']))
             
             obj_labels.append(obj_idx)
-            func_labels.append(func_idx)
+            action_labels.append(action_idx)
 
-    return datasets, obj_labels, func_labels
+    return datasets, obj_labels, action_labels
 
 def infinite_random_pairs(a, b):
     pool = list(itertools.product(range(a), range(b)))
@@ -184,29 +183,29 @@ def create_data_loader(tasks: List[Tuple], batch_size: int, shuffle: bool = True
     # 1. Pool all examples into a single dataset
     all_examples: List[Any] = []
     all_obj_labels:   List[int] = []
-    all_func_labels:     List[int] = []
+    all_action_labels:     List[int] = []
 
-    for datasets, obj_labels, func_labels in tasks:
-        for (input_grid,objects,target_grid,_position) , label , func_idx in zip(datasets,obj_labels,func_labels):
+    for datasets, obj_labels, action_labels in tasks:
+        for (input_grid,objects,target_grid,_position) , label , action_idx in zip(datasets,obj_labels,action_labels):
             obj=objects[label]
-            func_counter[func_idx] += 1
+            action_counter[action_idx] += 1
 
 
             if printing == True:
-                logging.debug(f"dataset: \n {input_grid} ,\n {obj['grid']} ,\n{target_grid},{func_names[func_idx]},")
+                logger.debug(f"dataset: \n {input_grid} ,\n {obj['grid']} ,\n{target_grid},{action_names[action_idx]},")
                 obj_grid= placement(np.zeros_like(target_grid),obj,obj,0)
                 display(input_grid,obj_grid,target_grid,'data_loader') 
 
                 
         all_examples.extend(datasets)
         all_obj_labels.extend(obj_labels)
-        all_func_labels.extend(func_labels)
+        all_action_labels.extend(action_labels)
 
     # After the loop
     print("Function counts:")
-    for func_idx, count in func_counter.items():
-        print(f"{func_names[func_idx]}: {count}")
-    # 2. Create and shuffle indices
+    for action_idx, count in action_counter.items():
+        print(f"{action_names[action_idx]}: {count}")
+    # 2. create and shuffle indices
     indices = list(range(len(all_examples)))
     if shuffle:
         random.shuffle(indices)
@@ -219,15 +218,15 @@ def create_data_loader(tasks: List[Tuple], batch_size: int, shuffle: bool = True
         # Use the indices to get the data for the batch
         batch_examples = [all_examples[j] for j in batch_indices]
         batch_obj_labels = [all_obj_labels[j] for j in batch_indices]
-        batch_func_labels = [all_func_labels[j] for j in batch_indices]
+        batch_action_labels = [all_action_labels[j] for j in batch_indices]
 
-        yield batch_examples, batch_obj_labels, batch_func_labels
-
-
+        yield batch_examples, batch_obj_labels, batch_action_labels
 
 
-def Dataset_creater( Create):
-    if Create==True:
+
+
+def dataset_creater( create):
+    if create==True:
         # clear('train_examples')
         tasks1 = [      generate_simple_task(grid_size=(10, 10), num_bg_objects=5 , training_eg=4 ) for _ in range(10)]
         tasks2 = [generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5 , training_eg=16) for _ in range(10)]
@@ -242,20 +241,21 @@ def Dataset_creater( Create):
             tasks1 = pickle.load(f)
     return tasks1
 
-# --- Main  Function ---
 
+# --- Main  Function ---
 if __name__ == '__main__':
-    clear('likelihood_predictions')
-    clear('classifier_predictions')
+    # clear('likelihood_predictions')
+
+    # clear('classifier_predictions')
 
     ft1 = FeatureExtractor(input_channels=1)
     likelihood_predictor = Likelihood(feature_extractor=ft1, output_dim=1,no_of_inputs=3)
     likelihood_predictor.show_structure()
-    action_classifier = DQN_Classifier(ft1,len(COMB),3)
+    action_classifier = DQN_Classifier(ft1,len(ALL_ACTIONS),3)
     # likelihood_predictor.load()
     # action_classifier.load()
-    Create=False
-    tasks = Dataset_creater(Create)
+
+    tasks = dataset_creater(create=False)
 
     likelihood_losses=[]
     likelihood_accuracies=[]
@@ -264,12 +264,12 @@ if __name__ == '__main__':
     position_losses=[]
 
     # data_loader = create_data_loader(tasks, batch_size=10, shuffle=True)
-    # datasets, obj_labels , func_labels = next(iter(data_loader))
+    # datasets, obj_labels , action_labels = next(iter(data_loader))
 
     for epoch in range(10):
 
         data_loader = create_data_loader(tasks, batch_size=10, shuffle=True,printing=False)
-        for datasets, obj_labels , func_labels in data_loader:
+        for datasets, obj_labels , action_labels in data_loader:
             start_time=time.time()
 
             loss,acc=likelihood_predictor.train_supervised(datasets,obj_labels)
@@ -277,7 +277,7 @@ if __name__ == '__main__':
             likelihood_losses.append(loss)
             likelihood_accuracies.append(acc)
 
-            a_loss,pos_loss,acc= action_classifier.train_supervised(datasets,obj_labels,func_labels)
+            a_loss,pos_loss,acc= action_classifier.train_supervised(datasets,obj_labels,action_labels)
             print(f"a Step {epoch+1}: losses = {loss:.4f}, Accuracy = {acc:.2%} , time= {time.time()-start_time}")
             action_losses.append(a_loss)
             position_losses.append(pos_loss)

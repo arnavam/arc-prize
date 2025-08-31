@@ -1,29 +1,32 @@
 # ARC Prize 2025 – Neuro-Symbolic Solver
 
-This project is focused on solving tasks from the [ARC (Abstraction and Reasoning Corpus)](https://github.com/fchollet/ARC) using a combination of **symbolic algorithms** (like A*, BFS, DSLs) and **neural models**, integrating them in a neuro-symbolic framework. The goal is to develop systems that generalize from few examples and mimic human-like reasoning.
+This project is focused on solving tasks from the [ARC (Abstraction and Reasoning Corpus)](https://github.com/fchollet/ARC) using a combination of **symbolic algorithms**  and **neural models**, integrating them in a neuro-symbolic framework. The goal is to develop systems that generalize from few examples and mimic human-like reasoning.
 
 
-## 🧠 Project Structure
 
-| File | Description |
-|------|-------------|
-| `A_arc.py` | first file created , my first rough implementation of the solution  |
-| `a-star.py`, `a-star2.py` | A* search-based solvers  , dosent work very well  |
-| `bfs.py`, `bfs2.py`, `bfs3.py` | BFS-based solvers, works well though dosent provide correct soln and takes long time  |
-| `dsl.py`, `dsl2.py` | my dsl implementations |
-| `neuro+mcts.py`, `neuro+mcts2.py`| Neural model combined with MCTS for task planning |
-| `neurosymbolic_reinforce.py` | Torch-based neural-symbolic integration |
-| `nuerosymbolic_tf.py` | tf based neuro-symbolic pipeline |
-| `neurosymbolics_tf.ipynb` | same thing using to run in colab  |
-| `neurosymbolic_RLA2C.py` | Torch-based neural-symbolic ,updatation using RL_A2C |
-| `nuerosymb_q_learning.py` | Torch-based neural-symbolic ,updatation using q-learning (greedy-epsilon) |
-| `submission.py`, `submission.json` | Code and metadata for ARC submission format |
-| `Trash.py` | Scratch or deprecated experiments |
-| `IDEAS.md` | Notes and brainstorming for models and approaches |
-| `.gitignore` | Standard Git ignore rules |
-| `README.md` | This file |
+## 📂 File Structure
 
-
+|Category|File / Directory|Description|
+|---|---|---|
+|**Core Logic & Execution**|`Arc_Prize_soln.py`|The main script that implements the core RL solution logic and generates outputs.|
+||`Arc_Prize_pretraining.py`|Script for supervised pre-training machine learning models on ARC-like tasks.|
+||`d_models/`|A directory containing the dl models architecture and training code|
+||`dsl.py`|Defines the custom Domain-Specific Language (DSL) for grid transformations.|
+|**Helper Modules**|`helper.py`|A general-purpose module with utility functions used across the project.|
+||`helper_arc.py`|Contains specific helper functions for handling ARC task data structures |
+||`helper_env.py`|Contains specific helper functions  related to  the environment|
+|**Data & Models**|`weights/`|Directory containing the saved weights for our trained models.|
+||`generated_training_data.pkl`|A pickled file containing synthetically generated data used to train the models.|
+|**Output & Logs**|`data_loader/`|Contains images of the generated datets|
+||`classifier_predictions/`|Default directory for storing the output predictions images from the classifier model.|
+||`likelihood_predictions/`|Default directory for storing the output images from the likelihood model.|
+||`app.log`|A log file for tracking execution, debugging information, and errors.|
+|**Miscellaneous**|`IDEAS.md`|A document containing brainstorming notes and future ideas.|
+||`submission.py`|A helper script used to format and package the final solution for submission.|
+||`.gitignore`|Specifies which files and directories to exclude from Git version control.|
+||`__pycache__/`|Directory for Python's cached bytecode.|
+||`arc-prize-2025/`|Directory  holding data to the 2025 ARC Prize.|
+||`README.md`|This file.|
 
 
 

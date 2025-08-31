@@ -92,7 +92,7 @@ def remove(data):
     data=np.zeros_like(data) 
     return data
 
-TRANSFORM = {
+TRANSFORM_ACTIONS = {
         "rotate": rotate,
         "rotate_re":rotate_re,
         "mirrorlr": mirrorlr,
@@ -136,11 +136,11 @@ def move_right( position):
 def place (position):
     return position
 
-SHIFT = {
+SHIFT_ACTIONS = {
     "move_up": move_up,
     "move_down": move_down,
     "move_left": move_left,
     "move_right": move_right ,
 }
 
-COMB = TRANSFORM | SHIFT
+ALL_ACTIONS = TRANSFORM_ACTIONS | SHIFT_ACTIONS

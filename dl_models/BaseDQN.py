@@ -6,12 +6,13 @@ import torch.nn.functional as F
 from torch.distributions import Categorical
 import logging
 
-logging.basicConfig(
-    level=logging.DEBUG,  # Set the minimum log level to DEBUG
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    filename='app.log',  # Log output to predicted_grid file named app.log
-    filemode='w'  # Overwrite the log file each time the program runs
-)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler('log/base_dqn.log', mode='w')
+# handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+logger.addHandler(handler)
+logger.propagate = False
+
 import random
 from collections import deque
 
@@ -69,7 +70,7 @@ class BaseDQN:
 
             # If it's object dtype, try to convert to numeric
             if array.dtype == np.object_:
-                logging.debug("WARNING: NumPy array has dtype=object. Attempting to convert to numeric dtype...")
+                logger.debug("WARNING: NumPy array has dtype=object. Attempting to convert to numeric dtype...")
 
                 try:
                     # Try float conversion by default

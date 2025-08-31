@@ -9,15 +9,15 @@ from dl_models.BaseDQN import BaseDQN
 from helper_env import placement , place_object
 from  helper_arc import display
 import logging
-from dsl import COMB
-func_names= list(COMB.keys())
-logging.basicConfig(
-    level=logging.DEBUG,  # Set the minimum log level to DEBUG
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    filename='app.log',  # Log output to predicted_grid file named app.log
-    filemode='w'  # Overwrite the log file each time the program runs
-)
+from dsl import ALL_ACTIONS
+action_names= list(ALL_ACTIONS.keys())
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler('log/action_classifer.log', mode='w')
+# handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+logger.addHandler(handler)
+logger.propagate = False
 
 import random
 from collections import deque
@@ -79,7 +79,7 @@ class QNetwork(nn.Module):
 
             # If it's object dtype, try to convert to numeric
             if array.dtype == np.object_:
-                logging.debug("WARNING: NumPy array has dtype=object. Attempting to convert to numeric dtype...")
+                logger.debug("WARNING: NumPy array has dtype=object. Attempting to convert to numeric dtype...")
 
                 try:
                     # Try float conversion by default
@@ -148,7 +148,7 @@ class DQN_Classifier(BaseDQN):
 
             values = [random.random(), random.random()]
 
-            logging.debug(f"'random values',{action_idx,values}")
+            logger.debug(f"'random values',{action_idx,values}")
             return action_idx , values
         else:
             # Exploitation: choose the best action from the policy_net network
@@ -158,7 +158,8 @@ class DQN_Classifier(BaseDQN):
                 action_idx = torch.argmax(action_values).item()
                 pos_values = pos_values.tolist()[0]
 
-                logging.debug(f"'action_idx,pos_values:',{action_idx,pos_values}")
+                logger.debug(f"'action_idx,pos_values:',{action_idx,pos_values}")
+                
                 return action_idx , pos_values
 
     def update_policy(self):
@@ -176,9 +177,9 @@ class DQN_Classifier(BaseDQN):
         try:
          obj_grids = torch.cat([s[1] for s in states], dim=0)
         except Exception as e:
-            logging.warning(f"Concatenation failed: {e}")
+            logger.warning(f"Concatenation failed: {e}")
             for i, s in enumerate(states):
-                logging.warning(f"Tensor {i}: shape {s[1].shape}")
+                logger.warning(f"Tensor {i}: shape {s[1].shape}")
 
         obj_positions = torch.cat([s[2] for s in states], dim=0)
 
@@ -223,7 +224,7 @@ class DQN_Classifier(BaseDQN):
         
         # Check the loss itself
         if loss_q.isnan():
-            logging.warning("loss_q is NaN! Halting or debugging.")
+            logger.warning("loss_q is NaN! Halting or debugging.")
             loss_q = torch.nan_to_num(loss_q, nan=0.0)
 
             # import pdb; pdb.set_trace() # Uncomment for interactive debugging     # Position loss with masking
@@ -243,9 +244,9 @@ class DQN_Classifier(BaseDQN):
         self.update_counter += 1
         if self.update_counter % self.target_update_frequency == 0:
             self.target_net.load_state_dict(self.policy_net.state_dict())
-    def train_supervised(self, inputs, obj_labels, func_labels):
+    def train_supervised(self, inputs, obj_labels, action_labels):
 
-        func_criterion = nn.CrossEntropyLoss()
+        action_criterion = nn.CrossEntropyLoss()
         pos_criterion = nn.MSELoss()  # or SmoothL1Loss()
         self.optimizer.zero_grad()
         pos_loss = torch.tensor(0.0, device=self.device) # Default to 0
@@ -254,7 +255,7 @@ class DQN_Classifier(BaseDQN):
         pos_preds = []
         pos_targets = []
 
-        for (current_grid, objects, target_grid , obj_pos) ,obj_label ,func_label in zip(inputs, obj_labels ,func_labels):
+        for (current_grid, objects, target_grid , obj_pos) ,obj_label ,action_label in zip(inputs, obj_labels ,action_labels):
             obj = objects[obj_label]
             obj_grid = place_object(np.zeros_like(target_grid.copy()),obj['grid'],obj['position'])
 
@@ -262,22 +263,22 @@ class DQN_Classifier(BaseDQN):
             action_values, pos_pred = self.policy_net([current_grid, obj_grid, obj['position'], target_grid])
 
             all_scores.append(action_values.squeeze())  # [num_actions]
-            func_name= func_names[func_label]
+            action_name= action_names[action_label]
 
-            if func_name == 'place':
+            if action_name == 'place':
 
-                logging.debug('performed')
+                logger.debug('performed')
                 pos_preds.append(pos_pred.squeeze())  
                 pos_targets.append([obj_pos[0] / target_grid.shape[0],obj_pos[1] / target_grid.shape[1]])
 
             
-            logging.debug(f"predictions: \n{current_grid},\n{obj_grid},\n{target_grid},{action_values.squeeze()},{action_values.argmax(dim=1)}")
-            logging.debug(f"\nfunc-name: {func_name},predictedpos :{[int(pos_pred[0][0] * target_grid.shape[1]), int(pos_pred[0][1] * target_grid.shape[0])],obj_pos}")
+            logger.debug(f"predictions: \n{current_grid},\n{obj_grid},\n{target_grid},{action_values.squeeze()},{action_values.argmax(dim=1)}")
+            logger.debug(f"\naction-name: {action_name},predictedpos :{[int(pos_pred[0][0] * target_grid.shape[1]), int(pos_pred[0][1] * target_grid.shape[0])],obj_pos}")
 
         # Functional (classification) loss
         scores_batch = torch.stack(all_scores).to(self.device)  # [batch_size, num_actions]
-        func_labels = torch.tensor(func_labels, dtype=torch.long, device=self.device)
-        func_loss = func_criterion(scores_batch, func_labels)
+        action_labels = torch.tensor(action_labels, dtype=torch.long, device=self.device)
+        action_loss = action_criterion(scores_batch, action_labels)
         
         if pos_preds:
             pos_preds   = torch.stack(pos_preds).to(self.device)           # [batch_size, 2]
@@ -286,7 +287,7 @@ class DQN_Classifier(BaseDQN):
         
         alpha = 1 # This is a hyperparameter you can tune
 
-        total_loss = func_loss + alpha * pos_loss
+        total_loss = action_loss + alpha * pos_loss
 
         total_loss.backward()
 
@@ -302,6 +303,6 @@ class DQN_Classifier(BaseDQN):
         # Accuracy
         with torch.no_grad():
             preds = scores_batch.argmax(dim=1)
-            acc = (preds == func_labels).float().mean().item()
+            acc = (preds == action_labels).float().mean().item()
 
         return total_loss.item(),pos_loss.item(), acc

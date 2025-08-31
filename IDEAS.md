@@ -4,12 +4,11 @@
 - make more robust scoring by adding  error of  miss placing + error not placing
 - use early-stopping
 - use diff RL algorithms or variants .
-- create a resoning type advanced datasts ( like if yello move top etc..)
-- add remove dsl , pre-train using that  & also some other dsls
+- create a resoning type advanced pre-training datasts ( like if yello move top etc..)
+- add 'remove' dsl , pre-train using that  & also add some other dsls
 
 - positional encoding
 - use masked fitting where object shape can be incredebly complex in shape
-- maybe a bit more refined  
 - make the pretraining more robust by evaluating on unseen data.
 - make evaluation on unseen target i.e, the target shouldnt shown or replace with current during placement
 - if no of combination and placment runs out we need to create another task. 

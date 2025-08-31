@@ -52,7 +52,7 @@ def find_objects(grid, max_objects=10):
     initial_object = {
         'grid': np.array([row[:] for row in grid]),
         'color': 'mixed',  # Special value indicating multiple colors
-        'position': (0, 0),
+        'position': (None, None),
         'placed':False,
         'size': (rows, cols)
     }
