@@ -156,10 +156,8 @@ def recursive_fill(input_grid, output_grid, template=None, mask=None):
     return None, None
 
 # --- Integrated Solver ---
-def solve_with_bfs(input_grid, output_grid):
-    """Main solver that handles both small and large output cases."""
-    input_node = np.array(input_grid)
-    output_node = np.array(output_grid)
+def solve_with_bfs(input_node, output_node):
+
     
     # Case 1: Output is smaller or same size
     if input_node.shape >= output_node.shape:
@@ -184,7 +182,7 @@ def main():
     start_time = time.time()
     
     for count, case_id in enumerate(train.keys()):
-        if count >= 10:  # Process first 10 for testing
+        if count >= 10:  # Processing first 10 for testing
             break
             
         print(f"Processing case {count+1}: {case_id}")
