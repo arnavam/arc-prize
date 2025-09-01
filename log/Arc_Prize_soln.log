@@ -1,0 +1,19 @@
+Processing task 00576224 with 2 examples
+output shape & no of examples(6, 2)
+count(np.int64(1), 1)
+input grid: [[8 6]
+ [6 4]]
+target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+new_predicted_grid
+'predicted_grid',
+[[0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>

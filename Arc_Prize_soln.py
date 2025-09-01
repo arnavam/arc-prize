@@ -216,12 +216,20 @@ def find_solution(old_predicted_grid, likelihood_predictor,neuro_classifer, Plac
     )
     logging.debug(f'new obj position{norm_pos}')
 
+<<<<<<< Updated upstream
     neuro_classifer.store_experience(
         state=(old_predicted_grid, obj_info['grid'], obj_info['position']),
+=======
+
+    obj_grid = place_object(np.zeros_like(target_grid.copy()),obj_info['grid'],obj_info['position'])
+    new_obj_grid = place_object(np.zeros_like(target_grid.copy()),new_obj_info['grid'],new_obj_info['position'])
+    action_classifier.store_experience(
+        state=(old_predicted_grid, obj_grid),
+>>>>>>> Stashed changes
 
         action=action_idx,
         reward=reward,
-        next_state=(new_predicted_grid, new_obj_info['grid'], new_obj_info['position']),
+        next_state=(new_predicted_grid, new_obj_grid),
         true_position=norm_pos,
         is_place_action=is_place_action
     )
@@ -237,6 +245,7 @@ def find_solution(old_predicted_grid, likelihood_predictor,neuro_classifer, Plac
 if __name__ == "__main__":
     train, ids = loader(train_path='arc-prize-2025/arc-agi_training_challenges.json')
     count=0
+
     for case_id in ids:
         count +=1
         if count ==2:
@@ -249,6 +258,11 @@ if __name__ == "__main__":
 
         predicted , success = Arc_Prize_Solver(examples,load=False,save=True ,max_iterations=100)
 
+<<<<<<< Updated upstream
+=======
+        predicted , success = Arc_Prize_Solver(examples,load=False,save=False ,max_iterations=100)
+        display(a,b,predicted)
+>>>>>>> Stashed changes
         if success:
             a = task['train'][0]['input']
             b= task['train'][0]['output']

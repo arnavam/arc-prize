@@ -59,8 +59,12 @@ def place_object(grid, obj, pos):
 # --- Task-Specific Generation Functions ---
 
 def generate_simple_task(grid_size=(10, 10), num_bg_objects=3, training_eg=4):
+<<<<<<< Updated upstream
 
     datasets = []
+=======
+    inputs = []
+>>>>>>> Stashed changes
     objects=[]
     labels=[]
     funcs=[]
@@ -68,11 +72,18 @@ def generate_simple_task(grid_size=(10, 10), num_bg_objects=3, training_eg=4):
 
     for _ in range(num_bg_objects):
         objects.append(create_random_object())
+<<<<<<< Updated upstream
 
     for _ in range(training_eg):
+=======
+    
+    i=0
+    while i < training_eg:
+>>>>>>> Stashed changes
 
-        obj_idx= random.randint(0,num_bg_objects-1)
+        obj_idx= random.randint(0,num_bg_objects-1) # choose one random object from the lsit
         obj=objects[obj_idx]
+<<<<<<< Updated upstream
         current_grid=target_grid
         pos = find_empty_spot(target_grid, obj['size'])
         if pos:
@@ -80,6 +91,35 @@ def generate_simple_task(grid_size=(10, 10), num_bg_objects=3, training_eg=4):
             datasets.append((current_grid,objects,target_grid))
             labels.append(obj_idx)
             funcs.append(func_names.index('place'))
+=======
+        
+        position = find_empty_spot(target_grid, obj['size']) # looks if the obj can be placed on target
+        
+        if position: # if can be placed
+
+            current_grid=target_grid.copy()
+            target_grid = place_object(target_grid, obj['grid'], position)
+           
+            if np.array_equal(target_grid, current_grid):
+                print('grid: \n' , current_grid,'\n',target_grid)
+                continue
+                # raise ValueError("Both grids can't be the same")
+        
+            inputs.append((current_grid,objects,target_grid.copy(),position))
+            obj_labels.append(obj_idx)       
+            action_labels.append(action_names.index('place'))
+
+            obj['position']=position
+            
+
+
+
+            i +=1
+
+    return inputs , obj_labels , action_labels
+
+
+>>>>>>> Stashed changes
 
         else:
             training_eg +=1
@@ -87,14 +127,18 @@ def generate_simple_task(grid_size=(10, 10), num_bg_objects=3, training_eg=4):
     return datasets , labels , funcs
 
 def generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5, training_eg=4):
-    datasets = []
+    inputs = []
     objects=[]
     labels=[]
     funcs=[]
     target_grid = np.zeros(grid_size, dtype=int)
+<<<<<<< Updated upstream
 
+=======
+    
+>>>>>>> Stashed changes
     i = 0
-    while i < num_bg_objects:
+    while i < num_bg_objects: # place random objects  in  target_grid
         
         obj=create_random_object()
         pos = find_empty_spot(target_grid, obj['size'])
@@ -104,21 +148,36 @@ def generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5, training_eg
             obj['position']=pos
             objects.append(obj)
             i+=1
+<<<<<<< Updated upstream
             
+=======
+
+    object_action_combinations = all_random_paris(num_bg_objects,len(action_names) ) 
+>>>>>>> Stashed changes
     i = 0
+
     while i < training_eg:
 
         new_target_grid=None
 
+<<<<<<< Updated upstream
         obj_idx = random.randint(0, num_bg_objects - 1)
+=======
+        obj_idx,action_idx=next(object_action_combinations)
+>>>>>>> Stashed changes
         obj=objects[obj_idx]
 
         func = random.choice(func_names)
         func_idx = func_names.index(func)
         new_obj = copy.deepcopy(obj)
 
+<<<<<<< Updated upstream
         
         if func in ['place', 'remove']:
+=======
+
+        if action_name in ['place', 'remove']: # do nothing for this two actions
+>>>>>>> Stashed changes
             continue 
     #     new_obj_info.update({
     #         'placed': True,
@@ -128,6 +187,7 @@ def generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5, training_eg
     #         objects.append(new_obj_info)
     #         obj_info = new_obj_info
 
+<<<<<<< Updated upstream
         elif func in Transform:
             new_obj['grid'] = COMB[func](obj['grid'])
             new_target_grid = placement(target_grid.copy(), obj, new_obj, background=0)
@@ -135,9 +195,19 @@ def generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5, training_eg
         elif func in Shift:
             new_obj['position'] = COMB[func](obj['position'])
             new_target_grid = placement(target_grid.copy(), obj, new_obj, background=0)
+=======
+        elif action_name in Transform_Actions:
+            new_obj['grid'] = ALL_ACTIONS[action_name](obj['grid']) # performs action on the grid
+            new_target_grid = placement(target_grid.copy(), obj, new_obj, background=0) # update the obj on the grid
 
-        if new_target_grid is not  None:
+        elif action_name in Shift_Actions:
+            new_obj['position'] = ALL_ACTIONS[action_name](obj['position']) # peforms action on the position
+            new_target_grid = placement(target_grid.copy(), obj, new_obj, background=0)# update the obj on the grid
+>>>>>>> Stashed changes
+
+        if new_target_grid is not  None: # the update has happend
             i+=1
+<<<<<<< Updated upstream
             logging.debug(f"dataset: {new_target_grid},{target_grid},{obj['grid']},{obj_idx},{i}")
             display(new_target_grid,target_grid,obj['grid'],'train_examples')
             datasets.append((new_target_grid,objects,target_grid))
@@ -178,6 +248,126 @@ if __name__ == '__main__':
     # Then train over those
     for epoch in range(100):
         for datasets, labels , funcs in tasks1:
+=======
+            inputs.append((new_target_grid,objects,target_grid.copy(),new_obj['position']))
+            
+            obj_labels.append(obj_idx)
+            action_labels.append(action_idx)
+
+    return inputs, obj_labels, action_labels
+
+
+def all_random_paris(a, b):
+    pool = list(itertools.product(range(a), range(b)))
+    while True:
+        for pair in np.random.permutation(pool):
+            yield pair
+
+
+
+def create_data_loader(tasks: List[Tuple], batch_size: int, shuffle: bool = True,printing=False):
+ 
+    
+    all_examples:      List[Any] = []
+    all_obj_labels:    List[int] = []
+    all_action_labels: List[int] = []
+
+    for inputs, obj_labels, action_labels in tasks:
+        for (input_grid,objects,target_grid,_position) , label , action_idx in zip(inputs,obj_labels,action_labels):
+            obj=objects[label]
+            action_counter[action_idx] += 1
+
+
+            if printing == True:
+                logger.debug(f"dataset: \n {input_grid} ,\n {obj['grid']} ,\n{target_grid},{action_names[action_idx]},")
+                obj_grid= placement(np.zeros_like(target_grid),obj,obj,0)
+                display(input_grid,obj_grid,target_grid,'data_loader') 
+
+                
+        all_examples.extend(inputs)
+        all_obj_labels.extend(obj_labels)
+        all_action_labels.extend(action_labels)
+
+    # for finding no of each actions each timed it used it train
+    print("Function counts:")
+    for action_idx, count in action_counter.items():
+        print(f"{action_names[action_idx]}: {count}")
+
+    indices = list(range(len(all_examples))) #create and shuffle indices
+    if shuffle:
+        random.shuffle(indices)
+
+    # Yield mini-batches one by one
+    for i in range(0, len(indices), batch_size):
+        # Get the indices for the current batch
+        batch_indices = indices[i:i + batch_size]
+        
+        # Use the indices to get the data for the batch
+        batch_examples = [all_examples[j] for j in batch_indices]
+        batch_obj_labels = [all_obj_labels[j] for j in batch_indices]
+        batch_action_labels = [all_action_labels[j] for j in batch_indices]
+
+        yield batch_examples, batch_obj_labels, batch_action_labels
+
+
+
+
+def dataset_creater( create):
+    if create==True:
+
+        tasks1 = [      generate_simple_task(grid_size=(10, 10), num_bg_objects=5 , training_eg=4 ) for _ in range(10)] 
+        tasks2 = [generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5 , training_eg=16) for _ in range(10)]
+
+        tasks1.extend(tasks2)
+
+        with open("generated_training_data.pkl", "wb") as f:
+            pickle.dump(tasks1, f) 
+
+    else:
+        with open("generated_training_data.pkl", "rb") as f:
+            tasks1 = pickle.load(f)
+    return tasks1
+
+
+# --- Main  Function ---
+if __name__ == '__main__':
+
+    likelihood_losses=[]
+    likelihood_accuracies=[]
+    action_position_losse=[]
+    action_accuracies=[]
+    position_losses=[]
+    
+
+    #----------- initialized the dl models --------
+
+    likelihood_ft = FeatureExtractor(input_channels=1) 
+    likelihood_predictor = Likelihood(feature_extractor=likelihood_ft, no_of_outputs=1,no_of_inputs=3)
+
+    action_classifier_ft = FeatureExtractor(input_channels=1)
+    action_classifier = DQN_Classifier(feature_extractor=action_classifier_ft ,num_actions=len(ALL_ACTIONS),no_of_inputs=3)
+  
+    #---------- load the models if necessary
+    # likelihood_predictor.load()
+    # action_classifier.load()
+
+    # --- shows the dl model architecture
+    # action_classifier.show_structure()
+    # likelihood_predictor.show_structure() 
+
+
+    dataset = dataset_creater(create=False) # dataset_creater -> function which creates the dataset.
+
+    #----- train the model only on one batch
+    data_loader = create_data_loader(dataset, batch_size=10, shuffle=True)
+    inputs, obj_labels , action_labels = next(iter(data_loader))
+
+    for epoch in range(100):
+
+        # data_loader = create_data_loader(dataset, batch_size=10, shuffle=True,printing=True)# prints the input images in data_loader folder
+        # for inputs, obj_labels , action_labels in data_loader: 
+            
+>>>>>>> Stashed changes
             start_time=time.time()
             loss,acc=likelihood_predictor.train_supervised(datasets,labels)
             print(f"Step {epoch+1}: losses = {loss:.4f}, Accuracy = {acc:.2%} , time= {time.time()-start_times}")
@@ -186,16 +376,44 @@ if __name__ == '__main__':
             l_accs.append(acc)
             loss,acc= nuero_classifier.train_supervised(datasets,labels,funcs)
 
+<<<<<<< Updated upstream
     likelihood_predictor.save()
     plt.plot(l_accs, label='Accuracy')
     plt.plot(l_losses, label='l_losses')
+=======
+            loss,acc=likelihood_predictor.train_supervised(inputs,obj_labels) # training code is defined inside the class
+            print(f"l Step {epoch+1}: losses = {loss:.4f}, Accuracy = {acc:.2%} , time= {time.time()-start_time}")
+            likelihood_losses.append(loss)
+            likelihood_accuracies.append(acc)
+
+            a_loss,pos_loss,acc= action_classifier.train_supervised(inputs,obj_labels,action_labels) # this o/ps both action and position of the object in which action preformed
+            print(f"a Step {epoch+1}: losses = {loss:.4f}, Accuracy = {acc:.2%} , time= {time.time()-start_time}")
+            action_position_losse.append(a_loss)
+            position_losses.append(pos_loss)
+            action_accuracies.append(acc)
+
+    # likelihood_predictor.save()
+    # action_classifier.save()
+
+#----- plot the loss & accuracy
+    plt.title('likelihood_predictor')
+    plt.plot(likelihood_accuracies, label='Accuracy')
+    plt.plot(likelihood_losses, label='losses')
+>>>>>>> Stashed changes
     plt.xlabel("Step")
     plt.legend()
     plt.show()
 
+<<<<<<< Updated upstream
     nuero_classifier.save()
     plt.plot(l_accs, label='Accuracy')
     plt.plot(l_losses, label='losses')
+=======
+    plt.title('action_classifier')
+    plt.plot(action_accuracies, label='Accuracy')
+    plt.plot(action_position_losse, label='action_loss')
+    plt.plot(position_losses,label='position_loss')
+>>>>>>> Stashed changes
     plt.xlabel("Step")
     plt.legend()
     plt.show()

@@ -135,7 +135,7 @@ class BaseDQN:
 
 
     def store_experience(self, state, action, reward, next_state):
-        """Saves an experience tuple to the replay memory."""
+
         self.memory.push((state, action, reward, next_state))
 
 
@@ -146,6 +146,6 @@ class BaseDQN:
     def save(self):
         torch.save(self.policy_net.state_dict(), f'weights/{self.__class__.__name__}.pth')
 
-    def show(self):
+    def show_structure(self):
         for name, param in self.policy_net.state_dict().items():
             print(name, param.shape)
