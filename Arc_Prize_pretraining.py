@@ -6,93 +6,79 @@ import matplotlib.pyplot as plt
 import copy
 import pickle
 import time
-from typing import List, Tuple, Any
-import itertools
-from collections import Counter
-from helper_env import place_object , coordinate_convertergi
-action_counter = Counter()
 
-from helper_arc import display,clear
-from dl_models.DQNAction_Classifier import DQN_Classifier
-from dl_models.Feature_Extractor import FeatureExtractor
-from dl_models.ReinLikelihood import Likelihood
+from A_arc import display,clear
+from rl_models.DQNAction_Classifier import DQN_Classifier
+from rl_models.feature_extractor import FeatureExtractor
+from rl_models.ReinLikelihood import Likelihood
 # --- Helper Functions for Data Generation ---
-from dsl import ALL_ACTIONS , SHIFT_ACTIONS , TRANSFORM_ACTIONS
-from helper_env import placement
+from dsl import COMB , SHIFT , TRANSFORM
+from env import placement
 
 import logging
-# logging.getLogger('matplotlib.font_manager').setLevel(logging.WARNING)
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler('log/Arc_Prize_pretraining.log', mode='w')
-# handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
-logger.addHandler(handler)
-logger.propagate = False
 
+logging.basicConfig(
+    level=logging.DEBUG,  # Set the minimum log level to DEBUG
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename='Arc_Prize_pretraining.log',  # Log output to current_grid file named app.log
+    filemode='w'  # Overwrite the log file each time the program runs
+)
 
-Shift_Actions = SHIFT_ACTIONS.keys()
-Transform_Actions = TRANSFORM_ACTIONS.keys()
-action_names=list(ALL_ACTIONS.keys())
-num_actions = len(action_names)
-
+Shift = SHIFT.keys()
+Transform = TRANSFORM.keys()
+func_names=list(COMB.keys())
+num_actions = len(func_names)
 
 
 def create_random_object(max_size=3, max_color=9):
-    size = (random.randint(1, max_size), random.randint(1, max_size))
-    
-    # Decide how many colors to use (1 to 3)
-    num_colors = random.randint(2, min(3, max_color))
-    
-    # Randomly choose distinct colors
-    colors = random.sample(range(1, max_color + 1), num_colors)
-    
-    # create grid with randomly assigned colors from the chosen set
-    obj_grid = np.random.choice(colors, size=size)
-    # print(obj_grid)
-    return {
-        'grid': obj_grid,
-        'colors': colors,
-        'size': size,
-        'position': (None, None)
-    }
 
+    size = (random.randint(1, max_size), random.randint(1, max_size))
+    color = random.randint(1, max_color)
+    obj_grid = np.full(size, color)
+    return {'grid': obj_grid, 'color': color, 'size': size,'position':(0,0)}
+    # return obj_grid
 
 def find_empty_spot(grid, obj_size):
+    """Finds a valid top-left (y, x) coordinate to place an object without overlap."""
     grid_h, grid_w = grid.shape
     obj_h, obj_w = obj_size
     possible_spots = []
-
     for y in range(grid_h - obj_h + 1):
         for x in range(grid_w - obj_w + 1):
             if np.all(grid[y:y+obj_h, x:x+obj_w] == 0):
-                # Convert top-left to center position
-                center_pos = coordinate_converter((y, x), obj_size, is_center=False)
-                possible_spots.append(center_pos)
-
+                possible_spots.append((y, x))
     return random.choice(possible_spots) if possible_spots else None
 
+def place_object(grid, obj, pos):
+    """Places an object's grid onto the main grid at a given position."""
+    y, x = pos
+    obj_h, obj_w = obj['size']
+    grid[y:y+obj_h, x:x+obj_w] = obj['grid']
+    return grid
 
 # --- Task-Specific Generation Functions ---
+
 def generate_simple_task(grid_size=(10, 10), num_bg_objects=3, training_eg=4):
-    datasets = []
+    inputs = []
     objects=[]
-    obj_labels=[]
-    action_labels=[]
+    labels=[]
+    funcs=[]
     target_grid = np.zeros(grid_size, dtype=int)
 
     for _ in range(num_bg_objects):
         objects.append(create_random_object())
+    
     i=0
     while i < training_eg:
 
-        obj_idx= random.randint(0,num_bg_objects-1)
+        obj_idx= random.randint(0,num_bg_objects-1) # choose one random object from the lsit
         obj=objects[obj_idx]
         
-        position = find_empty_spot(target_grid, obj['size'])
-        if position:
+        position = find_empty_spot(target_grid, obj['size']) # looks if the obj can be placed on target
+        
+        if position: # if can be placed
 
             current_grid=target_grid.copy()
-
             target_grid = place_object(target_grid, obj['grid'], position)
            
             if np.array_equal(target_grid, current_grid):
@@ -100,7 +86,7 @@ def generate_simple_task(grid_size=(10, 10), num_bg_objects=3, training_eg=4):
                 continue
                 # raise ValueError("Both grids can't be the same")
         
-            datasets.append((current_grid,objects,target_grid.copy(),position))
+            inputs.append((current_grid,objects,target_grid.copy(),position))
             obj_labels.append(obj_idx)       
             action_labels.append(action_names.index('place'))
 
@@ -111,65 +97,72 @@ def generate_simple_task(grid_size=(10, 10), num_bg_objects=3, training_eg=4):
 
             i +=1
 
-    return datasets , obj_labels , action_labels
-
-
-
+    return inputs , obj_labels , action_labels
 
 
 def generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5, training_eg=4):
-    datasets = []
+    inputs = []
     objects=[]
-    obj_labels=[]
-    action_labels=[]
+    labels=[]
+    funcs=[]
     target_grid = np.zeros(grid_size, dtype=int)
+    
     i = 0
-    while i < num_bg_objects:
+    while i < num_bg_objects: # place random objects  in  target_grid
         
         obj=create_random_object()
-        position = find_empty_spot(target_grid, obj['size'])
+        pos = find_empty_spot(target_grid, obj['size'])
 
-        if position:
-            logger.debug('generated_ineter')
-            target_grid = place_object(target_grid, obj['grid'], position)
-            obj['position']=position
+        if pos:
+            target_grid = place_object(target_grid, obj, pos)
+            obj['position']=pos
             objects.append(obj)
             i+=1
 
-    gen = infinite_random_pairs(num_bg_objects,len(action_names) )
+    object_action_combinations = all_random_paris(num_bg_objects,len(action_names) ) 
     i = 0
+
     while i < training_eg:
 
         new_target_grid=None
 
-        obj_idx,action_idx=next(gen)
+        obj_idx,action_idx=next(object_action_combinations)
         obj=objects[obj_idx]
 
-        action_name = action_names[action_idx]
+        func = random.choice(func_names)
+        func_idx = func_names.index(func)
         new_obj = copy.deepcopy(obj)
 
 
-        if action_name in ['place', 'remove']:
+        if action_name in ['place', 'remove']: # do nothing for this two actions
             continue 
+    #     new_obj_info.update({
+    #         'placed': True,
+    #         'position': pos_values
+    #     })
+    #         is_place_action = True
+    #         objects.append(new_obj_info)
+    #         obj_info = new_obj_info
 
         elif action_name in Transform_Actions:
-            new_obj['grid'] = ALL_ACTIONS[action_name](obj['grid'])
-            new_target_grid = placement(target_grid.copy(), obj, new_obj, background=0)
+            new_obj['grid'] = ALL_ACTIONS[action_name](obj['grid']) # performs action on the grid
+            new_target_grid = placement(target_grid.copy(), obj, new_obj, background=0) # update the obj on the grid
 
         elif action_name in Shift_Actions:
-            new_obj['position'] = ALL_ACTIONS[action_name](obj['position'])
-            new_target_grid = placement(target_grid.copy(), obj, new_obj, background=0)
+            new_obj['position'] = ALL_ACTIONS[action_name](obj['position']) # peforms action on the position
+            new_target_grid = placement(target_grid.copy(), obj, new_obj, background=0)# update the obj on the grid
 
-        if new_target_grid is not  None:
+        if new_target_grid is not  None: # the update has happend
             i+=1
-            datasets.append((new_target_grid,objects,target_grid.copy(),new_obj['position']))
+            inputs.append((new_target_grid,objects,target_grid.copy(),new_obj['position']))
             
             obj_labels.append(obj_idx)
             action_labels.append(action_idx)
 
-    return datasets, obj_labels, action_labels
+    return inputs, obj_labels, action_labels
 
-def infinite_random_pairs(a, b):
+
+def all_random_paris(a, b):
     pool = list(itertools.product(range(a), range(b)))
     while True:
         for pair in np.random.permutation(pool):
@@ -178,15 +171,14 @@ def infinite_random_pairs(a, b):
 
 
 def create_data_loader(tasks: List[Tuple], batch_size: int, shuffle: bool = True,printing=False):
-    if printing ==True:
-        clear('data_loader')    
-    # 1. Pool all examples into a single dataset
-    all_examples: List[Any] = []
-    all_obj_labels:   List[int] = []
-    all_action_labels:     List[int] = []
+ 
+    
+    all_examples:      List[Any] = []
+    all_obj_labels:    List[int] = []
+    all_action_labels: List[int] = []
 
-    for datasets, obj_labels, action_labels in tasks:
-        for (input_grid,objects,target_grid,_position) , label , action_idx in zip(datasets,obj_labels,action_labels):
+    for inputs, obj_labels, action_labels in tasks:
+        for (input_grid,objects,target_grid,_position) , label , action_idx in zip(inputs,obj_labels,action_labels):
             obj=objects[label]
             action_counter[action_idx] += 1
 
@@ -197,20 +189,20 @@ def create_data_loader(tasks: List[Tuple], batch_size: int, shuffle: bool = True
                 display(input_grid,obj_grid,target_grid,'data_loader') 
 
                 
-        all_examples.extend(datasets)
+        all_examples.extend(inputs)
         all_obj_labels.extend(obj_labels)
         all_action_labels.extend(action_labels)
 
-    # After the loop
+    # for finding no of each actions each timed it used it train
     print("Function counts:")
     for action_idx, count in action_counter.items():
         print(f"{action_names[action_idx]}: {count}")
-    # 2. create and shuffle indices
-    indices = list(range(len(all_examples)))
+
+    indices = list(range(len(all_examples))) #create and shuffle indices
     if shuffle:
         random.shuffle(indices)
 
-    # 3. Yield mini-batches one by one
+    # Yield mini-batches one by one
     for i in range(0, len(indices), batch_size):
         # Get the indices for the current batch
         batch_indices = indices[i:i + batch_size]
@@ -227,14 +219,14 @@ def create_data_loader(tasks: List[Tuple], batch_size: int, shuffle: bool = True
 
 def dataset_creater( create):
     if create==True:
-        # clear('train_examples')
-        tasks1 = [      generate_simple_task(grid_size=(10, 10), num_bg_objects=5 , training_eg=4 ) for _ in range(10)]
+
+        tasks1 = [      generate_simple_task(grid_size=(10, 10), num_bg_objects=5 , training_eg=4 ) for _ in range(10)] 
         tasks2 = [generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5 , training_eg=16) for _ in range(10)]
 
         tasks1.extend(tasks2)
 
         with open("generated_training_data.pkl", "wb") as f:
-            pickle.dump(tasks1, f)
+            pickle.dump(tasks1, f) 
 
     else:
         with open("generated_training_data.pkl", "rb") as f:
@@ -244,48 +236,65 @@ def dataset_creater( create):
 
 # --- Main  Function ---
 if __name__ == '__main__':
-    # clear('likelihood_predictions')
-
-    # clear('classifier_predictions')
-
-    ft1 = FeatureExtractor(input_channels=1)
-    likelihood_predictor = Likelihood(feature_extractor=ft1, output_dim=1,no_of_inputs=3)
-    likelihood_predictor.show_structure()
-    action_classifier = DQN_Classifier(ft1,len(ALL_ACTIONS),3)
-    # likelihood_predictor.load()
-    # action_classifier.load()
-
-    tasks = dataset_creater(create=False)
 
     likelihood_losses=[]
     likelihood_accuracies=[]
-    action_losses=[]
+    action_position_losse=[]
     action_accuracies=[]
     position_losses=[]
+    
 
-    # data_loader = create_data_loader(tasks, batch_size=10, shuffle=True)
-    # datasets, obj_labels , action_labels = next(iter(data_loader))
+    #----------- initialized the dl models --------
 
-    for epoch in range(10):
+    likelihood_ft = FeatureExtractor(input_channels=1) 
+    likelihood_predictor = Likelihood(feature_extractor=likelihood_ft, no_of_outputs=1,no_of_inputs=3)
 
-        data_loader = create_data_loader(tasks, batch_size=10, shuffle=True,printing=False)
-        for datasets, obj_labels , action_labels in data_loader:
+    action_classifier_ft = FeatureExtractor(input_channels=1)
+    action_classifier = DQN_Classifier(feature_extractor=action_classifier_ft ,num_actions=len(ALL_ACTIONS),no_of_inputs=3)
+  
+    #---------- load the models if necessary
+    # likelihood_predictor.load()
+    # action_classifier.load()
+
+    # --- shows the dl model architecture
+    # action_classifier.show_structure()
+    # likelihood_predictor.show_structure() 
+
+
+    dataset = dataset_creater(create=False) # dataset_creater -> function which creates the dataset.
+
+    #----- train the model only on one batch
+    data_loader = create_data_loader(dataset, batch_size=10, shuffle=True)
+    inputs, obj_labels , action_labels = next(iter(data_loader))
+
+    for epoch in range(100):
+
+        # data_loader = create_data_loader(dataset, batch_size=10, shuffle=True,printing=True)# prints the input images in data_loader folder
+        # for inputs, obj_labels , action_labels in data_loader: 
+            
             start_time=time.time()
+            loss,acc=likelihood_predictor.train_supervised(inputs,obj_labels)
+            print(f"Step {epoch+1}: losses = {loss:.4f}, Accuracy = {acc:.2%} , time= {time.time()-start_times}")
+            
+            likelihood_losses.append(loss)
+            likelihood_accuracies.append(acc)
+            loss,acc= action_classifier.train_supervised(inputs,obj_labels,action_labels)
 
-            loss,acc=likelihood_predictor.train_supervised(datasets,obj_labels)
+            loss,acc=likelihood_predictor.train_supervised(inputs,obj_labels) # training code is defined inside the class
             print(f"l Step {epoch+1}: losses = {loss:.4f}, Accuracy = {acc:.2%} , time= {time.time()-start_time}")
             likelihood_losses.append(loss)
             likelihood_accuracies.append(acc)
 
-            a_loss,pos_loss,acc= action_classifier.train_supervised(datasets,obj_labels,action_labels)
+            a_loss,pos_loss,acc= action_classifier.train_supervised(inputs,obj_labels,action_labels) # this o/ps both action and position of the object in which action preformed
             print(f"a Step {epoch+1}: losses = {loss:.4f}, Accuracy = {acc:.2%} , time= {time.time()-start_time}")
-            action_losses.append(a_loss)
+            action_position_losse.append(a_loss)
             position_losses.append(pos_loss)
             action_accuracies.append(acc)
 
     # likelihood_predictor.save()
     # action_classifier.save()
 
+#----- plot the loss & accuracy
     plt.title('likelihood_predictor')
     plt.plot(likelihood_accuracies, label='Accuracy')
     plt.plot(likelihood_losses, label='losses')
@@ -295,7 +304,7 @@ if __name__ == '__main__':
 
     plt.title('action_classifier')
     plt.plot(action_accuracies, label='Accuracy')
-    plt.plot(action_losses, label='action_loss')
+    plt.plot(action_position_losse, label='action_loss')
     plt.plot(position_losses,label='position_loss')
     plt.xlabel("Step")
     plt.legend()
