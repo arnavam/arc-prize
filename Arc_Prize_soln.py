@@ -1,33 +1,37 @@
-from rl_models.BaseDQN import BaseDQN
 import numpy as np
 import time 
 import os
-from dsl import COMB ,SHIFT,TRANSFORM
-from dsl2 import find_objects , extract_target_region
-from A_arc import  loader , display 
-from rl_models.reinforce import FeatureExtractor
-from rl_models.DQNAction_Classifier import DQN_Classifier
-from rl_models.ReinLikelihood import Likelihood
+
+from dsl import ALL_ACTIONS ,SHIFT_ACTIONS,TRANSFORM_ACTIONS
+from helper import find_objects , extract_target_region
+from helper_arc import  loader , display
+from dl_models.Feature_Extractor import FeatureExtractor
+from dl_models.DQNAction_Classifier import DQN_Classifier
+from dl_models.ReinLikelihood import Likelihood
 import torch
-import torch
+import copy
 torch.autograd.set_detect_anomaly(True)
-from env import  placement
-from env import matrix_similarity
+from helper_env import  placement , place_object
+from helper_env import matrix_similarity
 import logging
 
-logging.basicConfig(
-    level=logging.DEBUG,  # Set the minimum log level to DEBUG
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    filename='app.log',  # Log output to predicted_grid file named app.log
-    filemode='w'  # Overwrite the log file each time the program runs
-)
+import logging
+# logging.getLogger('matplotlib.font_manager').setLevel(logging.WARNING)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler('log/Arc_Prize_soln.log', mode='w')
+# handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+logger.addHandler(handler)
+logger.propagate = False
+
 
 # Initialized parameters
 #----------------------------------
-action_names = list(COMB.keys())
-Shift = list(SHIFT.keys())
-Transform=list(TRANSFORM.keys())
+action_names = list(ALL_ACTIONS.keys())
+shift_actions = list(SHIFT_ACTIONS.keys())
+transform_actions=list(TRANSFORM_ACTIONS.keys())
 num_actions = len(action_names)
+
 
 
 # Initialized Clas
@@ -81,10 +85,10 @@ def Arc_Prize_Solver(examples,load,save,max_iterations=100, max_steps_per_episod
 
 
     ft1 = FeatureExtractor(input_channels=1)
-    action_classifier = DQN_Classifier(feature_extractor=ft1, num_actions=num_actions,no_of_inputs=3)
+    action_classifier = DQN_Classifier(feature_extractor=ft1, no_of_outputs=num_actions,no_of_inputs=3)
 
     ft2 = FeatureExtractor(input_channels=1)
-    likelihood_predictor = Likelihood(feature_extractor= ft2, output_dim=1,no_of_inputs=3)
+    likelihood_predictor = Likelihood(feature_extractor= ft2, no_of_outputs=1,no_of_inputs=3)
 
     Placer = None #DQN_Solver(ft,len(examples[0]['output']),3)
 
@@ -193,12 +197,12 @@ def find_solution(old_predicted_grid, likelihood_predictor,action_classifier, Pl
         objects.append(new_obj_info)
         obj_info = new_obj_info
     
-    elif func in Transform:
+    elif func in transform_actions:
         
-        new_obj_info['grid']=COMB[func](obj_info['grid'])
+        new_obj_info['grid']=ALL_ACTIONS[func](obj_info['grid'])
 
-    elif func in Shift:
-        new_obj_info['position']=COMB[func](obj_info['position']) 
+    elif func in shift_actions:
+        new_obj_info['position']=ALL_ACTIONS[func](obj_info['position']) 
 
     new_predicted_grid =placement(old_predicted_grid, obj_info, new_obj_info, background=0)
 

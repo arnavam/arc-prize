@@ -6,28 +6,33 @@ import matplotlib.pyplot as plt
 import copy
 import pickle
 import time
+from typing import List, Tuple, Any
+import itertools
+from collections import Counter
+from helper_env import place_object , coordinate_converter
+action_counter = Counter()
 
-from A_arc import display,clear
-from rl_models.DQNAction_Classifier import DQN_Classifier
-from rl_models.feature_extractor import FeatureExtractor
-from rl_models.ReinLikelihood import Likelihood
+from helper_arc import display,clear
+from dl_models.DQNAction_Classifier import DQN_Classifier
+from dl_models.Feature_Extractor import FeatureExtractor
+from dl_models.ReinLikelihood import Likelihood
 # --- Helper Functions for Data Generation ---
-from dsl import COMB , SHIFT , TRANSFORM
-from env import placement
+from dsl import ALL_ACTIONS , SHIFT_ACTIONS , TRANSFORM_ACTIONS
+from helper_env import placement
 
 import logging
 
-logging.basicConfig(
-    level=logging.DEBUG,  # Set the minimum log level to DEBUG
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    filename='Arc_Prize_pretraining.log',  # Log output to current_grid file named app.log
-    filemode='w'  # Overwrite the log file each time the program runs
-)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler('log/Arc_Prize_pretraining.log', mode='w')
+# handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+logger.addHandler(handler)
+logger.propagate = False
 
-Shift = SHIFT.keys()
-Transform = TRANSFORM.keys()
-func_names=list(COMB.keys())
-num_actions = len(func_names)
+
+Shift_Actions = SHIFT_ACTIONS.keys()
+Transform_Actions = TRANSFORM_ACTIONS.keys()
+action_names=list(ALL_ACTIONS.keys())
 
 
 def create_random_object(max_size=3, max_color=9):
@@ -39,7 +44,7 @@ def create_random_object(max_size=3, max_color=9):
     # return obj_grid
 
 def find_empty_spot(grid, obj_size):
-    """Finds a valid top-left (y, x) coordinate to place an object without overlap."""
+
     grid_h, grid_w = grid.shape
     obj_h, obj_w = obj_size
     possible_spots = []
@@ -50,19 +55,19 @@ def find_empty_spot(grid, obj_size):
     return random.choice(possible_spots) if possible_spots else None
 
 def place_object(grid, obj, pos):
-    """Places an object's grid onto the main grid at a given position."""
+
     y, x = pos
     obj_h, obj_w = obj['size']
     grid[y:y+obj_h, x:x+obj_w] = obj['grid']
     return grid
 
+ 
 # --- Task-Specific Generation Functions ---
-
 def generate_simple_task(grid_size=(10, 10), num_bg_objects=3, training_eg=4):
     inputs = []
     objects=[]
-    labels=[]
-    funcs=[]
+    obj_labels=[]
+    action_labels=[]
     target_grid = np.zeros(grid_size, dtype=int)
 
     for _ in range(num_bg_objects):
@@ -119,7 +124,7 @@ def generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5, training_eg
             objects.append(obj)
             i+=1
 
-    object_action_combinations = all_random_paris(num_bg_objects,len(action_names) ) 
+    object_action_combinations = all_pair_combinations(num_bg_objects,len(action_names) ) 
     i = 0
 
     while i < training_eg:
@@ -129,20 +134,14 @@ def generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5, training_eg
         obj_idx,action_idx=next(object_action_combinations)
         obj=objects[obj_idx]
 
-        func = random.choice(func_names)
-        func_idx = func_names.index(func)
+        action_name = random.choice(action_names)
+        action_idx = action_names.index(action_name)
         new_obj = copy.deepcopy(obj)
 
 
         if action_name in ['place', 'remove']: # do nothing for this two actions
             continue 
-    #     new_obj_info.update({
-    #         'placed': True,
-    #         'position': pos_values
-    #     })
-    #         is_place_action = True
-    #         objects.append(new_obj_info)
-    #         obj_info = new_obj_info
+
 
         elif action_name in Transform_Actions:
             new_obj['grid'] = ALL_ACTIONS[action_name](obj['grid']) # performs action on the grid
@@ -162,7 +161,7 @@ def generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5, training_eg
     return inputs, obj_labels, action_labels
 
 
-def all_random_paris(a, b):
+def all_pair_combinations(a, b):
     pool = list(itertools.product(range(a), range(b)))
     while True:
         for pair in np.random.permutation(pool):
@@ -239,7 +238,7 @@ if __name__ == '__main__':
 
     likelihood_losses=[]
     likelihood_accuracies=[]
-    action_position_losse=[]
+    action_position_losses=[]
     action_accuracies=[]
     position_losses=[]
     
@@ -250,7 +249,7 @@ if __name__ == '__main__':
     likelihood_predictor = Likelihood(feature_extractor=likelihood_ft, no_of_outputs=1,no_of_inputs=3)
 
     action_classifier_ft = FeatureExtractor(input_channels=1)
-    action_classifier = DQN_Classifier(feature_extractor=action_classifier_ft ,num_actions=len(ALL_ACTIONS),no_of_inputs=3)
+    action_classifier = DQN_Classifier(feature_extractor=action_classifier_ft ,no_of_outputs=len(ALL_ACTIONS),no_of_inputs=3)
   
     #---------- load the models if necessary
     # likelihood_predictor.load()
@@ -273,21 +272,15 @@ if __name__ == '__main__':
         # for inputs, obj_labels , action_labels in data_loader: 
             
             start_time=time.time()
-            loss,acc=likelihood_predictor.train_supervised(inputs,obj_labels)
-            print(f"Step {epoch+1}: losses = {loss:.4f}, Accuracy = {acc:.2%} , time= {time.time()-start_times}")
-            
-            likelihood_losses.append(loss)
-            likelihood_accuracies.append(acc)
-            loss,acc= action_classifier.train_supervised(inputs,obj_labels,action_labels)
 
             loss,acc=likelihood_predictor.train_supervised(inputs,obj_labels) # training code is defined inside the class
             print(f"l Step {epoch+1}: losses = {loss:.4f}, Accuracy = {acc:.2%} , time= {time.time()-start_time}")
             likelihood_losses.append(loss)
             likelihood_accuracies.append(acc)
 
-            a_loss,pos_loss,acc= action_classifier.train_supervised(inputs,obj_labels,action_labels) # this o/ps both action and position of the object in which action preformed
+            loss,pos_loss,acc= action_classifier.train_supervised(inputs,obj_labels,action_labels) # this o/ps both action and position of the object in which action preformed
             print(f"a Step {epoch+1}: losses = {loss:.4f}, Accuracy = {acc:.2%} , time= {time.time()-start_time}")
-            action_position_losse.append(a_loss)
+            action_position_losses.append(loss)
             position_losses.append(pos_loss)
             action_accuracies.append(acc)
 
@@ -304,7 +297,7 @@ if __name__ == '__main__':
 
     plt.title('action_classifier')
     plt.plot(action_accuracies, label='Accuracy')
-    plt.plot(action_position_losse, label='action_loss')
+    plt.plot(action_position_losses, label='action_position_loss')
     plt.plot(position_losses,label='position_loss')
     plt.xlabel("Step")
     plt.legend()

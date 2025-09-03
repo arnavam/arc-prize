@@ -17,43 +17,15 @@ import random
 from collections import deque
 
 
-# --- Replay Memory ---
-class ReplayMemory:
-    """A simple ring buffer for storing experience tuples."""
-    def __init__(self, capacity):
-        self.memory = deque([], maxlen=capacity)
-
-    def push(self, experience):
-        """Save an experience tuple (state, action, reward, next_state, done)"""
-        self.memory.append(experience)
-
-    def sample(self, batch_size):
-        """Sample a random batch of experiences"""
-        return random.sample(self.memory, batch_size)
-
-    def __len__(self):
-        return len(self.memory)
 
 # --- Parent/Base DQN Class ---
-class BaseDQN:
-    """
-    A base template for DQN agents.
-    This class contains all the core logic for training a DQN,
-    but it is independent of the specific neural network architecture used.
-    """
-    def __init__(self, policy_net, target_net, optimizer, device, gamma, batch_size, memory_size, target_update):
-        self.device = device
-        self.gamma = gamma
-        self.batch_size = batch_size
-        
-        # The models and optimizer are now passed in during initialization
-        self.policy_net = policy_net
-        self.target_net = target_net
-        self.optimizer = optimizer
-        
-        self.memory = ReplayMemory(memory_size)
-        self.update_counter = 0
-        self.target_update_frequency = target_update
+class BaseDL:
+
+    def __init__(self, device):
+        _device = torch.device(device if getattr(torch, device).is_available() else "cpu")
+        print(f'Using device: {_device} for Multi-Head Solver')
+
+        self.device = _device
 
     def select_action(self, state, epsilon=0.4):
             pass
@@ -90,10 +62,6 @@ class BaseDQN:
         return tensor.to(self.device)
 
 
-    def store_experience(self, state, action, reward, next_state):
-        """Saves an experience tuple to the replay memory."""
-        self.memory.push((state, action, reward, next_state))
-
 
     def load(self):
         self.policy_net.load_state_dict(torch.load(f'weights/{self.__class__.__name__}.pth'))
@@ -102,6 +70,6 @@ class BaseDQN:
     def save(self):
         torch.save(self.policy_net.state_dict(), f'weights/{self.__class__.__name__}.pth')
 
-    def show(self):
+    def show_structure(self):
         for name, param in self.policy_net.state_dict().items():
             print(name, param.shape)
