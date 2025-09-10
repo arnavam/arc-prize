@@ -13,7 +13,16 @@ pil_logger = logging.getLogger('PIL')
 # override the logger logging level to INFO
 pil_logger.setLevel(logging.INFO)
 
+cmap = colors.ListedColormap(
+    ['#000000', '#0074D9', '#FF4136', '#2ECC40', '#FFDC00',
+        '#AAAAAA', '#F012BE', '#FF851B', '#7FDBFF', '#870C25'])
+norm = colors.Normalize(vmin=0, vmax=9)
+
+# Global set to keep track of cleared folders
+cleared_folders = set()
+
 def clear(folder_path):
+
     for filename in os.listdir(folder_path):
         file_path = os.path.join(folder_path, filename)
         try:
@@ -22,36 +31,37 @@ def clear(folder_path):
         except Exception as e:
             print(f"Error deleting {file_path}: {e}")
 
-cmap = colors.ListedColormap(
-    ['#000000', '#0074D9', '#FF4136', '#2ECC40', '#FFDC00',
-        '#AAAAAA', '#F012BE', '#FF851B', '#7FDBFF', '#870C25'])
-norm = colors.Normalize(vmin=0, vmax=9)
+def display(input, predicted, target, folder='train_outputs', printing=True):
 
-def display(input ,predicted,target,folder='train_ouputs',printing=True):
+    # Clear folder only once
+    if folder not in cleared_folders:
+        if os.path.exists(folder):
+            clear(folder)
+        cleared_folders.add(folder)
+
     os.makedirs(folder, exist_ok=True)
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-    sns.heatmap(input, cmap=cmap, ax=axes[0], cbar=False)
+    sns.heatmap(input, cmap='viridis', ax=axes[0], cbar=False)
     axes[0].set_title('Input')
 
-    sns.heatmap(predicted, cmap=cmap, ax=axes[1], cbar=False)
+    sns.heatmap(predicted, cmap='viridis', ax=axes[1], cbar=False)
     axes[1].set_title('Predicted')
 
-    sns.heatmap(target, cmap=cmap, ax=axes[2], cbar=False)
+    sns.heatmap(target, cmap='viridis', ax=axes[2], cbar=False)
     axes[2].set_title('Target')
-
-
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S,%f")[:-3]
     filename = f"heatmap_{timestamp}.png"
 
-    plt.savefig(f'{folder}/{filename}')
+    plt.savefig(os.path.join(folder, filename))
 
-    if printing == True:
+    if printing:
         print(f"Figure saved as {filename}")
 
     plt.close()
+
 
 
 train_path='arc-prize-2025/arc-agi_training_challenges.json'
