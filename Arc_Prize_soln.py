@@ -39,7 +39,7 @@ class PatchEmbedding(nn.Module):
         return embeddings
 
 class MambaBlock(nn.Module):
-    """Single Mamba block with selective state space mechanism"""
+
     
     def __init__(self, d_model: int, d_state: int = 16, d_conv: int = 4, expand: int = 2):
         super().__init__()
@@ -145,9 +145,6 @@ class MambaBlock(nn.Module):
         return x
 
 class MambaSSM(nn.Module):
-    """
-    Mamba State Space Model for ARC Prize competition with multiple inputs and dual outputs
-    """
     
     def __init__(self, d_model: int = 512, d_state: int = 16, d_conv: int = 4, 
                  expand: int = 2, n_layers: int = 8, n_classes: int = 10,
@@ -224,9 +221,9 @@ class MambaSSM(nn.Module):
         return action_output, position_output
 
 
-from Arc_Prize_pretraining import dataset_creater, create_data_loader
+from dataset_generator import dataset_creater, create_data_loader
 from helper_arc import loader
-from helper_env import place_object
+
 
 def train_mamba_model(train_dataset):
 
