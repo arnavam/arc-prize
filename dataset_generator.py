@@ -9,22 +9,17 @@ import time
 from typing import List, Tuple, Any
 import itertools
 from collections import Counter
-from helper_env import place_object , coordinate_converter
-action_counter = Counter()
-
-from helper_arc import display,clear
-from dl_models.DQNAction_Classifier import DQN_Classifier
-from dl_models.feature_extractor import FeatureExtractor
-from dl_models.ReinLikelihood import Likelihood
-# --- Helper Functions for Data Generation ---
-from dsl import ALL_ACTIONS , SHIFT_ACTIONS , TRANSFORM_ACTIONS
-from helper_env import placement
-
 import logging
+
+from helper_env import place_object , coordinate_converter
+from helper_arc import display,clear
+from helper_env import placement
+from dsl import ALL_ACTIONS , SHIFT_ACTIONS , TRANSFORM_ACTIONS
+
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler('log/Arc_Prize_pretraining.log', mode='w')
+handler = logging.FileHandler('log/dataset_generator.log', mode='w')
 # handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
 logger.addHandler(handler)
 logger.propagate = False
@@ -33,7 +28,7 @@ logger.propagate = False
 Shift_Actions = SHIFT_ACTIONS.keys()
 Transform_Actions = TRANSFORM_ACTIONS.keys()
 action_names=list(ALL_ACTIONS.keys())
-
+action_counter = Counter()
 
 def create_random_object(max_size=3, max_color=9):
 
