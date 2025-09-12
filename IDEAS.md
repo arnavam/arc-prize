@@ -1,6 +1,6 @@
 ## Present Idea
 
-- reduce tre training loss
+- reduce pre training loss
 - make more robust scoring by adding  error of  miss placing + error not placing
 - use early-stopping
 - use diff RL algorithms or variants .

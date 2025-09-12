@@ -1,3 +1,99 @@
+class ARCDataset(Dataset):
+    """Dataset for ARC Prize competition"""
+    
+    def __init__(self, data_dir, split='train', max_seq_len=1024):
+        self.data_dir = data_dir
+        self.split = split
+        self.max_seq_len = max_seq_len
+        
+        # Load data
+        with open(os.path.join(data_dir, f'{split}.json'), 'r') as f:
+            self.data = json.load(f)
+        
+        # Preprocess data
+        self.examples = self._preprocess_data()
+    
+    def _preprocess_data(self):
+        examples = []
+        for item in self.data:
+            # Convert input to token sequence (this is a placeholder)
+            # You'll need to implement the actual tokenization for ARC tasks
+            input_seq = self._tokenize_input(item['input'])
+            label = item['output']
+            
+            # Pad or truncate sequence
+            if len(input_seq) > self.max_seq_len:
+                input_seq = input_seq[:self.max_seq_len]
+            else:
+                input_seq = input_seq + [0] * (self.max_seq_len - len(input_seq))
+            
+            examples.append({
+                'input': torch.tensor(input_seq, dtype=torch.long),
+                'label': torch.tensor(label, dtype=torch.long)
+            })
+        
+        return examples
+    
+    def _tokenize_input(self, input_data):
+        """
+        Tokenize ARC input data. This is a placeholder implementation.
+        You'll need to implement the actual tokenization strategy for ARC tasks.
+        """
+        # For demonstration, we'll use a simple approach
+        # In practice, you'll need a more sophisticated tokenization strategy
+        if isinstance(input_data, list):
+            # Flatten the grid and convert to tokens
+            tokens = []
+            for row in input_data:
+                for cell in row:
+                    tokens.append(cell + 1)  # Add 1 to avoid 0 (padding)
+            return tokens
+        else:
+            # Handle other input formats
+            return [int(x) for x in str(input_data)]
+    
+    def __len__(self):
+        return len(self.examples)
+    
+    def __getitem__(self, idx):
+        return self.examples[idx]['input'], self.examples[idx]['label']
+
+
+
+        # with torch.no_grad():
+        #     for inputs, labels in val_loader:
+        #         inputs, labels = inputs.to(device), labels.to(device)
+                
+        #         outputs = model(inputs)
+        #         loss = criterion(outputs, labels)
+                
+        #         val_loss += loss.item()
+        #         _, predicted = outputs.max(1)
+        #         val_total += labels.size(0)
+        #         val_correct += predicted.eq(labels).sum().item()
+        
+        # Calculate metrics
+        train_acc = 100. * train_correct / train_total
+        # val_acc = 100. * val_correct / val_total
+        # avg_train_loss = train_loss / len(train_loader)
+        # avg_val_loss = val_loss / len(val_loader)
+
+
+
+        # print(f'Train Loss: {avg_train_loss:.4f}, Train Acc: {train_acc:.2f}%')
+        # print(f'Val Loss: {avg_val_loss:.4f}, Val Acc: {val_acc:.2f}%')
+        
+        # # Save best model
+        # if val_acc > best_val_acc:
+        #     best_val_acc = val_acc
+        #     torch.save(model.state_dict(), 'best_mamba_arc.pth')
+        #     print(f'New best model saved with accuracy: {best_val_acc:.2f}%')
+
+        val_loss = 0.0
+        val_correct = 0
+        val_total = 0
+        
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -7,36 +103,7 @@ import json
 import os
 from tqdm import tqdm
 import math
-from typing import Optional, Tuple, List
-
-class PatchEmbedding(nn.Module):
-    """2D Patch Embedding with ViT-style patching"""
-    
-    def __init__(self, patch_size: int = 2, d_model: int = 512):
-        super().__init__()
-        self.patch_size = patch_size
-        self.projection = nn.Linear(patch_size * patch_size, d_model)
-        
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        # x shape: (batch, channels, height, width)
-        # For ARC, channels=1 (grid values)
-        batch_size, _, height, width = x.shape
-        
-        # Pad if necessary to make divisible by patch_size
-        pad_h = (self.patch_size - height % self.patch_size) % self.patch_size
-        pad_w = (self.patch_size - width % self.patch_size) % self.patch_size
-        
-        if pad_h > 0 or pad_w > 0:
-            x = nn.functional.pad(x, (0, pad_w, 0, pad_h), mode='constant', value=0)
-        
-        # Extract patches
-        patches = x.unfold(2, self.patch_size, self.patch_size).unfold(3, self.patch_size, self.patch_size)
-        patches = patches.contiguous().view(batch_size, -1, self.patch_size * self.patch_size)
-        
-        # Project to embedding dimension
-        embeddings = self.projection(patches.to(dtype=torch.float32))
-        
-        return embeddings
+from typing import Optional, Tuple
 
 class MambaBlock(nn.Module):
     """Single Mamba block with selective state space mechanism"""
@@ -146,21 +213,23 @@ class MambaBlock(nn.Module):
 
 class MambaSSM(nn.Module):
     """
-    Mamba State Space Model for ARC Prize competition with multiple inputs and dual outputs
+    Mamba State Space Model for ARC Prize competition
     """
     
     def __init__(self, d_model: int = 512, d_state: int = 16, d_conv: int = 4, 
                  expand: int = 2, n_layers: int = 8, n_classes: int = 10,
-                 max_seq_len: int = 1024, patch_size: int = 2):
+                 vocab_size: Optional[int] = None, max_seq_len: int = 1024):
         super().__init__()
         self.d_model = d_model
         self.d_state = d_state
         self.n_layers = n_layers
         self.max_seq_len = max_seq_len
-        self.patch_size = patch_size
         
-        # Patch embedding for 2D grids
-        self.patch_embed = PatchEmbedding(patch_size, d_model)
+        # Embedding layer if dealing with discrete tokens
+        if vocab_size is not None:
+            self.embedding = nn.Embedding(vocab_size, d_model)
+        else:
+            self.embedding = None
         
         # Positional encoding (learnable)
         self.pos_embedding = nn.Parameter(torch.randn(1, max_seq_len, d_model))
@@ -171,10 +240,9 @@ class MambaSSM(nn.Module):
             for _ in range(n_layers)
         ])
         
-        # Output layers for classification and position prediction
+        # Output layers for classification
         self.norm = nn.LayerNorm(d_model)
-        self.action_classifier = nn.Linear(d_model, n_classes)
-        self.position_predictor = nn.Linear(d_model, 2)  # x, y coordinates
+        self.classifier = nn.Linear(d_model, n_classes)
         
         # Initialize weights
         self.apply(self._init_weights)
@@ -184,52 +252,38 @@ class MambaSSM(nn.Module):
             nn.init.normal_(module.weight, mean=0.0, std=0.02)
             if module.bias is not None:
                 nn.init.zeros_(module.bias)
+        elif isinstance(module, nn.Embedding):
+            nn.init.normal_(module.weight, mean=0.0, std=0.02)
         elif isinstance(module, nn.LayerNorm):
             nn.init.zeros_(module.bias)
             nn.init.ones_(module.weight)
     
-    def forward(self, current_grid: torch.Tensor, obj_grid: torch.Tensor, target_grid: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
-        # Input shapes: (batch, 1, height, width) - add channel dimension
-        batch_size = current_grid.shape[0]
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        # Input shape: (batch, seq_len)
+        batch_size, seq_len = x.shape
         
-        # Process each grid through patch embedding
-        current_emb = self.patch_embed(current_grid.unsqueeze(1))  # Add channel dim
-        obj_emb = self.patch_embed(obj_grid.unsqueeze(1))
-        target_emb = self.patch_embed(target_grid.unsqueeze(1))
-        
-        # Concatenate embeddings along sequence dimension
-        x = torch.cat([current_emb, obj_emb, target_emb], dim=1)
+        # Input embedding if dealing with tokens
+        if self.embedding is not None:
+            x = self.embedding(x)  # (batch, seq_len, d_model)
         
         # Add positional encoding
-        seq_len = x.shape[1]
         if seq_len > self.max_seq_len:
-            # Truncate if necessary
-            x = x[:, :self.max_seq_len, :]
-            seq_len = self.max_seq_len
-        
+            raise ValueError(f"Sequence length {seq_len} exceeds maximum {self.max_seq_len}")
         x = x + self.pos_embedding[:, :seq_len, :]
         
         # Process through Mamba blocks
         for block in self.blocks:
             x = block(x)
         
-        # Use the last token's representation for prediction
+        # Classification head (use the last token's representation)
         x = self.norm(x)
         x = x[:, -1, :]  # Take the last token representation
+        x = self.classifier(x)
         
-        # Dual outputs
-        action_output = self.action_classifier(x)
-        position_output = self.position_predictor(x)
-        
-        return action_output, position_output
+        return x
 
-
-from Arc_Prize_pretraining import dataset_creater, create_data_loader
-from helper_arc import loader
-from helper_env import place_object
-
-def train_mamba_model(train_dataset):
-
+def train_mamba_arc(train_dataset):
+    """Train Mamba model on ARC Prize data"""
     # Hyperparameters
     d_model = 512
     d_state = 16
@@ -237,8 +291,8 @@ def train_mamba_model(train_dataset):
     expand = 2
     n_layers = 8
     n_classes = 10  # Adjust based on ARC task
-    max_seq_len = 1024
-    patch_size = 2
+    vocab_size = 100  # Adjust based on tokenization
+    max_seq_len = 256
     batch_size = 10
     learning_rate = 1e-3
     weight_decay = 0.01
@@ -256,23 +310,20 @@ def train_mamba_model(train_dataset):
         expand=expand,
         n_layers=n_layers,
         n_classes=n_classes,
-        max_seq_len=max_seq_len,
-        patch_size=patch_size
+        vocab_size=vocab_size,
+        max_seq_len=max_seq_len
     ).to(device)
     
     # Print model size
     num_params = sum(p.numel() for p in model.parameters())
     print(f"Model parameters: {num_params:,}")
     
-    
-    train_loader = create_data_loader(train_dataset, batch_size=batch_size, shuffle=True)
 
 
-    # Loss functions
+
     action_criterion = nn.CrossEntropyLoss()
-    pos_criterion = nn.MSELoss()
+    pos_criterion = nn.MSELoss()  # or SmoothL1Loss()
 
-    # Optimizer and scheduler
     optimizer = optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=weight_decay)
     scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=num_epochs)
     
@@ -285,68 +336,50 @@ def train_mamba_model(train_dataset):
         train_correct = 0
         train_total = 0
         
-        pbar = tqdm(train_loader, desc=f'Epoch {epoch+1}/{num_epochs} [Train]')
-        
-        for batch in pbar:
-            print(batch,len(batch))
-            current_grids, obj_grids, target_grids, pos_labels , action_labels,  = batch
+        # pbar = tqdm(train_loader, desc=f'Epoch {epoch+1}/{num_epochs} [Train]')
+
+        # for inputs, action_labels in pbar:
+        for inputs, obj_labels , action_labels  in train_loader:
+          for (current_grid, objects, target_grid , obj_pos) ,obj_label ,action_labels in zip(inputs, obj_labels ,action_labels):
             
-            # Move to device
-            current_grids = torch.tensor(current_grids).to(device)
-            obj_grids = torch.tensor(obj_grids).to(device)
-            target_grids = torch.tensor(target_grids).to(device)
-            action_labels = torch.tensor(action_labels).to(device)
-            pos_labels = torch.tensor(pos_labels).to(device)
+            obj = objects[obj_label]
+            obj_grid = place_object(np.zeros_like(target_grid.copy()),obj['grid'],obj['position'])
+
+            # inputs = embedding([current_grid, obj_grid, target_grid])
             
-            # Forward pass
+            inputs, action_labels = inputs.to(device), action_labels.to(device)
+            
+
             optimizer.zero_grad()
-            action_outputs, pos_outputs = model(current_grids, obj_grids, target_grids)
-            
-            # Calculate losses
+            action_outputs , pos_ouputs= model(inputs)
             action_loss = action_criterion(action_outputs, action_labels)
-            pos_loss = pos_criterion(pos_outputs, pos_labels)
-            total_loss = action_loss + pos_loss
-            
-            # Backward pass
-            total_loss.backward()
+
+            action_loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
             
             # Update metrics
-            train_loss += total_loss.item()
+            train_loss += action_loss.item()
             _, predicted = action_outputs.max(1)
             train_total += action_labels.size(0)
             train_correct += predicted.eq(action_labels).sum().item()
             
             # Update progress bar
-            pbar.set_postfix({
-                'total_loss': f'{total_loss.item():.4f}',
-                'action_loss': f'{action_loss.item():.4f}',
-                'pos_loss': f'{pos_loss.item():.4f}',
-                'Acc': f'{100.*train_correct/train_total:.2f}%'
-            })
+            # pbar.set_postfix({
+            #     'action_loss': f'{action_loss.item():.4f}',
+            #     'Acc': f'{100.*train_correct/train_total:.2f}%'
+            # })
         
-        # Validation phase (you'll need to implement this)
+        # Validation phase
         model.eval()
         scheduler.step()
         
         # Print epoch results
         print(f'Epoch {epoch+1}/{num_epochs}:')
-        print(f'Train Loss: {train_loss/len(train_loader):.4f}')
-        print(f'Train Accuracy: {100.*train_correct/train_total:.2f}%')
-        
-        # Add validation code here
-        # ...
+
         
         print('-' * 50)
     
     print(f'Training completed. Best validation accuracy: {best_val_acc:.2f}%')
 
 
-if __name__ == '__main__':
-    dataset = dataset_creater(create=False) # dataset_creater -> function which creates the dataset.
-    train_mamba_model(dataset)
-
-    # train, ids = loader(dataset_path='arc-prize-2025/arc-agi_training_challenges.json')
-    # for id in ids:
-    #     train_mamba_model(train['id'])

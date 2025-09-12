@@ -10,17 +10,33 @@ import logging
 
 plt.set_loglevel (level = 'warning')
 pil_logger = logging.getLogger('PIL')  
-# override the logger logging level to INFO
-pil_logger.setLevel(logging.INFO)
+pil_logger.setLevel(logging.INFO) # override the logger logging level to INFO
+
 
 cmap = colors.ListedColormap(
     ['#000000', '#0074D9', '#FF4136', '#2ECC40', '#FFDC00',
         '#AAAAAA', '#F012BE', '#FF851B', '#7FDBFF', '#870C25'])
+
 norm = colors.Normalize(vmin=0, vmax=9)
+
+
 
 # Global set to keep track of cleared folders
 cleared_folders = set()
 
+
+
+def loader(dataset_path='arc-prize-2025/arc-agi_training_challenges.json'):
+
+    with open(dataset_path, 'r') as f:
+        dataset = json.load(f)
+    ids=[]
+    for case_id in dataset:
+        ids.append(case_id)
+    return dataset , ids 
+
+
+# could be used to clear a folder but mainly used to clear images in a folder
 def clear(folder_path):
 
     for filename in os.listdir(folder_path):
@@ -31,10 +47,12 @@ def clear(folder_path):
         except Exception as e:
             print(f"Error deleting {file_path}: {e}")
 
+
+# save  the  image of the input , predicted  and target in  'folder'
 def display(input, predicted, target, folder='train_outputs', printing=True):
 
-    # Clear folder only once
-    if folder not in cleared_folders:
+    if folder not in cleared_folders: # TO clear folder only once
+
         if os.path.exists(folder):
             clear(folder)
         cleared_folders.add(folder)
@@ -64,46 +82,6 @@ def display(input, predicted, target, folder='train_outputs', printing=True):
 
 
 
-train_path='arc-prize-2025/arc-agi_training_challenges.json'
-with open(train_path, 'r') as f:
-    train = json.load(f)
 
 
 
-def loader(train_path):
-
-    with open(train_path, 'r') as f:
-        train = json.load(f)
-    ids=[]
-    for case_id in train:
-        ids.append(case_id)
-    return train , ids 
-
-ids=[]
-for case_id in train:
-    ids.append(case_id)
-
-
-
-def new_func(train, cmap, ids, data, i):
-    for j in ('input','output'):
-        a=train[ids[1]][data][i]['input']
-        target=train[ids[1]][data][i]['output']
-        print(input)
-        sns.heatmap(input,cmap=cmap)
-        plt.show()
-    return input,target
-
-if __name__ == '__main__':
-    data='train'
-    for i in range(2):
-        input, target = new_func(train, cmap, ids, data, i)
-
-    input=np.array(input)
-    target=np.array(target)
-
-    if target.size <= input.size:
-        print('output')
-
-    else :
-        print('input')

@@ -14,7 +14,7 @@ action_counter = Counter()
 
 from helper_arc import display,clear
 from dl_models.DQNAction_Classifier import DQN_Classifier
-from dl_models.Feature_Extractor import FeatureExtractor
+from dl_models.feature_extractor import FeatureExtractor
 from dl_models.ReinLikelihood import Likelihood
 # --- Helper Functions for Data Generation ---
 from dsl import ALL_ACTIONS , SHIFT_ACTIONS , TRANSFORM_ACTIONS
@@ -54,12 +54,6 @@ def find_empty_spot(grid, obj_size):
                 possible_spots.append((y, x))
     return random.choice(possible_spots) if possible_spots else None
 
-def place_object(grid, obj, pos):
-
-    y, x = pos
-    obj_h, obj_w = obj['size']
-    grid[y:y+obj_h, x:x+obj_w] = obj['grid']
-    return grid
 
  
 # --- Task-Specific Generation Functions ---
@@ -173,12 +167,27 @@ def create_data_loader(tasks: List[Tuple], batch_size: int, shuffle: bool = True
  
     
     all_examples:      List[Any] = []
+    all_input_grids =[]
+    all_obj_grids=[]
+    all_target_grids=[]
     all_obj_labels:    List[int] = []
     all_action_labels: List[int] = []
+    inputs=[]
+    for all_inputs, obj_labels, action_labels in tasks:
+        for (input_grid, objects, target_grid , obj_pos) ,obj_label ,action_idx in zip(all_inputs, obj_labels ,action_labels):
+            
+            # place object inside a target shaped input 
+            obj = objects[obj_label]
+            obj_grid = place_object(np.zeros_like(target_grid.copy()),obj['grid'],obj['position'])
 
-    for inputs, obj_labels, action_labels in tasks:
-        for (input_grid,objects,target_grid,_position) , label , action_idx in zip(inputs,obj_labels,action_labels):
-            obj=objects[label]
+            # all_examples.append([input_grid,obj_grid,target_grid])
+            all_input_grids.append(input_grid)
+            all_obj_grids.append(obj_grid)
+            all_target_grids.append(target_grid)
+            all_obj_labels.append(obj_pos)
+            all_action_labels.append(action_idx)
+
+            obj=objects[obj_label]
             action_counter[action_idx] += 1
 
 
@@ -188,16 +197,13 @@ def create_data_loader(tasks: List[Tuple], batch_size: int, shuffle: bool = True
                 display(input_grid,obj_grid,target_grid,'data_loader') 
 
                 
-        all_examples.extend(inputs)
-        all_obj_labels.extend(obj_labels)
-        all_action_labels.extend(action_labels)
 
     # for finding no of each actions each timed it used it train
     print("Function counts:")
     for action_idx, count in action_counter.items():
         print(f"{action_names[action_idx]}: {count}")
 
-    indices = list(range(len(all_examples))) #create and shuffle indices
+    indices = list(range(len(all_action_labels))) #create and shuffle indices
     if shuffle:
         random.shuffle(indices)
 
@@ -207,11 +213,14 @@ def create_data_loader(tasks: List[Tuple], batch_size: int, shuffle: bool = True
         batch_indices = indices[i:i + batch_size]
         
         # Use the indices to get the data for the batch
-        batch_examples = [all_examples[j] for j in batch_indices]
+        # batch_examples = [all_examples[j] for j in batch_indices]
+        batch_target_grids = [all_target_grids[j] for j in batch_indices]
+        batch_input_grids = [all_input_grids[j] for j in batch_indices]
+        batch_obj_grids = [all_obj_grids[j] for j in batch_indices]
         batch_obj_labels = [all_obj_labels[j] for j in batch_indices]
         batch_action_labels = [all_action_labels[j] for j in batch_indices]
 
-        yield batch_examples, batch_obj_labels, batch_action_labels
+        yield batch_input_grids,batch_obj_grids,batch_target_grids, batch_obj_labels, batch_action_labels
 
 
 
