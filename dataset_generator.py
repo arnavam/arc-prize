@@ -97,8 +97,8 @@ def generate_simple_task(grid_size=(10, 10), num_bg_objects=3, training_eg=4):
 def generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5, training_eg=4):
     inputs = []
     objects=[]
-    labels=[]
-    funcs=[]
+    obj_labels=[]
+    action_labels=[]
     target_grid = np.zeros(grid_size, dtype=int)
     
     i = 0
