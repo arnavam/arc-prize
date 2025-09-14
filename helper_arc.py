@@ -28,6 +28,8 @@ cmap = colors.ListedColormap(
 norm = colors.Normalize(vmin=0, vmax=9)
 
 def display(input ,predicted,target,folder='train_ouputs',printing=True):
+    
+    folder = 'visualizations' + folder
     os.makedirs(folder, exist_ok=True)
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))

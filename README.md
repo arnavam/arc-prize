@@ -10,6 +10,7 @@ This project is focused on solving tasks from the [ARC (Abstraction and Reasonin
 |---|---|---|
 |**Core Logic & Execution**|`Arc_Prize_soln.py`|The main script that implements the core RL solution logic and generates outputs.|
 ||`Arc_Prize_pretraining.py`|Script for supervised pre-training machine learning models on ARC-like tasks.|
+||`Arc_Prize_visualizer.py`|code to view prediction and datset using streamlite.|
 ||`d_models/`|A directory containing the dl models architecture and training code|
 ||`dsl.py`|Defines the custom Domain-Specific Language (DSL) for grid transformations.|
 |**Helper Modules**|`helper.py`|A general-purpose module with utility functions used across the project.|
@@ -17,14 +18,11 @@ This project is focused on solving tasks from the [ARC (Abstraction and Reasonin
 ||`helper_env.py`|Contains specific helper functions  related to  the environment|
 |**Data & Models**|`weights/`|Directory containing the saved weights for our trained models.|
 ||`generated_training_data.pkl`|A pickled file containing synthetically generated data used to train the models.|
-|**Output & Logs**|`data_loader/`|Contains images of the generated datets|
-||`classifier_predictions/`|Default directory for storing the output predictions images from the classifier model.|
-||`likelihood_predictions/`|Default directory for storing the output images from the likelihood model.|
-||`app.log`|A log file for tracking execution, debugging information, and errors.|
+|**Output & Logs**|`visualizations`|Default directory for storing the output visualizations|
+||`app.log`|A log file for tracking main codes execution, debugging information, and errors.|
+||`log`|A log folder for tracking subcodes execution, debugging information, and errors.|
 |**Miscellaneous**|`IDEAS.md`|A document containing brainstorming notes and future ideas.|
-||`submission.py`|A helper script used to format and package the final solution for submission.|
 ||`.gitignore`|Specifies which files and directories to exclude from Git version control.|
-||`__pycache__/`|Directory for Python's cached bytecode.|
 ||`arc-prize-2025/`|Directory  holding data to the 2025 ARC Prize.|
 ||`README.md`|This file.|
 
@@ -32,6 +30,19 @@ This project is focused on solving tasks from the [ARC (Abstraction and Reasonin
 
 
 
-**To be added .**
+- for dataset & prediction visualization: https://arc-prize-visualizer.streamlit.app/
+
+## architecture
+
+
+ I use this in combination which with a `example_selector` which focus on which selects which example in the task to select based a bandit algorithm  (in which the example the score is improving )
+
+ next it applies the architecture given below `n` no of times:
+ ![Architecture](Architecture.jpg)
+
+here liklihood predicts the object to focus on and the classifier focus on which dsl to apply
+
+
+ 
 ---
 

@@ -19,7 +19,7 @@ from dl_models.ReinLikelihood import Likelihood
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler('log/Arc_Prize_soln.log', mode='w')
+handler = logging.FileHandler('app.log', mode='w')
 # handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
 logger.addHandler(handler)
 logger.propagate = False
@@ -256,7 +256,8 @@ if __name__ == "__main__":
         print(examples)
 
         logging.debug(f"Processing task {case_id} with {len(examples)} examples")
-        OUTPUT[case_id]['train']={}
+
+        OUTPUT[case_id]={}
 
         predicted , success = Arc_Prize_Solver(examples,OUTPUT[case_id],load=False,save=True ,max_iterations=100 , max_steps_per_episode=4)
         a = task['train'][0]['input']
