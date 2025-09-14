@@ -92,24 +92,48 @@ def placement(canvas, old_obj, new_obj, background=0):
     return result
 
 def place_object(grid, obj_grid, pos):
+    """
+    Places an object onto a grid, correctly handling partial or no overlap.
+    """
+    grid_h, grid_w = grid.shape
     obj_h, obj_w = obj_grid.shape
+
+    # Get the top-left coordinate for the object on the grid
     y_top, x_left = coordinate_converter(pos, obj_grid.shape, is_center=True)
-    # y_top, x_left = pos
-    
-    logging.debug(f"\n,{grid},\n{obj_grid}") 
-    y_start = max(0, y_top)
-    y_end = min(grid.shape[0], y_top + obj_h)
-    x_start = max(0, x_left)
-    x_end = min(grid.shape[1], x_left + obj_w)
-    
+
+    # --- Calculate the overlapping area ---
+
+    # Find the starting y-coordinate on both grids
+    grid_y_start = max(0, y_top)
     obj_y_start = max(0, -y_top)
-    obj_y_end = obj_y_start + (y_end - y_start)
+
+    # Find the starting x-coordinate on both grids
+    grid_x_start = max(0, x_left)
     obj_x_start = max(0, -x_left)
-    obj_x_end = obj_x_start + (x_end - x_start)
+
+    # Find the height of the overlap
+    # This is the distance from the top of the overlap to the bottom
+    overlap_h = max(0, min(y_top + obj_h, grid_h) - grid_y_start)
+
+    # Find the width of the overlap
+    overlap_w = max(0, min(x_left + obj_w, grid_w) - grid_x_start)
+
+    # --- If there is an overlap, perform the copy ---
+    if overlap_h > 0 and overlap_w > 0:
+        # Define the destination slice on the main grid
+        dest_slice = grid[grid_y_start : grid_y_start + overlap_h,
+                          grid_x_start : grid_x_start + overlap_w]
+
+        # Define the source slice from the object grid
+        src_slice = obj_grid[obj_y_start : obj_y_start + overlap_h,
+                             obj_x_start : obj_x_start + overlap_w]
+        
+        # Copy the source slice to the destination
+        dest_slice[:] = src_slice
     
-    grid[y_start:y_end, x_start:x_end] = obj_grid[obj_y_start:obj_y_end, obj_x_start:obj_x_end]
-    # logging.debug(grid)
+    # The grid is modified in-place, but returning it is good practice
     return grid
+
 
 def coordinate_converter(position, obj_size, is_center=True):
     y, x = position

@@ -89,8 +89,8 @@ class Likelihood(BaseDL):
         super().__init__( device=device, )
 
         
-        self.policy = Policy(feature_extractor, no_of_outputs, no_of_inputs,self.device).to(self.device)
-        self.optimizer = optim.Adam(self.policy.parameters(), lr=lr)
+        self.policy_net = Policy(feature_extractor, no_of_outputs, no_of_inputs,self.device).to(self.device)
+        self.optimizer = optim.Adam(self.policy_net.parameters(), lr=lr)
         self.memory = []
 
     def select_action(self, input):
@@ -104,7 +104,7 @@ class Likelihood(BaseDL):
 
             obj_grid = place_object(np.zeros_like(target_grid.copy()),obj['grid'],obj['position'])
             
-            score= self.policy([predicted_grid,obj_grid,target_grid])
+            score= self.policy_net([predicted_grid,obj_grid,target_grid])
             score = score.squeeze() 
             scores.append(score)
 
@@ -169,7 +169,7 @@ class Likelihood(BaseDL):
                 obj_grid = place_object(np.zeros_like(target_grid.copy()),obj['grid'],obj['position'])
 
                 # Predict score for each the object
-                score = self.policy([current_grid, obj_grid, target_grid])
+                score = self.policy_net([current_grid, obj_grid, target_grid])
                 scores_per_sample.append(score.squeeze())
 
                 
@@ -206,7 +206,7 @@ class Likelihood(BaseDL):
         current_grid, objects, target_grid = input_data
         
         # Set the self to evaluation mode
-        self.policy.eval()
+        self.policy_net.eval()
         with torch.no_grad():
 
             
@@ -221,7 +221,7 @@ class Likelihood(BaseDL):
                 obj_grid = place_object(np.zeros_like(target_grid.copy()),obj['grid'],obj['position'])
 
                 # Predict score for each the object
-                score = self.policy([current_grid, obj_grid, target_grid])
+                score = self.policy_net([current_grid, obj_grid, target_grid])
                 scores.append(score.squeeze())
 
             
@@ -230,5 +230,5 @@ class Likelihood(BaseDL):
             best_action = torch.argmax(scores_t).item()
         
         # Set the self back to training mode
-        self.policy.train()
+        self.policy_net.train()
         return best_action

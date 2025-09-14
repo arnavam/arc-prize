@@ -27,7 +27,7 @@ class FeatureExtractor(nn.Module):
 
     def add_channel_dim(self, tensor): # to batch & add channel for image dataset
         if tensor is tuple :
-            print(tensor)
+            print('ans ',tensor)
         if tensor.ndim == 3:
             tensor = tensor.unsqueeze(1)  # Add channel dimension at position 1
         elif tensor.ndim != 4:

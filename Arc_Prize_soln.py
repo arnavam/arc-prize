@@ -1,22 +1,22 @@
 import numpy as np
 import time 
 import os
+import json
+import torch
+import copy
+import logging
+
+torch.autograd.set_detect_anomaly(True)
 
 from dsl import ALL_ACTIONS ,SHIFT_ACTIONS,TRANSFORM_ACTIONS
 from helper import find_objects , extract_target_region
 from helper_arc import  loader , display
-from dl_models.Feature_Extractor import FeatureExtractor
-from dl_models.DQNAction_Classifier import DQN_Classifier
-from dl_models.ReinLikelihood import Likelihood
-import torch
-import copy
-torch.autograd.set_detect_anomaly(True)
 from helper_env import  placement , place_object
 from helper_env import matrix_similarity
-import logging
+from dl_models.feature_extractor import FeatureExtractor
+from dl_models.DQNAction_Classifier import DQN_Classifier
+from dl_models.ReinLikelihood import Likelihood
 
-import logging
-# logging.getLogger('matplotlib.font_manager').setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler('log/Arc_Prize_soln.log', mode='w')
@@ -31,7 +31,7 @@ action_names = list(ALL_ACTIONS.keys())
 shift_actions = list(SHIFT_ACTIONS.keys())
 transform_actions=list(TRANSFORM_ACTIONS.keys())
 num_actions = len(action_names)
-
+OUTPUT = {}
 
 
 # Initialized Clas
@@ -67,7 +67,7 @@ class Example_Chooser:
                 
                 scores[i] = np.random.normal(mean, std)
                 logging.debug(f"Arm {i}: Mean={mean:.4f}, Std={std:.4f} -> Score={scores[i]:.4f}")           
-        return np.argmax(scores)
+        return int(np.argmax(scores))
 
     def update_arm(self, arm, reward):
         self.n[arm] += 1
@@ -81,7 +81,7 @@ class Example_Chooser:
 #---------------------------------------------------------------------
 
 
-def Arc_Prize_Solver(examples,load,save,max_iterations=100, max_steps_per_episode=4):
+def Arc_Prize_Solver(examples,output,load,save,max_iterations=100, max_steps_per_episode=4):
 
 
     ft1 = FeatureExtractor(input_channels=1)
@@ -93,7 +93,7 @@ def Arc_Prize_Solver(examples,load,save,max_iterations=100, max_steps_per_episod
     Placer = None #DQN_Solver(ft,len(examples[0]['output']),3)
 
     if load == True:
-        # action_classifier.load()
+        action_classifier.load()
         likelihood_predictor.load()
     
     logging.debug(f'output shape & no of examples{len(examples[0]['output']),len(examples)}')
@@ -124,6 +124,7 @@ def Arc_Prize_Solver(examples,load,save,max_iterations=100, max_steps_per_episod
         logging.debug(f'target grid: {target_grid}')
         solved=0
         if idx not in obj_list:
+            output[idx]=[]
             objects = find_objects(input_grid)
             obj_list[idx]=objects
 
@@ -134,16 +135,15 @@ def Arc_Prize_Solver(examples,load,save,max_iterations=100, max_steps_per_episod
             predicted_grid=example['predicted_grid']
 
         logging.debug(f"'predicted_grid',{predicted_grid},{type(predicted_grid)}")
-
-        new_grid = predicted_grid
+        
         old_reward=0
         sim_score=0
         for step in range(max_steps_per_episode):
-            new_grid ,new_reward= find_solution(new_grid,likelihood_predictor,action_classifier,Placer, target_grid,objects)
+            new_grid ,new_reward= find_solution(predicted_grid,likelihood_predictor,action_classifier,Placer, target_grid,objects)
             
             sim_score += new_reward-old_reward
             old_reward=new_reward
-                    
+            
             if np.array_equal(new_grid, target_grid):
                 #remove the current example from the iterations
                 solved +=1 
@@ -152,8 +152,8 @@ def Arc_Prize_Solver(examples,load,save,max_iterations=100, max_steps_per_episod
                 #if no more to remove say we solved everyone and use maybe testing example to test the solution
                 break
 
-            example['predicted_grid']= predicted_grid
-
+            example['predicted_grid']= new_grid
+            output[idx].append((predicted_grid.tolist(),sim_score))
             print(sim_score)
             action_classifier.update_policy()
             likelihood_predictor.update_policy()
@@ -176,7 +176,7 @@ def find_solution(old_predicted_grid, likelihood_predictor,action_classifier, Pl
     idx,prob1 = likelihood_predictor.select_action([old_predicted_grid, objects, target_grid])
     obj_info  = objects[idx]
 
-    action_idx ,(x,y)= action_classifier.select_action([old_predicted_grid,  obj_info['grid'], obj_info['position'],target_grid])
+    action_idx ,(x,y)= action_classifier.select_action([old_predicted_grid,obj_info['grid'],target_grid])
 
     pos_values = [int(x * target_grid.shape[1]), int(y * target_grid.shape[0])]
 
@@ -248,22 +248,23 @@ if __name__ == "__main__":
 
     for case_id in ids:
         count +=1
-        if count ==2:
+        if count ==3:
             break
 
         task = train[case_id]
         examples = task['train']  # Assume each task has a 'train' list of examples
         print(examples)
+        
         logging.debug(f"Processing task {case_id} with {len(examples)} examples")
+        OUTPUT['case_id']={}
 
-        predicted , success = Arc_Prize_Solver(examples,load=False,save=True ,max_iterations=100)
-
-        predicted , success = Arc_Prize_Solver(examples,load=False,save=False ,max_iterations=100)
-        display(a,b,predicted)
+        predicted , success = Arc_Prize_Solver(examples,OUTPUT['case_id'],load=False,save=True ,max_iterations=100)
+        a = task['train'][0]['input']
+        b = task['train'][0]['output']
+        display(a,b,predicted,)
         if success:
-            a = task['train'][0]['input']
-            b= task['train'][0]['output']
-            display(a,b,predicted)
             print(f"Task {case_id} solved")
         else:
             print(f"Task {case_id} not solved")
+    with open('output.json', 'w') as f:
+            json.dump(OUTPUT, f, indent=2)

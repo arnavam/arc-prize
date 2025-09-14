@@ -137,23 +137,23 @@ class DQN_Classifier(BaseDL):
         self.target_update_frequency = target_update
 
 
-    def store_experience(self, state, action, reward, next_state , is_place_action):
+    def store_experience(self, state, action, reward, next_state ,true_position, is_place_action):
 
         state_tensors = [ self._preprocess_to_tensor(i) for i in  state]
         next_state_tensors = [self._preprocess_to_tensor(i)  for i in next_state]
         
         action_tensor = torch.tensor(action, dtype=torch.long)
         reward_tensor = torch.tensor(reward, dtype=torch.float32)
-
+        position_tensor = torch.tensor(true_position,dtype=torch.float32)
         is_place_tensor = torch.tensor(is_place_action, dtype=torch.bool)
         
         self.memory.push((state_tensors, action_tensor, reward_tensor, 
-                        next_state_tensors, is_place_tensor))
+                        next_state_tensors, position_tensor,is_place_tensor))
 
 
     def select_action(self, state, epsilon=0.4):
-        self.target_grid_tensor = self._preprocess_to_tensor(state[3])
-        self.target_grid_shape = state[3].shape
+        self.target_grid_tensor = self._preprocess_to_tensor(state[2])
+        self.target_grid_shape = state[2].shape
         
         if random.random() < epsilon: # Exploration: choose a random action
             
@@ -189,10 +189,9 @@ class DQN_Classifier(BaseDL):
         next_current_grids, next_obj_grids  = (torch.cat(tensors, dim=0) for tensors in zip(*states))
 
         target_grids = self.target_grid_tensor.repeat(self.batch_size, 1, 1, 1)
-
+        true_pos_tensor = torch.stack(true_positions).to(self.device)
         actions_tensor = torch.stack(actions).to(self.device)
         rewards_tensor = torch.stack(rewards).to(self.device)
-        true_pos_tensor = torch.stack(true_positions).to(self.device)
         loss_mask = torch.stack(is_place_flags).float().to(self.device)
         
 
