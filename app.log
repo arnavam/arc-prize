@@ -1,641 +1,2319 @@
-2025-09-15 01:08:25,953 - DEBUG - Processing task 00576224 with 2 examples
-2025-09-15 01:08:28,267 - DEBUG - output shape & no of examples(6, 2)
-2025-09-15 01:08:28,268 - DEBUG - count(1, 1)
-2025-09-15 01:08:28,268 - DEBUG - input grid: [[8 6]
+2025-09-16 01:56:04,842 - DEBUG - Processing task 00576224 with 2 examples
+2025-09-16 01:56:07,557 - DEBUG - output shape & no of examples(6, 2)
+2025-09-16 01:56:07,558 - DEBUG - count(1, 1)
+2025-09-16 01:56:07,558 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:28,268 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:07,558 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:28,269 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+2025-09-16 01:56:07,559 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
  [0 0 0 0 0 0]
  [0 0 0 0 0 0]
  [0 0 0 0 0 0]
  [0 0 0 0 0 0]
  [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:28,328 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:28,328 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:28,413 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:28,413 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:28,446 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:28,446 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:28,478 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 1]
-2025-09-15 01:08:28,478 - DEBUG - new obj position(0.6666666666666666, 0.16666666666666666)
-2025-09-15 01:08:28,486 - DEBUG - Arm 1: Mean=0.0000, Std=0.0000 -> Score=-0.0000
-2025-09-15 01:08:28,487 - DEBUG - count(1, 2)
-2025-09-15 01:08:28,487 - DEBUG - input grid: [[8 6]
+2025-09-16 01:56:07,683 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:07,683 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:07,790 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 1]
+2025-09-16 01:56:07,790 - DEBUG - new obj position(0.3333333333333333, 0.16666666666666666)
+2025-09-16 01:56:07,833 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:07,833 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:07,868 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:07,868 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:07,878 - DEBUG - Arm 1: Mean=0.0208, Std=0.0069 -> Score=0.0201
+2025-09-16 01:56:07,878 - DEBUG - count(1, 2)
+2025-09-16 01:56:07,878 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:28,487 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:07,878 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:28,487 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+2025-09-16 01:56:07,878 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+ [0 0 4 0 0 0]
  [0 0 0 0 0 0]
  [0 0 0 0 0 0]
- [6 0 0 0 0 0]
- [0 0 0 0 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:28,513 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:28,513 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:28,552 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 1]
-2025-09-15 01:08:28,552 - DEBUG - new obj position(0.5, 0.16666666666666666)
-2025-09-15 01:08:28,652 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 3]
-2025-09-15 01:08:28,652 - DEBUG - new obj position(0.16666666666666666, 0.5)
-2025-09-15 01:08:28,713 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:28,713 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:28,728 - DEBUG - Arm 1: Mean=0.0035, Std=0.0035 -> Score=0.0075
-2025-09-15 01:08:28,729 - DEBUG - count(1, 3)
-2025-09-15 01:08:28,729 - DEBUG - input grid: [[8 6]
- [6 4]]
-2025-09-15 01:08:28,729 - DEBUG - target grid: [[8 6 8 6 8 6]
- [6 4 6 4 6 4]
- [6 8 6 8 6 8]
- [4 6 4 6 4 6]
- [8 6 8 6 8 6]
- [6 4 6 4 6 4]]
-2025-09-15 01:08:28,729 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 8 0 0 0]
- [0 0 0 0 0 0]
- [6 0 0 0 0 0]
  [0 0 0 0 0 0]
  [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:28,784 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:28,784 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:28,841 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 0]
-2025-09-15 01:08:28,841 - DEBUG - new obj position(0.0, 0.0)
-2025-09-15 01:08:28,903 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 2]
-2025-09-15 01:08:28,903 - DEBUG - new obj position(0.6666666666666666, 0.3333333333333333)
-2025-09-15 01:08:28,976 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:28,976 - DEBUG - new obj position(0.5, 0.3333333333333333)
-2025-09-15 01:08:28,994 - DEBUG - Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0018
-2025-09-15 01:08:28,994 - DEBUG - count(1, 4)
-2025-09-15 01:08:28,994 - DEBUG - input grid: [[8 6]
- [6 4]]
-2025-09-15 01:08:28,994 - DEBUG - target grid: [[8 6 8 6 8 6]
- [6 4 6 4 6 4]
- [6 8 6 8 6 8]
- [4 6 4 6 4 6]
- [8 6 8 6 8 6]
- [6 4 6 4 6 4]]
-2025-09-15 01:08:28,994 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 8 0 0 0]
- [0 8 0 0 0 0]
- [6 0 0 0 0 0]
- [0 0 0 0 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:29,045 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:29,045 - DEBUG - new obj position(0.16666666666666666, 0.6666666666666666)
-2025-09-15 01:08:29,110 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:29,110 - DEBUG - new obj position(0.0, 0.16666666666666666)
-2025-09-15 01:08:29,174 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:29,174 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:29,239 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 1]
-2025-09-15 01:08:29,239 - DEBUG - new obj position(0.8333333333333334, 0.16666666666666666)
-2025-09-15 01:08:29,256 - DEBUG - Arm 1: Mean=0.0104, Std=0.0035 -> Score=0.0062
-2025-09-15 01:08:29,256 - DEBUG - count(1, 5)
-2025-09-15 01:08:29,256 - DEBUG - input grid: [[8 6]
- [6 4]]
-2025-09-15 01:08:29,256 - DEBUG - target grid: [[8 6 8 6 8 6]
- [6 4 6 4 6 4]
- [6 8 6 8 6 8]
- [4 6 4 6 4 6]
- [8 6 8 6 8 6]
- [6 4 6 4 6 4]]
-2025-09-15 01:08:29,256 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 8 0 0 0]
- [0 8 0 0 0 0]
- [6 0 0 0 0 0]
- [6 0 0 0 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:29,308 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:29,308 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:29,382 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:29,382 - DEBUG - new obj position(0.8333333333333334, 0.3333333333333333)
-2025-09-15 01:08:29,457 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:29,457 - DEBUG - new obj position(0.16666666666666666, 0.6666666666666666)
-2025-09-15 01:08:29,532 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 5]
-2025-09-15 01:08:29,533 - DEBUG - new obj position(0.0, 0.8333333333333334)
-2025-09-15 01:08:29,551 - DEBUG - Arm 1: Mean=0.0153, Std=0.0038 -> Score=0.0110
-2025-09-15 01:08:29,551 - DEBUG - count(0, 6)
-2025-09-15 01:08:29,551 - DEBUG - input grid: [[7 9]
+2025-09-16 01:56:07,909 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:07,909 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:07,955 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:07,955 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:08,005 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:08,005 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:08,059 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:08,059 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:08,073 - DEBUG - Arm 1: Mean=0.0174, Std=0.0051 -> Score=0.0287
+2025-09-16 01:56:08,073 - DEBUG - count(0, 3)
+2025-09-16 01:56:08,073 - DEBUG - input grid: [[7 9]
  [4 3]]
-2025-09-15 01:08:29,552 - DEBUG - target grid: [[7 9 7 9 7 9]
+2025-09-16 01:56:08,073 - DEBUG - target grid: [[7 9 7 9 7 9]
  [4 3 4 3 4 3]
  [9 7 9 7 9 7]
  [3 4 3 4 3 4]
  [7 9 7 9 7 9]
  [4 3 4 3 4 3]]
-2025-09-15 01:08:29,552 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+2025-09-16 01:56:08,073 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
  [0 0 0 0 0 0]
  [0 0 0 0 0 0]
  [0 0 0 0 0 0]
  [0 0 0 0 0 0]
  [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:29,571 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 3]
-2025-09-15 01:08:29,571 - DEBUG - new obj position(0.5, 0.5)
-2025-09-15 01:08:29,628 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:29,628 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:29,665 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:29,665 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:29,708 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 5]
-2025-09-15 01:08:29,708 - DEBUG - new obj position(0.5, 0.5)
-2025-09-15 01:08:29,721 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=0.0000
-2025-09-15 01:08:29,721 - DEBUG - Arm 1: Mean=0.0153, Std=0.0038 -> Score=0.0125
-2025-09-15 01:08:29,721 - DEBUG - count(1, 7)
-2025-09-15 01:08:29,722 - DEBUG - input grid: [[8 6]
+2025-09-16 01:56:08,091 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:08,091 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:08,122 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 0]
+2025-09-16 01:56:08,122 - DEBUG - new obj position(0.0, 0.0)
+2025-09-16 01:56:08,158 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 3]
+2025-09-16 01:56:08,158 - DEBUG - new obj position(0.8333333333333334, 0.5)
+2025-09-16 01:56:08,199 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:08,199 - DEBUG - new obj position(0.0, 0.0)
+2025-09-16 01:56:08,211 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=-0.0018
+2025-09-16 01:56:08,211 - DEBUG - Arm 1: Mean=0.0174, Std=0.0051 -> Score=0.0126
+2025-09-16 01:56:08,211 - DEBUG - count(1, 4)
+2025-09-16 01:56:08,212 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:29,722 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:08,212 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:29,722 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 8 0 0 0]
- [0 8 0 0 0 0]
- [6 0 0 0 0 0]
- [6 0 0 0 0 0]
+2025-09-16 01:56:08,212 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+ [0 0 4 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
  [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:29,790 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 4]
-2025-09-15 01:08:29,790 - DEBUG - new obj position(0.5, 0.3333333333333333)
-2025-09-15 01:08:29,873 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:29,874 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:29,957 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:29,958 - DEBUG - new obj position(0.0, 0.16666666666666666)
-2025-09-15 01:08:30,042 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:30,042 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:30,070 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=-0.0000
-2025-09-15 01:08:30,070 - DEBUG - Arm 1: Mean=0.0185, Std=0.0036 -> Score=0.0178
-2025-09-15 01:08:30,070 - DEBUG - count(1, 8)
-2025-09-15 01:08:30,070 - DEBUG - input grid: [[8 6]
+2025-09-16 01:56:08,252 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:08,252 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:08,309 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:08,310 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:08,381 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 0]
+2025-09-16 01:56:08,382 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:56:08,505 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 2]
+2025-09-16 01:56:08,505 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:08,529 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0132
+2025-09-16 01:56:08,529 - DEBUG - Arm 1: Mean=0.0185, Std=0.0039 -> Score=0.0180
+2025-09-16 01:56:08,529 - DEBUG - count(1, 5)
+2025-09-16 01:56:08,529 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:30,070 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:08,529 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:30,070 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+2025-09-16 01:56:08,529 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
  [0 0 6 0 0 0]
- [0 8 0 0 0 0]
- [6 0 0 0 0 0]
- [6 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
  [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:30,138 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:30,138 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:30,228 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 4]
-2025-09-15 01:08:30,228 - DEBUG - new obj position(0.6666666666666666, 0.6666666666666666)
-2025-09-15 01:08:30,321 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:30,321 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:30,420 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:30,420 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:30,445 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=0.0000
-2025-09-15 01:08:30,445 - DEBUG - Arm 1: Mean=0.0208, Std=0.0034 -> Score=0.0226
-2025-09-15 01:08:30,445 - DEBUG - count(1, 9)
-2025-09-15 01:08:30,445 - DEBUG - input grid: [[8 6]
+2025-09-16 01:56:08,655 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:08,655 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:08,917 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 2]
+2025-09-16 01:56:08,917 - DEBUG - new obj position(0.0, 0.3333333333333333)
+2025-09-16 01:56:09,015 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:09,015 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:09,089 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:09,089 - DEBUG - new obj position(0.3333333333333333, 0.16666666666666666)
+2025-09-16 01:56:09,108 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0249
+2025-09-16 01:56:09,108 - DEBUG - Arm 1: Mean=0.0226, Std=0.0038 -> Score=0.0284
+2025-09-16 01:56:09,108 - DEBUG - count(1, 6)
+2025-09-16 01:56:09,108 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:30,445 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:09,108 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:30,445 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 8 0 0 0]
- [0 8 0 0 0 0]
- [6 0 0 0 0 0]
- [6 0 0 0 0 0]
+2025-09-16 01:56:09,108 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+ [6 0 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
  [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:30,524 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 5]
-2025-09-15 01:08:30,524 - DEBUG - new obj position(0.16666666666666666, 0.5)
-2025-09-15 01:08:30,671 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:30,671 - DEBUG - new obj position(0.6666666666666666, 0.5)
-2025-09-15 01:08:30,789 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:30,790 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:30,899 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 4]
-2025-09-15 01:08:30,899 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:30,936 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=0.0000
-2025-09-15 01:08:30,936 - DEBUG - Arm 1: Mean=0.0217, Std=0.0030 -> Score=0.0202
-2025-09-15 01:08:30,936 - DEBUG - count(1, 10)
-2025-09-15 01:08:30,936 - DEBUG - input grid: [[8 6]
+2025-09-16 01:56:09,160 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:09,160 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:09,235 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:09,235 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:09,307 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 2]
+2025-09-16 01:56:09,307 - DEBUG - new obj position(0.5, 0.5)
+2025-09-16 01:56:09,379 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:09,379 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:09,398 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0098
+2025-09-16 01:56:09,398 - DEBUG - Arm 1: Mean=0.0292, Std=0.0043 -> Score=0.0260
+2025-09-16 01:56:09,398 - DEBUG - count(1, 7)
+2025-09-16 01:56:09,398 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:30,936 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:09,398 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:30,936 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 8 0 0 0]
- [0 8 0 0 0 0]
- [6 0 0 0 0 0]
- [6 0 0 0 0 0]
+2025-09-16 01:56:09,398 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+ [6 0 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
  [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:31,015 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:31,015 - DEBUG - new obj position(0.6666666666666666, 0.8333333333333334)
-2025-09-15 01:08:31,121 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 5]
-2025-09-15 01:08:31,121 - DEBUG - new obj position(0.8333333333333334, 0.8333333333333334)
-2025-09-15 01:08:31,229 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 0]
-2025-09-15 01:08:31,229 - DEBUG - new obj position(0.16666666666666666, 0.3333333333333333)
-2025-09-15 01:08:31,340 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:31,340 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:31,367 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=0.0000
-2025-09-15 01:08:31,368 - DEBUG - Arm 1: Mean=0.0231, Std=0.0028 -> Score=0.0268
-2025-09-15 01:08:31,368 - DEBUG - count(1, 11)
-2025-09-15 01:08:31,368 - DEBUG - input grid: [[8 6]
+2025-09-16 01:56:09,455 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:09,455 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:09,527 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:09,527 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:09,624 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:09,624 - DEBUG - new obj position(0.0, 0.3333333333333333)
+2025-09-16 01:56:09,701 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:09,701 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:09,725 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0198
+2025-09-16 01:56:09,725 - DEBUG - Arm 1: Mean=0.0336, Std=0.0041 -> Score=0.0401
+2025-09-16 01:56:09,725 - DEBUG - count(1, 8)
+2025-09-16 01:56:09,725 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:31,368 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:09,725 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:31,368 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 0 8 0 0]
- [0 8 0 0 0 0]
+2025-09-16 01:56:09,725 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+ [6 0 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:09,782 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 4]
+2025-09-16 01:56:09,782 - DEBUG - new obj position(0.6666666666666666, 0.6666666666666666)
+2025-09-16 01:56:09,857 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:09,857 - DEBUG - new obj position(0.3333333333333333, 0.16666666666666666)
+2025-09-16 01:56:09,933 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:09,933 - DEBUG - new obj position(0.3333333333333333, 0.16666666666666666)
+2025-09-16 01:56:10,014 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:10,014 - DEBUG - new obj position(0.3333333333333333, 0.16666666666666666)
+2025-09-16 01:56:10,033 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=-0.0064
+2025-09-16 01:56:10,033 - DEBUG - Arm 1: Mean=0.0367, Std=0.0038 -> Score=0.0363
+2025-09-16 01:56:10,033 - DEBUG - count(1, 9)
+2025-09-16 01:56:10,033 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:10,033 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:10,033 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+ [6 0 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:10,089 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 4]
+2025-09-16 01:56:10,089 - DEBUG - new obj position(0.16666666666666666, 0.5)
+2025-09-16 01:56:10,172 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:10,173 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:10,250 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:10,250 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:10,325 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:10,325 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:10,344 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0089
+2025-09-16 01:56:10,344 - DEBUG - Arm 1: Mean=0.0373, Std=0.0034 -> Score=0.0368
+2025-09-16 01:56:10,344 - DEBUG - count(1, 10)
+2025-09-16 01:56:10,345 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:10,345 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:10,345 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+ [6 0 8 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:10,404 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:10,404 - DEBUG - new obj position(0.3333333333333333, 0.16666666666666666)
+2025-09-16 01:56:10,484 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 1]
+2025-09-16 01:56:10,484 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
+2025-09-16 01:56:10,585 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:10,587 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:10,692 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:10,692 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:10,723 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0106
+2025-09-16 01:56:10,723 - DEBUG - Arm 1: Mean=0.0370, Std=0.0031 -> Score=0.0414
+2025-09-16 01:56:10,723 - DEBUG - count(1, 11)
+2025-09-16 01:56:10,724 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:10,724 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:10,724 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+ [6 0 8 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:10,785 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 0]
+2025-09-16 01:56:10,786 - DEBUG - new obj position(0.3333333333333333, 0.16666666666666666)
+2025-09-16 01:56:10,872 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:10,872 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:11,032 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 5]
+2025-09-16 01:56:11,032 - DEBUG - new obj position(0.8333333333333334, 0.8333333333333334)
+2025-09-16 01:56:11,496 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 0]
+2025-09-16 01:56:11,496 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:56:11,795 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0114
+2025-09-16 01:56:11,796 - DEBUG - Arm 1: Mean=0.0368, Std=0.0029 -> Score=0.0394
+2025-09-16 01:56:11,796 - DEBUG - count(1, 12)
+2025-09-16 01:56:11,801 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:11,801 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:11,801 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+ [6 6 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:11,951 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:11,952 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:12,085 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:12,085 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:12,206 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:12,206 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:12,306 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:12,306 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:12,329 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=-0.0048
+2025-09-16 01:56:12,329 - DEBUG - Arm 1: Mean=0.0385, Std=0.0027 -> Score=0.0412
+2025-09-16 01:56:12,329 - DEBUG - count(1, 13)
+2025-09-16 01:56:12,329 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:12,329 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:12,329 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:12,401 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:12,401 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:12,499 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 1]
+2025-09-16 01:56:12,499 - DEBUG - new obj position(0.16666666666666666, 0.5)
+2025-09-16 01:56:12,646 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:12,646 - DEBUG - new obj position(0.0, 0.3333333333333333)
+2025-09-16 01:56:12,744 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:12,744 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:12,769 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0138
+2025-09-16 01:56:12,769 - DEBUG - Arm 1: Mean=0.0388, Std=0.0026 -> Score=0.0437
+2025-09-16 01:56:12,769 - DEBUG - count(1, 14)
+2025-09-16 01:56:12,770 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:12,770 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:12,770 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:12,837 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:12,837 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:12,936 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:12,936 - DEBUG - new obj position(0.3333333333333333, 0.16666666666666666)
+2025-09-16 01:56:13,030 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 5]
+2025-09-16 01:56:13,031 - DEBUG - new obj position(0.3333333333333333, 0.16666666666666666)
+2025-09-16 01:56:13,122 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:13,122 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:13,146 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=-0.0001
+2025-09-16 01:56:13,146 - DEBUG - Arm 1: Mean=0.0401, Std=0.0025 -> Score=0.0366
+2025-09-16 01:56:13,146 - DEBUG - count(1, 15)
+2025-09-16 01:56:13,146 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:13,146 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:13,146 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:13,216 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:13,216 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:13,309 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:13,309 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:13,402 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:13,402 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:13,497 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:13,497 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:13,522 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0063
+2025-09-16 01:56:13,522 - DEBUG - Arm 1: Mean=0.0397, Std=0.0023 -> Score=0.0427
+2025-09-16 01:56:13,522 - DEBUG - count(1, 16)
+2025-09-16 01:56:13,522 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:13,522 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:13,522 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+ [6 6 4 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:13,621 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:13,621 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:13,747 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:13,747 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:13,849 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:13,849 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:13,950 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:13,950 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:13,974 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0150
+2025-09-16 01:56:13,974 - DEBUG - Arm 1: Mean=0.0403, Std=0.0022 -> Score=0.0424
+2025-09-16 01:56:13,974 - DEBUG - count(1, 17)
+2025-09-16 01:56:13,974 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:13,975 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:13,975 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:14,049 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:56:14,049 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:14,152 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:14,152 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:14,252 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 3]
+2025-09-16 01:56:14,252 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:14,352 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:14,352 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:14,377 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=-0.0051
+2025-09-16 01:56:14,377 - DEBUG - Arm 1: Mean=0.0412, Std=0.0021 -> Score=0.0398
+2025-09-16 01:56:14,377 - DEBUG - count(1, 18)
+2025-09-16 01:56:14,377 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:14,378 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:14,378 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:14,455 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 5]
+2025-09-16 01:56:14,455 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
+2025-09-16 01:56:14,563 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:14,563 - DEBUG - new obj position(0.0, 0.3333333333333333)
+2025-09-16 01:56:14,709 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 1]
+2025-09-16 01:56:14,709 - DEBUG - new obj position(0.16666666666666666, 0.16666666666666666)
+2025-09-16 01:56:14,829 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:14,829 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:14,865 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=-0.0100
+2025-09-16 01:56:14,865 - DEBUG - Arm 1: Mean=0.0413, Std=0.0021 -> Score=0.0394
+2025-09-16 01:56:14,865 - DEBUG - count(1, 19)
+2025-09-16 01:56:14,866 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:14,866 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:14,866 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
+ [6 6 8 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:15,021 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 0]
+2025-09-16 01:56:15,021 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:15,156 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:15,157 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:15,271 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 4]
+2025-09-16 01:56:15,271 - DEBUG - new obj position(0.5, 0.6666666666666666)
+2025-09-16 01:56:15,394 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 5]
+2025-09-16 01:56:15,394 - DEBUG - new obj position(0.16666666666666666, 0.5)
+2025-09-16 01:56:15,423 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0039
+2025-09-16 01:56:15,423 - DEBUG - Arm 1: Mean=0.0405, Std=0.0020 -> Score=0.0377
+2025-09-16 01:56:15,423 - DEBUG - count(1, 20)
+2025-09-16 01:56:15,423 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:15,423 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:15,423 - DEBUG - 'predicted_grid',[[0 0 6 0 0 0]
+ [6 6 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:15,509 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:15,509 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:15,651 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:15,651 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:15,783 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:15,784 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:15,904 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 3]
+2025-09-16 01:56:15,907 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:15,937 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0079
+2025-09-16 01:56:15,937 - DEBUG - Arm 1: Mean=0.0413, Std=0.0019 -> Score=0.0416
+2025-09-16 01:56:15,937 - DEBUG - count(1, 21)
+2025-09-16 01:56:15,937 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:15,937 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:15,938 - DEBUG - 'predicted_grid',[[0 0 6 0 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:16,028 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:16,028 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:16,150 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:16,150 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:16,284 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 2]
+2025-09-16 01:56:16,284 - DEBUG - new obj position(0.16666666666666666, 0.3333333333333333)
+2025-09-16 01:56:16,420 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:16,421 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:16,454 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0028
+2025-09-16 01:56:16,454 - DEBUG - Arm 1: Mean=0.0420, Std=0.0019 -> Score=0.0396
+2025-09-16 01:56:16,454 - DEBUG - count(1, 22)
+2025-09-16 01:56:16,454 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:16,454 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:16,455 - DEBUG - 'predicted_grid',[[0 0 6 0 0 0]
+ [6 6 8 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:16,557 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:16,558 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:16,741 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:16,741 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:16,879 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:16,880 - DEBUG - new obj position(0.5, 0.6666666666666666)
+2025-09-16 01:56:17,019 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 0]
+2025-09-16 01:56:17,020 - DEBUG - new obj position(1.0, 0.8333333333333334)
+2025-09-16 01:56:17,060 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0056
+2025-09-16 01:56:17,060 - DEBUG - Arm 1: Mean=0.0423, Std=0.0019 -> Score=0.0463
+2025-09-16 01:56:17,060 - DEBUG - count(1, 23)
+2025-09-16 01:56:17,060 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:17,060 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:17,061 - DEBUG - 'predicted_grid',[[0 0 6 0 0 0]
+ [6 6 8 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:17,163 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:17,163 - DEBUG - new obj position(0.6666666666666666, 0.6666666666666666)
+2025-09-16 01:56:17,839 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 5]
+2025-09-16 01:56:17,841 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:56:17,988 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:17,988 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:18,126 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:18,126 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:18,159 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0068
+2025-09-16 01:56:18,159 - DEBUG - Arm 1: Mean=0.0432, Std=0.0018 -> Score=0.0452
+2025-09-16 01:56:18,159 - DEBUG - count(1, 24)
+2025-09-16 01:56:18,160 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:18,160 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:18,160 - DEBUG - 'predicted_grid',[[0 0 6 0 0 0]
+ [6 6 8 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:18,265 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:18,266 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:18,410 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 2]
+2025-09-16 01:56:18,410 - DEBUG - new obj position(0.8333333333333334, 0.3333333333333333)
+2025-09-16 01:56:18,556 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:18,556 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:18,747 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:18,747 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:18,796 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=-0.0025
+2025-09-16 01:56:18,796 - DEBUG - Arm 1: Mean=0.0447, Std=0.0019 -> Score=0.0464
+2025-09-16 01:56:18,796 - DEBUG - count(1, 25)
+2025-09-16 01:56:18,797 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:18,797 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:18,797 - DEBUG - 'predicted_grid',[[0 0 6 0 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:18,960 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 0]
+2025-09-16 01:56:18,960 - DEBUG - new obj position(0.5, 0.6666666666666666)
+2025-09-16 01:56:19,177 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:19,177 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:19,385 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:19,385 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:19,544 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:19,544 - DEBUG - new obj position(0.3333333333333333, 0.16666666666666666)
+2025-09-16 01:56:19,618 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0034
+2025-09-16 01:56:19,618 - DEBUG - Arm 1: Mean=0.0457, Std=0.0019 -> Score=0.0497
+2025-09-16 01:56:19,618 - DEBUG - count(1, 26)
+2025-09-16 01:56:19,618 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:19,618 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:19,618 - DEBUG - 'predicted_grid',[[0 0 6 0 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:19,751 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:19,751 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:19,906 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:19,906 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:20,066 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:20,066 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:20,244 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:20,244 - DEBUG - new obj position(0.0, 0.3333333333333333)
+2025-09-16 01:56:20,282 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0010
+2025-09-16 01:56:20,283 - DEBUG - Arm 1: Mean=0.0469, Std=0.0020 -> Score=0.0485
+2025-09-16 01:56:20,283 - DEBUG - count(1, 27)
+2025-09-16 01:56:20,283 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:20,283 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:20,283 - DEBUG - 'predicted_grid',[[0 0 6 0 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:20,398 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 5]
+2025-09-16 01:56:20,398 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:20,554 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:20,554 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:20,744 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:20,744 - DEBUG - new obj position(0.3333333333333333, 0.16666666666666666)
+2025-09-16 01:56:20,899 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 1]
+2025-09-16 01:56:20,899 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:56:20,938 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0089
+2025-09-16 01:56:20,938 - DEBUG - Arm 1: Mean=0.0481, Std=0.0020 -> Score=0.0452
+2025-09-16 01:56:20,938 - DEBUG - count(1, 28)
+2025-09-16 01:56:20,938 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:20,939 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:20,939 - DEBUG - 'predicted_grid',[[0 0 6 0 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:21,059 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:21,059 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:21,218 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:21,218 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:21,379 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:21,379 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:21,812 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:56:21,812 - DEBUG - new obj position(0.16666666666666666, 0.3333333333333333)
+2025-09-16 01:56:21,852 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=-0.0019
+2025-09-16 01:56:21,852 - DEBUG - Arm 1: Mean=0.0491, Std=0.0020 -> Score=0.0491
+2025-09-16 01:56:21,852 - DEBUG - count(1, 29)
+2025-09-16 01:56:21,852 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:21,852 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:21,852 - DEBUG - 'predicted_grid',[[0 6 6 0 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:21,970 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:21,970 - DEBUG - new obj position(0.8333333333333334, 0.8333333333333334)
+2025-09-16 01:56:22,129 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:22,129 - DEBUG - new obj position(0.8333333333333334, 0.3333333333333333)
+2025-09-16 01:56:22,299 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:22,299 - DEBUG - new obj position(0.5, 0.6666666666666666)
+2025-09-16 01:56:22,463 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 1]
+2025-09-16 01:56:22,463 - DEBUG - new obj position(0.8333333333333334, 0.16666666666666666)
+2025-09-16 01:56:22,505 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0082
+2025-09-16 01:56:22,505 - DEBUG - Arm 1: Mean=0.0516, Std=0.0023 -> Score=0.0525
+2025-09-16 01:56:22,505 - DEBUG - count(1, 30)
+2025-09-16 01:56:22,505 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:22,505 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:22,505 - DEBUG - 'predicted_grid',[[0 6 6 0 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
  [6 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:22,675 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 1]
+2025-09-16 01:56:22,675 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:22,859 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:22,859 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:23,027 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:23,027 - DEBUG - new obj position(0.6666666666666666, 0.6666666666666666)
+2025-09-16 01:56:23,192 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:23,192 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:23,229 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=-0.0006
+2025-09-16 01:56:23,230 - DEBUG - Arm 1: Mean=0.0532, Std=0.0024 -> Score=0.0488
+2025-09-16 01:56:23,230 - DEBUG - count(1, 31)
+2025-09-16 01:56:23,230 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:23,230 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:23,230 - DEBUG - 'predicted_grid',[[0 6 6 0 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
  [6 0 0 0 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:31,452 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:31,452 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:31,571 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 1]
-2025-09-15 01:08:31,571 - DEBUG - new obj position(0.16666666666666666, 0.5)
-2025-09-15 01:08:31,717 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 0]
-2025-09-15 01:08:31,717 - DEBUG - new obj position(0.6666666666666666, 0.6666666666666666)
-2025-09-15 01:08:31,838 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:31,838 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:31,866 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=-0.0000
-2025-09-15 01:08:31,867 - DEBUG - Arm 1: Mean=0.0250, Std=0.0028 -> Score=0.0200
-2025-09-15 01:08:31,867 - DEBUG - count(1, 12)
-2025-09-15 01:08:31,867 - DEBUG - input grid: [[8 6]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:23,354 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:23,354 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:23,622 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 3]
+2025-09-16 01:56:23,622 - DEBUG - new obj position(0.5, 0.5)
+2025-09-16 01:56:23,818 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:23,818 - DEBUG - new obj position(0.5, 0.6666666666666666)
+2025-09-16 01:56:23,990 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 4]
+2025-09-16 01:56:23,990 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:24,037 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0079
+2025-09-16 01:56:24,037 - DEBUG - Arm 1: Mean=0.0551, Std=0.0025 -> Score=0.0545
+2025-09-16 01:56:24,037 - DEBUG - count(1, 32)
+2025-09-16 01:56:24,037 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:31,867 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:24,037 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:31,867 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 0 8 0 0]
- [0 8 0 0 0 0]
+2025-09-16 01:56:24,037 - DEBUG - 'predicted_grid',[[0 6 6 0 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
  [6 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:24,164 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:24,164 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:24,337 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 0]
+2025-09-16 01:56:24,337 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:56:24,507 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:24,507 - DEBUG - new obj position(0.0, 0.3333333333333333)
+2025-09-16 01:56:24,723 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:24,723 - DEBUG - new obj position(0.0, 0.3333333333333333)
+2025-09-16 01:56:24,818 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0047
+2025-09-16 01:56:24,818 - DEBUG - Arm 1: Mean=0.0569, Std=0.0026 -> Score=0.0608
+2025-09-16 01:56:24,818 - DEBUG - count(1, 33)
+2025-09-16 01:56:24,818 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:24,818 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:24,818 - DEBUG - 'predicted_grid',[[0 6 6 0 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
  [6 0 0 0 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:31,953 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:31,953 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:32,065 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:32,065 - DEBUG - new obj position(0.6666666666666666, 0.8333333333333334)
-2025-09-15 01:08:32,180 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:32,180 - DEBUG - new obj position(0.5, 0.3333333333333333)
-2025-09-15 01:08:32,295 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:32,295 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:32,324 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=-0.0000
-2025-09-15 01:08:32,324 - DEBUG - Arm 1: Mean=0.0259, Std=0.0026 -> Score=0.0270
-2025-09-15 01:08:32,324 - DEBUG - count(1, 13)
-2025-09-15 01:08:32,324 - DEBUG - input grid: [[8 6]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:24,942 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:24,942 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:25,141 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 4]
+2025-09-16 01:56:25,141 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:56:25,327 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 3]
+2025-09-16 01:56:25,327 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:25,514 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:25,515 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:25,629 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=-0.0038
+2025-09-16 01:56:25,629 - DEBUG - Arm 1: Mean=0.0584, Std=0.0026 -> Score=0.0588
+2025-09-16 01:56:25,629 - DEBUG - count(1, 34)
+2025-09-16 01:56:25,629 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:32,324 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:25,629 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:32,324 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 0 8 0 0]
- [0 8 0 0 0 0]
+2025-09-16 01:56:25,630 - DEBUG - 'predicted_grid',[[0 6 6 0 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
  [6 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:25,804 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:25,804 - DEBUG - new obj position(0.8333333333333334, 0.8333333333333334)
+2025-09-16 01:56:26,005 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 5]
+2025-09-16 01:56:26,005 - DEBUG - new obj position(0.8333333333333334, 0.16666666666666666)
+2025-09-16 01:56:26,192 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:26,192 - DEBUG - new obj position(0.6666666666666666, 0.6666666666666666)
+2025-09-16 01:56:26,379 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:26,379 - DEBUG - new obj position(0.8333333333333334, 0.16666666666666666)
+2025-09-16 01:56:26,451 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0036
+2025-09-16 01:56:26,452 - DEBUG - Arm 1: Mean=0.0600, Std=0.0026 -> Score=0.0637
+2025-09-16 01:56:26,452 - DEBUG - count(1, 35)
+2025-09-16 01:56:26,452 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:26,452 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:26,452 - DEBUG - 'predicted_grid',[[0 6 6 0 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
  [6 0 0 0 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:32,412 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:32,412 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:32,534 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:32,534 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:32,688 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:32,688 - DEBUG - new obj position(0.8333333333333334, 1.0)
-2025-09-15 01:08:32,823 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:32,823 - DEBUG - new obj position(0.0, 1.0)
-2025-09-15 01:08:32,856 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=-0.0000
-2025-09-15 01:08:32,856 - DEBUG - Arm 1: Mean=0.0266, Std=0.0025 -> Score=0.0327
-2025-09-15 01:08:32,856 - DEBUG - count(1, 14)
-2025-09-15 01:08:32,856 - DEBUG - input grid: [[8 6]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:26,635 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:26,635 - DEBUG - new obj position(0.16666666666666666, 0.3333333333333333)
+2025-09-16 01:56:26,835 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:26,836 - DEBUG - new obj position(0.5, 0.6666666666666666)
+2025-09-16 01:56:27,023 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:27,024 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:27,213 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 4]
+2025-09-16 01:56:27,213 - DEBUG - new obj position(0.16666666666666666, 0.6666666666666666)
+2025-09-16 01:56:27,276 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0032
+2025-09-16 01:56:27,276 - DEBUG - Arm 1: Mean=0.0617, Std=0.0027 -> Score=0.0684
+2025-09-16 01:56:27,276 - DEBUG - count(1, 36)
+2025-09-16 01:56:27,276 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:32,856 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:27,276 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:32,856 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 0 8 0 0]
- [0 8 0 0 0 0]
+2025-09-16 01:56:27,276 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
  [6 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:27,403 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 1]
+2025-09-16 01:56:27,403 - DEBUG - new obj position(0.0, 0.16666666666666666)
+2025-09-16 01:56:27,619 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:27,619 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:27,825 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:27,825 - DEBUG - new obj position(0.8333333333333334, 0.3333333333333333)
+2025-09-16 01:56:28,025 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:28,026 - DEBUG - new obj position(0.0, 0.3333333333333333)
+2025-09-16 01:56:28,103 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0166
+2025-09-16 01:56:28,103 - DEBUG - Arm 1: Mean=0.0639, Std=0.0029 -> Score=0.0586
+2025-09-16 01:56:28,103 - DEBUG - count(1, 37)
+2025-09-16 01:56:28,103 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:28,104 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:28,104 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
  [6 0 0 0 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:32,951 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:32,951 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:33,074 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:33,075 - DEBUG - new obj position(0.0, 1.0)
-2025-09-15 01:08:33,197 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 5]
-2025-09-15 01:08:33,197 - DEBUG - new obj position(0.8333333333333334, 0.16666666666666666)
-2025-09-15 01:08:33,320 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:33,320 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:33,352 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=0.0000
-2025-09-15 01:08:33,352 - DEBUG - Arm 1: Mean=0.0272, Std=0.0023 -> Score=0.0291
-2025-09-15 01:08:33,352 - DEBUG - count(1, 15)
-2025-09-15 01:08:33,352 - DEBUG - input grid: [[8 6]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:28,240 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:28,240 - DEBUG - new obj position(0.16666666666666666, 0.16666666666666666)
+2025-09-16 01:56:28,445 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 0]
+2025-09-16 01:56:28,445 - DEBUG - new obj position(0.8333333333333334, 0.0)
+2025-09-16 01:56:28,692 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 5]
+2025-09-16 01:56:28,692 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:28,912 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:28,912 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:28,985 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0010
+2025-09-16 01:56:28,985 - DEBUG - Arm 1: Mean=0.0658, Std=0.0029 -> Score=0.0677
+2025-09-16 01:56:28,985 - DEBUG - count(1, 38)
+2025-09-16 01:56:28,985 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:33,352 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:28,985 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:33,352 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 6 8 0 0]
- [0 8 0 0 0 0]
+2025-09-16 01:56:28,986 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 6 4 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
  [6 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:29,120 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:29,121 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:29,323 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:29,323 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:29,676 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:29,676 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:30,045 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:30,045 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:30,121 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0096
+2025-09-16 01:56:30,121 - DEBUG - Arm 1: Mean=0.0674, Std=0.0030 -> Score=0.0638
+2025-09-16 01:56:30,121 - DEBUG - count(1, 39)
+2025-09-16 01:56:30,121 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:30,121 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:30,121 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 6 6 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
  [6 0 0 0 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:33,466 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:33,466 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:33,616 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 3]
-2025-09-15 01:08:33,616 - DEBUG - new obj position(0.16666666666666666, 0.5)
-2025-09-15 01:08:33,765 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:33,765 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:33,898 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 4]
-2025-09-15 01:08:33,898 - DEBUG - new obj position(0.6666666666666666, 0.6666666666666666)
-2025-09-15 01:08:33,931 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=-0.0000
-2025-09-15 01:08:33,931 - DEBUG - Arm 1: Mean=0.0298, Std=0.0025 -> Score=0.0320
-2025-09-15 01:08:33,931 - DEBUG - count(1, 16)
-2025-09-15 01:08:33,931 - DEBUG - input grid: [[8 6]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:30,277 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 5]
+2025-09-16 01:56:30,277 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:30,512 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 3]
+2025-09-16 01:56:30,513 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:30,801 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:30,801 - DEBUG - new obj position(0.16666666666666666, 0.3333333333333333)
+2025-09-16 01:56:31,017 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 3]
+2025-09-16 01:56:31,017 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
+2025-09-16 01:56:31,094 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0040
+2025-09-16 01:56:31,094 - DEBUG - Arm 1: Mean=0.0689, Std=0.0030 -> Score=0.0696
+2025-09-16 01:56:31,094 - DEBUG - count(1, 40)
+2025-09-16 01:56:31,094 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:33,931 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:31,094 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:33,931 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 6 8 0 0]
- [0 8 0 0 0 0]
- [6 0 0 4 0 0]
+2025-09-16 01:56:31,094 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 6 0 6 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
  [6 0 0 0 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:34,032 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:34,032 - DEBUG - new obj position(0.16666666666666666, 0.6666666666666666)
-2025-09-15 01:08:34,166 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:34,166 - DEBUG - new obj position(0.16666666666666666, 0.6666666666666666)
-2025-09-15 01:08:34,309 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 1]
-2025-09-15 01:08:34,309 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:34,442 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:34,442 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:34,475 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=-0.0000
-2025-09-15 01:08:34,475 - DEBUG - Arm 1: Mean=0.0306, Std=0.0024 -> Score=0.0321
-2025-09-15 01:08:34,475 - DEBUG - count(1, 17)
-2025-09-15 01:08:34,476 - DEBUG - input grid: [[8 6]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:31,242 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:31,242 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:31,467 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 3]
+2025-09-16 01:56:31,467 - DEBUG - new obj position(0.5, 0.5)
+2025-09-16 01:56:31,737 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 5]
+2025-09-16 01:56:31,738 - DEBUG - new obj position(0.8333333333333334, 0.6666666666666666)
+2025-09-16 01:56:31,986 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 3]
+2025-09-16 01:56:31,987 - DEBUG - new obj position(0.0, 0.3333333333333333)
+2025-09-16 01:56:32,060 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0132
+2025-09-16 01:56:32,061 - DEBUG - Arm 1: Mean=0.0702, Std=0.0030 -> Score=0.0730
+2025-09-16 01:56:32,061 - DEBUG - count(1, 41)
+2025-09-16 01:56:32,061 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:34,476 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:32,061 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:34,476 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 4 8 0 0]
- [0 8 0 0 0 0]
- [6 0 0 4 0 0]
+2025-09-16 01:56:32,061 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 6 0 6 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
  [6 0 0 0 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:34,582 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:34,582 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:34,775 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 2]
-2025-09-15 01:08:34,775 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:34,919 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:34,919 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:35,062 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
-2025-09-15 01:08:35,062 - DEBUG - new obj position(0.8333333333333334, 0.6666666666666666)
-2025-09-15 01:08:35,096 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=0.0000
-2025-09-15 01:08:35,096 - DEBUG - Arm 1: Mean=0.0308, Std=0.0023 -> Score=0.0291
-2025-09-15 01:08:35,096 - DEBUG - count(1, 18)
-2025-09-15 01:08:35,096 - DEBUG - input grid: [[8 6]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:32,211 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 4]
+2025-09-16 01:56:32,211 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:32,449 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 3]
+2025-09-16 01:56:32,449 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:32,834 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:32,835 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:33,096 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 4]
+2025-09-16 01:56:33,096 - DEBUG - new obj position(0.5, 0.6666666666666666)
+2025-09-16 01:56:33,172 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=-0.0021
+2025-09-16 01:56:33,173 - DEBUG - Arm 1: Mean=0.0715, Std=0.0030 -> Score=0.0671
+2025-09-16 01:56:33,173 - DEBUG - count(1, 42)
+2025-09-16 01:56:33,173 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:35,096 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:33,173 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:35,097 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 4 8 0 0]
- [0 8 0 0 0 0]
+2025-09-16 01:56:33,173 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 6 0 6 0 0]
+ [0 0 0 6 0 0]
+ [0 0 0 0 0 0]
  [6 0 0 0 0 0]
- [6 0 0 4 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:35,204 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 5]
-2025-09-15 01:08:35,204 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:35,358 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 4]
-2025-09-15 01:08:35,358 - DEBUG - new obj position(0.8333333333333334, 1.0)
-2025-09-15 01:08:35,726 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:35,726 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:35,910 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:35,910 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:35,947 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=-0.0000
-2025-09-15 01:08:35,947 - DEBUG - Arm 1: Mean=0.0310, Std=0.0022 -> Score=0.0310
-2025-09-15 01:08:35,947 - DEBUG - count(1, 19)
-2025-09-15 01:08:35,947 - DEBUG - input grid: [[8 6]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:33,363 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 3]
+2025-09-16 01:56:33,363 - DEBUG - new obj position(0.5, 0.6666666666666666)
+2025-09-16 01:56:33,659 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:33,659 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:33,904 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:33,904 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:34,147 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:34,148 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:34,229 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0235
+2025-09-16 01:56:34,229 - DEBUG - Arm 1: Mean=0.0728, Std=0.0030 -> Score=0.0755
+2025-09-16 01:56:34,229 - DEBUG - count(1, 43)
+2025-09-16 01:56:34,229 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:35,947 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:34,229 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:35,947 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 4 8 0 0]
- [0 8 0 0 0 0]
+2025-09-16 01:56:34,229 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 6 6 6 0 0]
+ [0 0 0 6 0 0]
+ [0 0 0 0 0 0]
  [6 0 0 0 0 0]
- [6 0 0 4 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:36,061 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:36,061 - DEBUG - new obj position(0.8333333333333334, 1.0)
-2025-09-15 01:08:36,209 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:36,209 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:36,369 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:36,369 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:36,520 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 5]
-2025-09-15 01:08:36,520 - DEBUG - new obj position(0.6666666666666666, 0.3333333333333333)
-2025-09-15 01:08:36,556 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=-0.0000
-2025-09-15 01:08:36,556 - DEBUG - Arm 1: Mean=0.0312, Std=0.0021 -> Score=0.0328
-2025-09-15 01:08:36,556 - DEBUG - count(1, 20)
-2025-09-15 01:08:36,556 - DEBUG - input grid: [[8 6]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:34,386 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:34,386 - DEBUG - new obj position(0.8333333333333334, 0.3333333333333333)
+2025-09-16 01:56:34,656 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 1]
+2025-09-16 01:56:34,656 - DEBUG - new obj position(0.5, 0.5)
+2025-09-16 01:56:34,912 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:34,912 - DEBUG - new obj position(0.16666666666666666, 0.3333333333333333)
+2025-09-16 01:56:35,163 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:35,163 - DEBUG - new obj position(0.16666666666666666, 0.3333333333333333)
+2025-09-16 01:56:35,241 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=-0.0033
+2025-09-16 01:56:35,241 - DEBUG - Arm 1: Mean=0.0746, Std=0.0031 -> Score=0.0728
+2025-09-16 01:56:35,241 - DEBUG - count(1, 44)
+2025-09-16 01:56:35,241 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:36,556 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:35,241 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:36,556 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 4 8 0 0]
- [0 8 0 0 0 0]
- [6 8 0 0 0 0]
- [6 0 0 4 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:36,724 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:36,725 - DEBUG - new obj position(0.6666666666666666, 0.8333333333333334)
-2025-09-15 01:08:36,891 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:36,891 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:37,045 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:37,045 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:37,211 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:37,212 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:37,250 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=0.0000
-2025-09-15 01:08:37,250 - DEBUG - Arm 1: Mean=0.0314, Std=0.0020 -> Score=0.0310
-2025-09-15 01:08:37,250 - DEBUG - count(1, 21)
-2025-09-15 01:08:37,251 - DEBUG - input grid: [[8 6]
+2025-09-16 01:56:35,241 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 6 6 6 0 0]
+ [0 0 0 6 0 0]
+ [0 0 0 0 0 0]
+ [6 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:35,398 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 2]
+2025-09-16 01:56:35,398 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:35,661 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 4]
+2025-09-16 01:56:35,661 - DEBUG - new obj position(0.16666666666666666, 0.16666666666666666)
+2025-09-16 01:56:35,917 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:35,917 - DEBUG - new obj position(0.5, 0.5)
+2025-09-16 01:56:36,163 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 2]
+2025-09-16 01:56:36,163 - DEBUG - new obj position(0.6666666666666666, 0.3333333333333333)
+2025-09-16 01:56:36,257 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0076
+2025-09-16 01:56:36,257 - DEBUG - Arm 1: Mean=0.0759, Std=0.0031 -> Score=0.0790
+2025-09-16 01:56:36,257 - DEBUG - count(1, 45)
+2025-09-16 01:56:36,257 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:37,251 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:36,257 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:37,251 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 4 8 0 0]
- [0 8 0 0 0 0]
- [6 8 0 0 0 0]
- [6 0 0 4 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:37,367 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:37,367 - DEBUG - new obj position(0.6666666666666666, 0.5)
-2025-09-15 01:08:37,529 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 3]
-2025-09-15 01:08:37,529 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:37,726 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 3]
-2025-09-15 01:08:37,726 - DEBUG - new obj position(0.8333333333333334, 0.16666666666666666)
-2025-09-15 01:08:37,887 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 4]
-2025-09-15 01:08:37,887 - DEBUG - new obj position(0.6666666666666666, 0.6666666666666666)
-2025-09-15 01:08:37,924 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=-0.0000
-2025-09-15 01:08:37,925 - DEBUG - Arm 1: Mean=0.0316, Std=0.0020 -> Score=0.0338
-2025-09-15 01:08:37,925 - DEBUG - count(1, 22)
-2025-09-15 01:08:37,925 - DEBUG - input grid: [[8 6]
+2025-09-16 01:56:36,257 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 6 6 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 0 0 0 0]
+ [6 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:36,659 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:36,659 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:56:36,944 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:36,944 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:37,187 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:37,187 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:37,438 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 2]
+2025-09-16 01:56:37,438 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:56:37,517 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0149
+2025-09-16 01:56:37,517 - DEBUG - Arm 1: Mean=0.0772, Std=0.0031 -> Score=0.0826
+2025-09-16 01:56:37,517 - DEBUG - count(1, 46)
+2025-09-16 01:56:37,518 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:37,925 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:37,518 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:37,925 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 4 8 0 0]
- [0 8 0 0 0 0]
- [6 8 0 8 0 0]
- [6 0 0 4 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:38,040 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 2]
-2025-09-15 01:08:38,040 - DEBUG - new obj position(0.5, 0.5)
-2025-09-15 01:08:38,194 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 4]
-2025-09-15 01:08:38,194 - DEBUG - new obj position(0.5, 0.5)
-2025-09-15 01:08:38,348 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:38,348 - DEBUG - new obj position(0.0, 0.16666666666666666)
-2025-09-15 01:08:38,503 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:38,503 - DEBUG - new obj position(0.0, 1.0)
-2025-09-15 01:08:38,540 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=-0.0000
-2025-09-15 01:08:38,540 - DEBUG - Arm 1: Mean=0.0314, Std=0.0019 -> Score=0.0334
-2025-09-15 01:08:38,540 - DEBUG - count(1, 23)
-2025-09-15 01:08:38,540 - DEBUG - input grid: [[8 6]
+2025-09-16 01:56:37,518 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 6 6 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 0 0 0 0]
+ [6 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:37,716 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:37,716 - DEBUG - new obj position(0.8333333333333334, 0.3333333333333333)
+2025-09-16 01:56:37,973 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 1]
+2025-09-16 01:56:37,974 - DEBUG - new obj position(0.5, 0.16666666666666666)
+2025-09-16 01:56:38,222 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 5]
+2025-09-16 01:56:38,223 - DEBUG - new obj position(0.3333333333333333, 0.16666666666666666)
+2025-09-16 01:56:38,475 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:38,475 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:38,555 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0101
+2025-09-16 01:56:38,555 - DEBUG - Arm 1: Mean=0.0787, Std=0.0031 -> Score=0.0790
+2025-09-16 01:56:38,555 - DEBUG - count(1, 47)
+2025-09-16 01:56:38,555 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:38,540 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:38,555 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:38,540 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 4 8 0 0]
- [0 8 0 0 0 0]
- [6 8 0 8 0 0]
- [6 0 0 4 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:38,714 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:38,714 - DEBUG - new obj position(0.0, 0.16666666666666666)
-2025-09-15 01:08:38,943 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:38,943 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:39,195 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 5]
-2025-09-15 01:08:39,195 - DEBUG - new obj position(0.8333333333333334, 0.8333333333333334)
-2025-09-15 01:08:39,368 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:39,368 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:39,410 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=0.0000
-2025-09-15 01:08:39,410 - DEBUG - Arm 1: Mean=0.0312, Std=0.0018 -> Score=0.0339
-2025-09-15 01:08:39,410 - DEBUG - count(1, 24)
-2025-09-15 01:08:39,410 - DEBUG - input grid: [[8 6]
+2025-09-16 01:56:38,555 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 6 6 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 0 0 0 0]
+ [6 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:38,762 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 3]
+2025-09-16 01:56:38,762 - DEBUG - new obj position(0.8333333333333334, 0.16666666666666666)
+2025-09-16 01:56:39,009 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 2]
+2025-09-16 01:56:39,010 - DEBUG - new obj position(0.5, 0.5)
+2025-09-16 01:56:39,505 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:39,505 - DEBUG - new obj position(0.0, 0.3333333333333333)
+2025-09-16 01:56:39,791 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:39,792 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:39,870 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0053
+2025-09-16 01:56:39,870 - DEBUG - Arm 1: Mean=0.0799, Std=0.0031 -> Score=0.0786
+2025-09-16 01:56:39,870 - DEBUG - count(1, 48)
+2025-09-16 01:56:39,870 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:39,410 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:39,870 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:39,410 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 4 8 0 0]
- [0 8 0 0 0 0]
- [6 8 0 8 0 0]
- [6 0 0 4 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:39,535 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:39,535 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:39,783 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 1]
-2025-09-15 01:08:39,783 - DEBUG - new obj position(0.8333333333333334, 0.16666666666666666)
-2025-09-15 01:08:39,961 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:39,961 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:40,130 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:40,130 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:40,175 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=-0.0000
-2025-09-15 01:08:40,175 - DEBUG - Arm 1: Mean=0.0311, Std=0.0017 -> Score=0.0326
-2025-09-15 01:08:40,175 - DEBUG - count(1, 25)
-2025-09-15 01:08:40,175 - DEBUG - input grid: [[8 6]
+2025-09-16 01:56:39,870 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 6 8 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 0 0 0 0]
+ [6 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:40,035 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 1]
+2025-09-16 01:56:40,035 - DEBUG - new obj position(0.16666666666666666, 0.6666666666666666)
+2025-09-16 01:56:40,283 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 1]
+2025-09-16 01:56:40,283 - DEBUG - new obj position(0.5, 0.5)
+2025-09-16 01:56:40,535 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 4]
+2025-09-16 01:56:40,535 - DEBUG - new obj position(0.5, 0.5)
+2025-09-16 01:56:40,830 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 5]
+2025-09-16 01:56:40,830 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:40,908 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0119
+2025-09-16 01:56:40,908 - DEBUG - Arm 1: Mean=0.0808, Std=0.0030 -> Score=0.0784
+2025-09-16 01:56:40,908 - DEBUG - count(1, 49)
+2025-09-16 01:56:40,908 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:40,175 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:40,908 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:40,175 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 4 8 0 0]
- [0 8 0 0 0 0]
- [6 8 0 8 0 0]
- [6 0 0 4 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:40,309 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 4]
-2025-09-15 01:08:40,309 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:40,475 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:40,475 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
-2025-09-15 01:08:40,699 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:40,700 - DEBUG - new obj position(0.5, 0.3333333333333333)
-2025-09-15 01:08:40,922 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:40,922 - DEBUG - new obj position(0.3333333333333333, 0.5)
-2025-09-15 01:08:40,965 - DEBUG - Arm 0: Mean=0.0000, Std=0.0000 -> Score=-0.0000
-2025-09-15 01:08:40,965 - DEBUG - Arm 1: Mean=0.0310, Std=0.0016 -> Score=0.0299
-2025-09-15 01:08:40,965 - DEBUG - count(1, 26)
-2025-09-15 01:08:40,966 - DEBUG - input grid: [[8 6]
+2025-09-16 01:56:40,908 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 6 6 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 0 0 0 0]
+ [6 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:41,084 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 5]
+2025-09-16 01:56:41,084 - DEBUG - new obj position(0.8333333333333334, 0.8333333333333334)
+2025-09-16 01:56:41,344 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 0]
+2025-09-16 01:56:41,344 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:41,681 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 0]
+2025-09-16 01:56:41,681 - DEBUG - new obj position(0.5, 0.8333333333333334)
+2025-09-16 01:56:42,063 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:42,063 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:42,146 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0046
+2025-09-16 01:56:42,146 - DEBUG - Arm 1: Mean=0.0819, Std=0.0030 -> Score=0.0834
+2025-09-16 01:56:42,146 - DEBUG - count(1, 50)
+2025-09-16 01:56:42,147 - DEBUG - input grid: [[8 6]
  [6 4]]
-2025-09-15 01:08:40,966 - DEBUG - target grid: [[8 6 8 6 8 6]
+2025-09-16 01:56:42,147 - DEBUG - target grid: [[8 6 8 6 8 6]
  [6 4 6 4 6 4]
  [6 8 6 8 6 8]
  [4 6 4 6 4 6]
  [8 6 8 6 8 6]
  [6 4 6 4 6 4]]
-2025-09-15 01:08:40,966 - DEBUG - 'predicted_grid',[[0 0 0 0 0 0]
- [0 0 8 8 0 0]
- [0 8 0 0 0 0]
- [6 8 0 8 0 0]
- [6 0 0 4 0 0]
- [0 0 0 0 0 0]],<class 'numpy.ndarray'>
-2025-09-15 01:08:41,094 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:41,095 - DEBUG - new obj position(0.8333333333333334, 1.0)
-2025-09-15 01:08:41,262 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
-2025-09-15 01:08:41,263 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
+2025-09-16 01:56:42,147 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 6 8 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 0 0 0 0]
+ [6 0 0 0 0 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:42,322 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:42,323 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:42,630 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:42,630 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:42,932 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:42,932 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:56:43,196 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:43,196 - DEBUG - new obj position(0.8333333333333334, 0.8333333333333334)
+2025-09-16 01:56:43,275 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0025
+2025-09-16 01:56:43,275 - DEBUG - Arm 1: Mean=0.0828, Std=0.0030 -> Score=0.0806
+2025-09-16 01:56:43,275 - DEBUG - count(1, 51)
+2025-09-16 01:56:43,275 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:43,275 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:43,276 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 6 8 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 0 0 0 0]
+ [6 0 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:43,458 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:43,459 - DEBUG - new obj position(0.8333333333333334, 0.3333333333333333)
+2025-09-16 01:56:43,747 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:43,747 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:44,011 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 1]
+2025-09-16 01:56:44,012 - DEBUG - new obj position(0.8333333333333334, 0.16666666666666666)
+2025-09-16 01:56:44,285 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 3]
+2025-09-16 01:56:44,285 - DEBUG - new obj position(0.6666666666666666, 0.5)
+2025-09-16 01:56:44,376 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0061
+2025-09-16 01:56:44,376 - DEBUG - Arm 1: Mean=0.0837, Std=0.0030 -> Score=0.0833
+2025-09-16 01:56:44,376 - DEBUG - count(1, 52)
+2025-09-16 01:56:44,376 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:44,376 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:44,376 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 6 8 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 6 0 0 0]
+ [6 0 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:44,606 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:44,606 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
+2025-09-16 01:56:44,897 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:44,898 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:45,164 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 5]
+2025-09-16 01:56:45,165 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:56:45,427 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:45,427 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:56:45,514 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0095
+2025-09-16 01:56:45,514 - DEBUG - Arm 1: Mean=0.0844, Std=0.0030 -> Score=0.0815
+2025-09-16 01:56:45,514 - DEBUG - count(1, 53)
+2025-09-16 01:56:45,514 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:45,514 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:45,514 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 8 8 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 6 0 0 0]
+ [6 0 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:45,755 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 3]
+2025-09-16 01:56:45,755 - DEBUG - new obj position(0.16666666666666666, 0.6666666666666666)
+2025-09-16 01:56:46,030 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 0]
+2025-09-16 01:56:46,030 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:46,317 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:46,318 - DEBUG - new obj position(0.6666666666666666, 0.6666666666666666)
+2025-09-16 01:56:46,636 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:46,636 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:46,748 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0085
+2025-09-16 01:56:46,748 - DEBUG - Arm 1: Mean=0.0852, Std=0.0029 -> Score=0.0871
+2025-09-16 01:56:46,748 - DEBUG - count(1, 54)
+2025-09-16 01:56:46,748 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:46,749 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:46,749 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 8 6 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 6 0 0 0]
+ [6 0 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:46,949 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:46,949 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:47,230 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:47,230 - DEBUG - new obj position(0.8333333333333334, 0.0)
+2025-09-16 01:56:47,504 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:47,504 - DEBUG - new obj position(0.8333333333333334, 0.0)
+2025-09-16 01:56:47,844 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 0]
+2025-09-16 01:56:47,844 - DEBUG - new obj position(0.8333333333333334, 0.3333333333333333)
+2025-09-16 01:56:47,931 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0044
+2025-09-16 01:56:47,931 - DEBUG - Arm 1: Mean=0.0863, Std=0.0029 -> Score=0.0848
+2025-09-16 01:56:47,931 - DEBUG - count(1, 55)
+2025-09-16 01:56:47,932 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:47,932 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:47,932 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 8 6 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 6 0 0 0]
+ [6 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:48,117 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:48,117 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:56:48,391 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:56:48,391 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:48,725 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:48,726 - DEBUG - new obj position(0.8333333333333334, 0.16666666666666666)
+2025-09-16 01:56:49,014 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:49,014 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:56:49,098 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0054
+2025-09-16 01:56:49,098 - DEBUG - Arm 1: Mean=0.0881, Std=0.0030 -> Score=0.0905
+2025-09-16 01:56:49,098 - DEBUG - count(1, 56)
+2025-09-16 01:56:49,098 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:49,098 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:49,098 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 4 6 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 6 0 0 0]
+ [6 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:49,289 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 1]
+2025-09-16 01:56:49,290 - DEBUG - new obj position(0.3333333333333333, 0.0)
+2025-09-16 01:56:49,574 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 0]
+2025-09-16 01:56:49,574 - DEBUG - new obj position(0.16666666666666666, 0.6666666666666666)
+2025-09-16 01:56:49,969 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 4]
+2025-09-16 01:56:49,969 - DEBUG - new obj position(0.0, 0.3333333333333333)
+2025-09-16 01:56:50,436 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 0]
+2025-09-16 01:56:50,436 - DEBUG - new obj position(0.8333333333333334, 0.0)
+2025-09-16 01:56:50,523 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0076
+2025-09-16 01:56:50,523 - DEBUG - Arm 1: Mean=0.0899, Std=0.0031 -> Score=0.0963
+2025-09-16 01:56:50,523 - DEBUG - count(1, 57)
+2025-09-16 01:56:50,523 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:50,523 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:50,524 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 4 6 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:50,778 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:50,779 - DEBUG - new obj position(0.0, 0.3333333333333333)
+2025-09-16 01:56:51,090 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:51,090 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:51,377 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:51,377 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:51,999 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:51,999 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:56:52,087 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0132
+2025-09-16 01:56:52,087 - DEBUG - Arm 1: Mean=0.0916, Std=0.0032 -> Score=0.0933
+2025-09-16 01:56:52,087 - DEBUG - count(1, 58)
+2025-09-16 01:56:52,087 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:52,087 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:52,087 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 4 6 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:52,297 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:56:52,297 - DEBUG - new obj position(0.5, 0.3333333333333333)
+2025-09-16 01:56:52,632 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:56:52,632 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:52,954 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 4]
+2025-09-16 01:56:52,954 - DEBUG - new obj position(0.16666666666666666, 0.3333333333333333)
+2025-09-16 01:56:53,262 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:53,262 - DEBUG - new obj position(0.16666666666666666, 0.3333333333333333)
+2025-09-16 01:56:53,354 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0134
+2025-09-16 01:56:53,354 - DEBUG - Arm 1: Mean=0.0934, Std=0.0032 -> Score=0.0929
+2025-09-16 01:56:53,354 - DEBUG - count(1, 59)
+2025-09-16 01:56:53,354 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:53,354 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:53,354 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 4 6 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:53,569 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:53,569 - DEBUG - new obj position(0.5, 0.16666666666666666)
+2025-09-16 01:56:54,422 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:54,423 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:56:54,788 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 3]
+2025-09-16 01:56:54,788 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:56:55,150 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 5]
+2025-09-16 01:56:55,150 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:55,245 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0044
+2025-09-16 01:56:55,245 - DEBUG - Arm 1: Mean=0.0951, Std=0.0033 -> Score=0.0940
+2025-09-16 01:56:55,245 - DEBUG - count(1, 60)
+2025-09-16 01:56:55,246 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:55,246 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:55,246 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [6 4 6 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:55,471 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:55,472 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:55,785 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 5]
+2025-09-16 01:56:55,785 - DEBUG - new obj position(0.5, 0.16666666666666666)
+2025-09-16 01:56:56,081 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:56,081 - DEBUG - new obj position(0.5, 0.5)
+2025-09-16 01:56:56,395 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 5]
+2025-09-16 01:56:56,395 - DEBUG - new obj position(0.3333333333333333, 0.0)
+2025-09-16 01:56:56,496 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0167
+2025-09-16 01:56:56,496 - DEBUG - Arm 1: Mean=0.0965, Std=0.0033 -> Score=0.1030
+2025-09-16 01:56:56,496 - DEBUG - count(1, 61)
+2025-09-16 01:56:56,496 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:56,497 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:56,497 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 6 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:56,769 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 0]
+2025-09-16 01:56:56,769 - DEBUG - new obj position(0.16666666666666666, 0.5)
+2025-09-16 01:56:57,065 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:57,065 - DEBUG - new obj position(0.5, 0.5)
+2025-09-16 01:56:57,357 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 1]
+2025-09-16 01:56:57,357 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:57,732 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:57,732 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:57,831 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0021
+2025-09-16 01:56:57,832 - DEBUG - Arm 1: Mean=0.0976, Std=0.0033 -> Score=0.0994
+2025-09-16 01:56:57,832 - DEBUG - count(1, 62)
+2025-09-16 01:56:57,832 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:57,832 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:57,832 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 8 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:58,034 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:58,034 - DEBUG - new obj position(0.8333333333333334, 0.0)
+2025-09-16 01:56:58,324 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 1]
+2025-09-16 01:56:58,324 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:56:58,805 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:58,805 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:56:59,109 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:59,109 - DEBUG - new obj position(0.0, 0.5)
+2025-09-16 01:56:59,199 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0170
+2025-09-16 01:56:59,199 - DEBUG - Arm 1: Mean=0.0984, Std=0.0033 -> Score=0.0999
+2025-09-16 01:56:59,199 - DEBUG - count(1, 63)
+2025-09-16 01:56:59,199 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:56:59,199 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:56:59,199 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 8 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:56:59,397 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 3]
+2025-09-16 01:56:59,398 - DEBUG - new obj position(0.6666666666666666, 0.5)
+2025-09-16 01:56:59,743 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:56:59,743 - DEBUG - new obj position(0.16666666666666666, 0.5)
+2025-09-16 01:57:00,145 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:00,145 - DEBUG - new obj position(0.6666666666666666, 0.8333333333333334)
+2025-09-16 01:57:00,517 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 1]
+2025-09-16 01:57:00,518 - DEBUG - new obj position(0.6666666666666666, 0.5)
+2025-09-16 01:57:00,673 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0012
+2025-09-16 01:57:00,673 - DEBUG - Arm 1: Mean=0.0990, Std=0.0032 -> Score=0.0952
+2025-09-16 01:57:00,673 - DEBUG - count(1, 64)
+2025-09-16 01:57:00,673 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:00,673 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:00,673 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 8 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:00,912 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:00,913 - DEBUG - new obj position(0.8333333333333334, 1.0)
+2025-09-16 01:57:01,412 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 5]
+2025-09-16 01:57:01,412 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:01,758 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:01,759 - DEBUG - new obj position(0.16666666666666666, 0.3333333333333333)
+2025-09-16 01:57:02,072 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:02,072 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:02,166 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0081
+2025-09-16 01:57:02,166 - DEBUG - Arm 1: Mean=0.0999, Std=0.0032 -> Score=0.1003
+2025-09-16 01:57:02,166 - DEBUG - count(1, 65)
+2025-09-16 01:57:02,166 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:02,167 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:02,167 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 8 6 0 0]
+ [0 0 0 6 0 0]
+ [0 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:02,370 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:02,370 - DEBUG - new obj position(0.16666666666666666, 0.3333333333333333)
+2025-09-16 01:57:02,732 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:02,732 - DEBUG - new obj position(0.8333333333333334, 0.16666666666666666)
+2025-09-16 01:57:03,075 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 2]
+2025-09-16 01:57:03,075 - DEBUG - new obj position(0.8333333333333334, 0.16666666666666666)
+2025-09-16 01:57:03,374 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:03,374 - DEBUG - new obj position(0.6666666666666666, 0.16666666666666666)
+2025-09-16 01:57:03,474 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0105
+2025-09-16 01:57:03,474 - DEBUG - Arm 1: Mean=0.1007, Std=0.0032 -> Score=0.1030
+2025-09-16 01:57:03,474 - DEBUG - count(1, 66)
+2025-09-16 01:57:03,475 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:03,475 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:03,475 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 8 6 0 0]
+ [0 0 0 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:03,697 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:03,698 - DEBUG - new obj position(0.16666666666666666, 0.5)
+2025-09-16 01:57:04,012 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:04,012 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:04,321 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:04,322 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:04,641 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 2]
+2025-09-16 01:57:04,641 - DEBUG - new obj position(0.5, 0.5)
+2025-09-16 01:57:04,752 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0018
+2025-09-16 01:57:04,752 - DEBUG - Arm 1: Mean=0.1015, Std=0.0032 -> Score=0.1078
+2025-09-16 01:57:04,752 - DEBUG - count(1, 67)
+2025-09-16 01:57:04,752 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:04,752 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:04,752 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 0 6 0 0]
+ [0 0 6 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:04,968 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:04,968 - DEBUG - new obj position(0.16666666666666666, 0.16666666666666666)
+2025-09-16 01:57:05,258 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:05,258 - DEBUG - new obj position(0.8333333333333334, 0.0)
+2025-09-16 01:57:05,561 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:05,561 - DEBUG - new obj position(0.8333333333333334, 0.8333333333333334)
+2025-09-16 01:57:05,926 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 3]
+2025-09-16 01:57:05,926 - DEBUG - new obj position(0.5, 0.6666666666666666)
+2025-09-16 01:57:06,018 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0110
+2025-09-16 01:57:06,019 - DEBUG - Arm 1: Mean=0.1025, Std=0.0032 -> Score=0.0988
+2025-09-16 01:57:06,019 - DEBUG - count(1, 68)
+2025-09-16 01:57:06,019 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:06,019 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:06,019 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 0 6 0 0]
+ [0 0 6 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:06,479 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:06,479 - DEBUG - new obj position(0.8333333333333334, 0.16666666666666666)
+2025-09-16 01:57:06,883 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 5]
+2025-09-16 01:57:06,883 - DEBUG - new obj position(0.16666666666666666, 0.5)
+2025-09-16 01:57:07,179 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 1]
+2025-09-16 01:57:07,179 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:57:07,467 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:07,467 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:07,556 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0092
+2025-09-16 01:57:07,556 - DEBUG - Arm 1: Mean=0.1035, Std=0.0032 -> Score=0.1072
+2025-09-16 01:57:07,556 - DEBUG - count(1, 69)
+2025-09-16 01:57:07,556 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:07,557 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:07,557 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 6 6 0 0]
+ [0 0 6 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:07,824 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:07,824 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:08,120 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:08,120 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:57:08,419 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 2]
+2025-09-16 01:57:08,419 - DEBUG - new obj position(0.5, 0.5)
+2025-09-16 01:57:08,776 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 3]
+2025-09-16 01:57:08,776 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:08,866 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0061
+2025-09-16 01:57:08,866 - DEBUG - Arm 1: Mean=0.1049, Std=0.0032 -> Score=0.1014
+2025-09-16 01:57:08,866 - DEBUG - count(1, 70)
+2025-09-16 01:57:08,866 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:08,866 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:08,867 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 6 6 0 0]
+ [0 0 6 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:09,072 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 2]
+2025-09-16 01:57:09,073 - DEBUG - new obj position(0.8333333333333334, 0.16666666666666666)
+2025-09-16 01:57:09,364 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:57:09,364 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:09,710 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:09,711 - DEBUG - new obj position(0.16666666666666666, 0.16666666666666666)
+2025-09-16 01:57:10,016 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:10,016 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:10,110 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0162
+2025-09-16 01:57:10,110 - DEBUG - Arm 1: Mean=0.1062, Std=0.0032 -> Score=0.1067
+2025-09-16 01:57:10,110 - DEBUG - count(1, 71)
+2025-09-16 01:57:10,110 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:10,110 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:10,110 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 6 6 0 0]
+ [0 0 6 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:10,330 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:57:10,330 - DEBUG - new obj position(0.6666666666666666, 0.16666666666666666)
+2025-09-16 01:57:10,715 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:10,716 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:11,056 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:11,056 - DEBUG - new obj position(0.5, 0.5)
+2025-09-16 01:57:11,363 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:11,363 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:57:11,455 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0104
+2025-09-16 01:57:11,455 - DEBUG - Arm 1: Mean=0.1072, Std=0.0032 -> Score=0.1027
+2025-09-16 01:57:11,455 - DEBUG - count(1, 72)
+2025-09-16 01:57:11,455 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:11,455 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:11,455 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 6 6 6 0 0]
+ [0 0 6 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:11,747 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:11,747 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:12,054 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:12,054 - DEBUG - new obj position(0.5, 0.5)
+2025-09-16 01:57:12,359 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:12,360 - DEBUG - new obj position(0.6666666666666666, 0.3333333333333333)
+2025-09-16 01:57:12,728 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:12,728 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:57:12,826 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0037
+2025-09-16 01:57:12,826 - DEBUG - Arm 1: Mean=0.1080, Std=0.0032 -> Score=0.1127
+2025-09-16 01:57:12,826 - DEBUG - count(1, 73)
+2025-09-16 01:57:12,826 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:12,826 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:12,826 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 6 6 6 0 0]
+ [0 0 6 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:13,038 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:13,038 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:13,336 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:57:13,336 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:13,670 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 5]
+2025-09-16 01:57:13,670 - DEBUG - new obj position(0.8333333333333334, 0.8333333333333334)
+2025-09-16 01:57:13,978 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:13,978 - DEBUG - new obj position(0.16666666666666666, 0.3333333333333333)
+2025-09-16 01:57:14,072 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0127
+2025-09-16 01:57:14,072 - DEBUG - Arm 1: Mean=0.1087, Std=0.0032 -> Score=0.1132
+2025-09-16 01:57:14,072 - DEBUG - count(1, 74)
+2025-09-16 01:57:14,072 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:14,072 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:14,073 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 6 6 6 0 0]
+ [0 0 6 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:14,289 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 4]
+2025-09-16 01:57:14,290 - DEBUG - new obj position(0.8333333333333334, 0.6666666666666666)
+2025-09-16 01:57:14,706 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 2]
+2025-09-16 01:57:14,706 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:15,092 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:15,092 - DEBUG - new obj position(0.8333333333333334, 0.0)
+2025-09-16 01:57:15,402 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 4]
+2025-09-16 01:57:15,402 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:57:15,494 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0112
+2025-09-16 01:57:15,494 - DEBUG - Arm 1: Mean=0.1095, Std=0.0031 -> Score=0.1055
+2025-09-16 01:57:15,494 - DEBUG - count(1, 75)
+2025-09-16 01:57:15,494 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:15,494 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:15,494 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 6 6 6 0 0]
+ [0 0 6 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:15,744 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:15,745 - DEBUG - new obj position(0.8333333333333334, 0.6666666666666666)
+2025-09-16 01:57:16,076 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:16,076 - DEBUG - new obj position(0.8333333333333334, 0.8333333333333334)
+2025-09-16 01:57:16,402 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:16,402 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:16,757 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:16,757 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:16,861 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0026
+2025-09-16 01:57:16,861 - DEBUG - Arm 1: Mean=0.1102, Std=0.0031 -> Score=0.1063
+2025-09-16 01:57:16,861 - DEBUG - count(1, 76)
+2025-09-16 01:57:16,861 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:16,861 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:16,862 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 6 4 6 0 0]
+ [0 0 6 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:17,291 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:17,292 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:17,650 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:17,650 - DEBUG - new obj position(0.5, 0.16666666666666666)
+2025-09-16 01:57:17,996 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 2]
+2025-09-16 01:57:17,997 - DEBUG - new obj position(0.8333333333333334, 0.3333333333333333)
+2025-09-16 01:57:18,319 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 3]
+2025-09-16 01:57:18,319 - DEBUG - new obj position(0.5, 0.5)
+2025-09-16 01:57:18,413 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0094
+2025-09-16 01:57:18,413 - DEBUG - Arm 1: Mean=0.1104, Std=0.0031 -> Score=0.1107
+2025-09-16 01:57:18,413 - DEBUG - count(1, 77)
+2025-09-16 01:57:18,413 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:18,413 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:18,413 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 6 4 6 0 0]
+ [0 0 8 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:18,683 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 3]
+2025-09-16 01:57:18,683 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:19,034 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:19,034 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:19,357 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 4]
+2025-09-16 01:57:19,358 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:57:19,710 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 2]
+2025-09-16 01:57:19,710 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
+2025-09-16 01:57:19,812 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0004
+2025-09-16 01:57:19,812 - DEBUG - Arm 1: Mean=0.1104, Std=0.0030 -> Score=0.1098
+2025-09-16 01:57:19,812 - DEBUG - count(1, 78)
+2025-09-16 01:57:19,812 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:19,813 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:19,813 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 6 4 6 0 0]
+ [0 0 8 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:20,334 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:20,335 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:57:20,699 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 4]
+2025-09-16 01:57:20,699 - DEBUG - new obj position(0.3333333333333333, 0.6666666666666666)
+2025-09-16 01:57:21,045 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 0]
+2025-09-16 01:57:21,046 - DEBUG - new obj position(0.8333333333333334, 0.0)
+2025-09-16 01:57:21,366 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:21,366 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:57:21,465 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=-0.0048
+2025-09-16 01:57:21,465 - DEBUG - Arm 1: Mean=0.1106, Std=0.0030 -> Score=0.1131
+2025-09-16 01:57:21,465 - DEBUG - count(1, 79)
+2025-09-16 01:57:21,465 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:21,465 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:21,465 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 4 6 0 0]
+ [0 0 8 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:21,706 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:21,706 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:22,043 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:22,043 - DEBUG - new obj position(0.5, 0.5)
+2025-09-16 01:57:22,375 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:22,375 - DEBUG - new obj position(0.0, 0.16666666666666666)
+2025-09-16 01:57:22,790 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 3]
+2025-09-16 01:57:22,790 - DEBUG - new obj position(0.6666666666666666, 0.5)
+2025-09-16 01:57:22,886 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0068
+2025-09-16 01:57:22,886 - DEBUG - Arm 1: Mean=0.1109, Std=0.0030 -> Score=0.1146
+2025-09-16 01:57:22,886 - DEBUG - count(1, 80)
+2025-09-16 01:57:22,886 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:22,886 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:22,886 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 4 6 0 0]
+ [0 0 8 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:23,153 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 1]
+2025-09-16 01:57:23,153 - DEBUG - new obj position(0.8333333333333334, 0.8333333333333334)
+2025-09-16 01:57:23,521 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 3]
+2025-09-16 01:57:23,521 - DEBUG - new obj position(1.0, 0.16666666666666666)
+2025-09-16 01:57:23,939 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 2]
+2025-09-16 01:57:23,939 - DEBUG - new obj position(1.0, 0.16666666666666666)
+2025-09-16 01:57:24,273 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 0]
+2025-09-16 01:57:24,273 - DEBUG - new obj position(0.6666666666666666, 0.5)
+2025-09-16 01:57:24,377 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0055
+2025-09-16 01:57:24,378 - DEBUG - Arm 1: Mean=0.1115, Std=0.0029 -> Score=0.1098
+2025-09-16 01:57:24,378 - DEBUG - count(1, 81)
+2025-09-16 01:57:24,378 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:24,378 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:24,378 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 4 6 0 0]
+ [0 0 8 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:24,650 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 3]
+2025-09-16 01:57:24,650 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:24,993 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:24,994 - DEBUG - new obj position(0.5, 0.6666666666666666)
+2025-09-16 01:57:25,328 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 0]
+2025-09-16 01:57:25,328 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:25,688 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:25,688 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:25,832 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0023
+2025-09-16 01:57:25,833 - DEBUG - Arm 1: Mean=0.1119, Std=0.0029 -> Score=0.1164
+2025-09-16 01:57:25,833 - DEBUG - count(1, 82)
+2025-09-16 01:57:25,833 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:25,833 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:25,833 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 4 6 0 0]
+ [0 0 8 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:26,068 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:26,068 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:26,399 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 4]
+2025-09-16 01:57:26,399 - DEBUG - new obj position(0.8333333333333334, 0.6666666666666666)
+2025-09-16 01:57:27,041 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 0]
+2025-09-16 01:57:27,042 - DEBUG - new obj position(0.3333333333333333, 0.3333333333333333)
+2025-09-16 01:57:27,655 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 3]
+2025-09-16 01:57:27,655 - DEBUG - new obj position(0.8333333333333334, 0.0)
+2025-09-16 01:57:27,855 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=-0.0005
+2025-09-16 01:57:27,855 - DEBUG - Arm 1: Mean=0.1124, Std=0.0029 -> Score=0.1116
+2025-09-16 01:57:27,856 - DEBUG - count(1, 83)
+2025-09-16 01:57:27,856 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:27,856 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:27,856 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 4 6 0 0]
+ [0 0 8 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:28,144 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:28,144 - DEBUG - new obj position(0.16666666666666666, 0.16666666666666666)
+2025-09-16 01:57:28,480 - DEBUG - target_shape: (6, 6) , new pos_values: [0, 5]
+2025-09-16 01:57:28,480 - DEBUG - new obj position(0.5, 0.3333333333333333)
+2025-09-16 01:57:29,232 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 1]
+2025-09-16 01:57:29,232 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:29,633 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 1]
+2025-09-16 01:57:29,633 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:29,766 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0029
+2025-09-16 01:57:29,766 - DEBUG - Arm 1: Mean=0.1128, Std=0.0029 -> Score=0.1130
+2025-09-16 01:57:29,766 - DEBUG - count(1, 84)
+2025-09-16 01:57:29,766 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:29,766 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:29,766 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 4 6 0 0]
+ [0 0 8 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:29,997 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 4]
+2025-09-16 01:57:29,997 - DEBUG - new obj position(0.8333333333333334, 0.3333333333333333)
+2025-09-16 01:57:30,319 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 4]
+2025-09-16 01:57:30,319 - DEBUG - new obj position(0.16666666666666666, 0.5)
+2025-09-16 01:57:30,687 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 0]
+2025-09-16 01:57:30,687 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:31,078 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 4]
+2025-09-16 01:57:31,078 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:31,201 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0136
+2025-09-16 01:57:31,201 - DEBUG - Arm 1: Mean=0.1133, Std=0.0028 -> Score=0.1102
+2025-09-16 01:57:31,201 - DEBUG - count(1, 85)
+2025-09-16 01:57:31,202 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:31,202 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:31,202 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 6 6 0 0]
+ [0 0 8 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:31,438 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:31,438 - DEBUG - new obj position(0.5, 0.3333333333333333)
+2025-09-16 01:57:31,802 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:31,803 - DEBUG - new obj position(0.5, 0.3333333333333333)
+2025-09-16 01:57:32,133 - DEBUG - target_shape: (6, 6) , new pos_values: [2, 0]
+2025-09-16 01:57:32,133 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:32,450 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 3]
+2025-09-16 01:57:32,450 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:32,556 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0158
+2025-09-16 01:57:32,556 - DEBUG - Arm 1: Mean=0.1138, Std=0.0028 -> Score=0.1188
+2025-09-16 01:57:32,556 - DEBUG - count(1, 86)
+2025-09-16 01:57:32,556 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:32,556 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:32,556 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 8 6 0 0]
+ [0 0 8 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:32,863 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 3]
+2025-09-16 01:57:32,863 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:33,829 - DEBUG - target_shape: (6, 6) , new pos_values: [4, 4]
+2025-09-16 01:57:33,830 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:34,172 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 3]
+2025-09-16 01:57:34,172 - DEBUG - new obj position(0.5, 0.6666666666666666)
+2025-09-16 01:57:34,504 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 3]
+2025-09-16 01:57:34,504 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:34,634 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0071
+2025-09-16 01:57:34,634 - DEBUG - Arm 1: Mean=0.1142, Std=0.0028 -> Score=0.1149
+2025-09-16 01:57:34,634 - DEBUG - count(1, 87)
+2025-09-16 01:57:34,634 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:34,634 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:34,634 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 8 6 0 0]
+ [0 0 8 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 6 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:34,867 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 3]
+2025-09-16 01:57:34,867 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:35,189 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 5]
+2025-09-16 01:57:35,189 - DEBUG - new obj position(0.5, 0.16666666666666666)
+2025-09-16 01:57:35,509 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:35,509 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:35,861 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:35,861 - DEBUG - new obj position(0.8333333333333334, 0.8333333333333334)
+2025-09-16 01:57:36,037 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0081
+2025-09-16 01:57:36,038 - DEBUG - Arm 1: Mean=0.1147, Std=0.0028 -> Score=0.1138
+2025-09-16 01:57:36,038 - DEBUG - count(1, 88)
+2025-09-16 01:57:36,038 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:36,038 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:36,038 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 8 6 0 0]
+ [0 0 8 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 8 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:36,286 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 1]
+2025-09-16 01:57:36,287 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:36,695 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:36,696 - DEBUG - new obj position(0.5, 0.16666666666666666)
+2025-09-16 01:57:37,064 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:37,064 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:37,399 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 5]
+2025-09-16 01:57:37,399 - DEBUG - new obj position(0.5, 0.5)
+2025-09-16 01:57:37,511 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0028
+2025-09-16 01:57:37,511 - DEBUG - Arm 1: Mean=0.1154, Std=0.0028 -> Score=0.1160
+2025-09-16 01:57:37,511 - DEBUG - count(1, 89)
+2025-09-16 01:57:37,511 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:37,511 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:37,511 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 8 6 0 0]
+ [0 0 8 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 8 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:37,781 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 2]
+2025-09-16 01:57:37,781 - DEBUG - new obj position(0.8333333333333334, 0.3333333333333333)
+2025-09-16 01:57:38,117 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:38,117 - DEBUG - new obj position(0.8333333333333334, 0.3333333333333333)
+2025-09-16 01:57:38,466 - DEBUG - target_shape: (6, 6) , new pos_values: [5, 4]
+2025-09-16 01:57:38,466 - DEBUG - new obj position(0.5, 0.16666666666666666)
+2025-09-16 01:57:38,887 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:38,887 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:38,987 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0096
+2025-09-16 01:57:38,987 - DEBUG - Arm 1: Mean=0.1160, Std=0.0028 -> Score=0.1203
+2025-09-16 01:57:38,987 - DEBUG - count(1, 90)
+2025-09-16 01:57:38,987 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:38,987 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:38,987 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 6 6 0 0]
+ [0 0 8 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 8 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:39,220 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:39,221 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:39,633 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:39,633 - DEBUG - new obj position(0.6666666666666666, 0.5)
+2025-09-16 01:57:39,993 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 3]
+2025-09-16 01:57:39,993 - DEBUG - new obj position(0.5, 0.16666666666666666)
+2025-09-16 01:57:40,335 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 3]
+2025-09-16 01:57:40,335 - DEBUG - new obj position(0.8333333333333334, 0.0)
+2025-09-16 01:57:40,439 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=-0.0008
+2025-09-16 01:57:40,439 - DEBUG - Arm 1: Mean=0.1170, Std=0.0028 -> Score=0.1172
+2025-09-16 01:57:40,439 - DEBUG - count(1, 91)
+2025-09-16 01:57:40,439 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:40,439 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:40,439 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 6 6 0 0]
+ [0 0 8 6 0 0]
+ [6 4 6 0 0 0]
+ [0 6 0 0 8 0]
+ [0 0 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:40,759 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:40,759 - DEBUG - new obj position(0.6666666666666666, 0.6666666666666666)
+2025-09-16 01:57:41,168 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 4]
+2025-09-16 01:57:41,169 - DEBUG - new obj position(0.6666666666666666, 0.5)
+2025-09-16 01:57:41,545 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:41,545 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:41,999 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 2]
+2025-09-16 01:57:42,000 - DEBUG - new obj position(1.0, 0.3333333333333333)
+2025-09-16 01:57:42,105 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0045
+2025-09-16 01:57:42,105 - DEBUG - Arm 1: Mean=0.1178, Std=0.0028 -> Score=0.1192
+2025-09-16 01:57:42,105 - DEBUG - count(1, 92)
+2025-09-16 01:57:42,105 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:42,105 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:42,105 - DEBUG - 'predicted_grid',[[0 6 6 6 0 0]
+ [0 4 6 6 0 0]
+ [0 0 8 6 0 0]
+ [6 4 6 0 0 0]
+ [0 0 0 0 8 0]
+ [0 6 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:42,343 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:42,343 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:42,731 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:42,731 - DEBUG - new obj position(0.8333333333333334, 0.16666666666666666)
+2025-09-16 01:57:43,084 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:43,085 - DEBUG - new obj position(0.8333333333333334, 0.3333333333333333)
+2025-09-16 01:57:43,428 - DEBUG - target_shape: (6, 6) , new pos_values: [1, 5]
+2025-09-16 01:57:43,428 - DEBUG - new obj position(0.16666666666666666, 0.8333333333333334)
+2025-09-16 01:57:43,530 - DEBUG - Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0053
+2025-09-16 01:57:43,530 - DEBUG - Arm 1: Mean=0.1185, Std=0.0028 -> Score=0.1212
+2025-09-16 01:57:43,530 - DEBUG - count(1, 93)
+2025-09-16 01:57:43,530 - DEBUG - input grid: [[8 6]
+ [6 4]]
+2025-09-16 01:57:43,530 - DEBUG - target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+2025-09-16 01:57:43,530 - DEBUG - 'predicted_grid',[[0 6 6 6 6 0]
+ [0 4 6 6 0 0]
+ [0 0 8 6 0 0]
+ [6 4 6 0 0 0]
+ [0 0 0 0 8 0]
+ [0 6 0 0 6 0]],<class 'numpy.ndarray'>
+2025-09-16 01:57:43,880 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:43,880 - DEBUG - new obj position(0.3333333333333333, 0.5)
+2025-09-16 01:57:44,217 - DEBUG - target_shape: (6, 6) , new pos_values: [3, 2]
+2025-09-16 01:57:44,218 - DEBUG - new obj position(0.3333333333333333, 0.5)

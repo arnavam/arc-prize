@@ -1,8 +1,8 @@
 ## Present Idea
 
-- reduce tre training loss
+- reduce the training loss
 - make more robust scoring by adding  error of  miss placing + error not placing
-- use early-stopping
+- use more refined early-stopping
 - use diff RL algorithms or variants .
 - create a resoning type advanced pre-training datasts ( like if yello move top etc..)
 - add 'remove' dsl , pre-train using that  & also add some other dsls
@@ -19,14 +19,8 @@
 - nan values being created using RL training
 
 ## optmizations to perform
-- make a main class for all RL modules
-- optimized dqn action classifer update policy method by reducing the code.
+- 
 
-## finished
-
-- the pretraining data sometimes produce same i/p & o/p target & produce two moves all at once 
-- no rotation / mirroring pre-training output generated. ( most likely prblm with placement)
-- use masked obj extraction to also indicate location of objects and no need to worry about shape problem
 
 ---
 
