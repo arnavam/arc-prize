@@ -1,5 +1,14 @@
 # arc-prize
 
- ---
 
- this is the first algorithm i used to find solution to arc prize here i used search algorithms such as BFS , A* search to reach the target grid by apllying some transformtaions sequentallu on the grid the problem is that it takes on input target and try to aplly transformtaion hence large no of the dsl and need to the find order of apllyong henece increase the search soace but also the model fepend on how good the dsls are if the dsl is inefficent to define the pattern the model will fail
+
+ 
+This was the first algorithm I used to approach the ARC Prize problem. It relies on search algorithms such as **Breadth-First Search (BFS)** and **A\*** to reach the target grid by sequentially applying a set of transformations.
+
+The algorithm takes the target grid as input and attempts to discover a sequence of transformations that can produce it. As a result, it must search over a large number of possible domain-specific language (DSL) operations and their application orders, which significantly increases the search space.
+
+Moreover, the effectiveness of this approach heavily depends on the quality and expressiveness of the DSL. If the DSL is not well-designed or is inefficient at capturing the underlying pattern in the data, the model is likely to fail, regardless of the search strategy.
+
+
+
+
