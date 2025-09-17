@@ -171,8 +171,7 @@ These are two specialized neural networks that learn the optimal policies for mo
 * **Role:** After all MCTS iterations are complete, the algorithm finds the node that was most successful (i.e., led to the highest rewards). This node contains the best object arrangement discovered.
 * **In the Code:** `best_terminal_node`. This variable is tracked throughout the MCTS loop and updated whenever a node's score exceeds `best_score`.
 
-### **Q: Output Grid**
 
-* **Role:** The final puzzle solution. It is the 2D grid representation of the arrangement stored in the `Best Solution Found` node.
-* **In the Code:** The final grid is extracted from the best node found: `best_terminal_node.output_grid`. This numpy array is then returned as the solution.
+---
 
+now as you can see this is normaly how a MCTS is implemeneted , its originaly used to find probablities and add it to the UCB score caluclation but this was my first time trying to implement UCB and so my own interepretation was wrong causing the model to not work as it suppose to.
