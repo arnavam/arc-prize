@@ -173,5 +173,8 @@ These are two specialized neural networks that learn the optimal policies for mo
 
 
 ---
+limitations:
 
-now as you can see this is normaly how a MCTS is implemeneted , its originaly used to find probablities and add it to the UCB score caluclation but this was my first time trying to implement UCB and so my own interepretation was wrong causing the model to not work as it suppose to.
+- now as you can see this is normaly how a MCTS is implemeneted , its originaly used to find probablities and add it to the UCB score caluclation but this was my first time trying to implement UCB and so my own interepretation was wrong causing the model to not work as it suppose to.
+
+- the idea of transformation &  moves as two neural agents may sound good in theory when implementing it. i felt like its not possible since the action done by one nueral agent affect other , and also other dont have a way to predict previous action . also the moves always are applied sequentaily dont matter which order it applied
