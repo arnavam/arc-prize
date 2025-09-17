@@ -7,7 +7,6 @@ import torch.nn.functional as F
 from torch.distributions import Categorical
 import json
 from itertools import product
-from A_arc import train 
 from dsl import PRIMITIVE
 import functools ,collections,time
 

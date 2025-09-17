@@ -18,7 +18,7 @@ elif torch.cuda.is_available(): torch.cuda.empty_cache()
 
 
 
-from helper import convert_np_to_native
+from helper import convert_np_to_native , display,extract_target_region,matrix_similarity
 from dsl import find_objects , TRANSFORM , ACTIONS
 from env import placement
 from dl_models.reinforce import NeuralSymbolicSolverRL ,FeatureExtractor
@@ -220,78 +220,11 @@ class MCTSNode:
             node.total_score += score
             node = node.parent
 
-def extract_target_region(target_grid, obj_info):
-    r, c = obj_info['position']
-    obj_h, obj_w = obj_info['grid'].shape
-    
-    # Handle edge cases where object extends beyond target grid
-    pad_h = max(0, r + obj_h - target_grid.shape[0])
-    pad_w = max(0, c + obj_w - target_grid.shape[1])
-    
-    if pad_h > 0 or pad_w > 0:
-        padded_target = np.pad(target_grid, 
-                              ((0, pad_h), (0, pad_w)),
-                              mode='constant',
-                              constant_values=0)#use background
-        return padded_target[r:r+obj_h, c:c+obj_w]
-    return target_grid[r:r+obj_h, c:c+obj_w]
-
-
-def pad_matrix(a, target_shape, direction):
-    pad_height = target_shape[0] - a.shape[0]
-    pad_width = target_shape[1] - a.shape[1]
-
-    # Default padding: [top, bottom], [left, right]
-    if direction == 'top':
-        padding = ((pad_height, 0), (0, 0))
-    elif direction == 'bottom':
-        padding = ((0, pad_height), (0, 0))
-    elif direction == 'left':
-        padding = ((0, 0), (pad_width, 0))
-    elif direction == 'right':
-        padding = ((0, 0), (0, pad_width))
-    else:
-        raise ValueError("Direction must be one of: 'top', 'bottom', 'left', 'right'")
-
-    return np.pad(a, padding, mode='constant', constant_values=0)
-
-
-def matrix_similarity(a, b, direction=None):
-    if a.shape == b.shape:
-        padded_a = a
-
-    else:
-        # Make sure a is smaller or equal in shape
-        if a.shape[0] > b.shape[0] or a.shape[1] > b.shape[1]:
-            # Cut down `b` to the shape of `a`
-            min_rows = min(a.shape[0], b.shape[0])
-            min_cols = min(a.shape[1], b.shape[1])
-
-            a = a[:min_rows, :min_cols]
-            b = b[:min_rows, :min_cols]
-            padded_a = a
-        else:
-            padded_a = pad_matrix(a, b.shape, direction)
-
-    # Ensure shapes now match
-    if padded_a.shape != b.shape:
-        print(a)
-        print(b)
-
-        raise ValueError("Shapes do not match after padding.")
-
-    # Pixel-by-pixel comparison
-    matches = np.sum(padded_a == b)
-    total = b.size
-    score = matches / total  # percentage match
-
-    return score  # Returns between 0.0 and 1.0
 
 
 
 
-
-def arrange_objects_mcts(input_grid, output_grid,device='cpu',save=False,load=False, iterations=500):
+def find_soln_using_mcts(input_grid, output_grid,device='cpu',save=False,load=False, iterations=500):
     # Initialize
     objects = find_objects(input_grid)
     output_grid=np.array(output_grid)
@@ -367,7 +300,6 @@ def arrange_objects_mcts(input_grid, output_grid,device='cpu',save=False,load=Fa
             current.total_score += reward
             current = current.parent
     
-    # Update policies
 
     
     # Fallback if no terminal node found
@@ -389,57 +321,12 @@ def arrange_objects_mcts(input_grid, output_grid,device='cpu',save=False,load=Fa
 
 
 
-def solve(input_grid, background, max_size=30,):
-    # Create blank target grid
-    
-    target_grid = np.zeros((max_size, max_size)) + background
-    
-    # Run MCTS with blank target
-    solution, _ = arrange_objects_mcts(input_grid, target_grid)
-    
-    # Crop to content
-    non_empty = np.where(solution != background)
-    min_r, max_r = np.min(non_empty[0]), np.max(non_empty[0])
-    min_c, max_c = np.min(non_empty[1]), np.max(non_empty[1])
-    return solution[min_r:max_r+1, min_c:max_c+1]
-
-
-
-def display(a, b, solved_grid):
-    cmap = 'coolwarm'  # Example colormap
-
-            # Create a 1x3 grid of subplots
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-
-            # Plot each heatmap on a separate subplot
-    sns.heatmap(a, cmap=cmap, ax=axes[0], cbar=False)
-    axes[0].set_title('Input')
-
-    sns.heatmap(b, cmap=cmap, ax=axes[1], cbar=False)
-    axes[1].set_title('Original')
-
-    sns.heatmap(solved_grid, cmap=cmap, ax=axes[2], cbar=False)
-    axes[2].set_title('Predicted')
-
-    timestamp = time.strftime("%Y%m%d-%H%M%S")
-    filename = f"heatmap_{timestamp}.png"
-
-    # Save the figure
-    plt.savefig(f'fig/{filename}')
-
-    # Optionally, print the filename to confirm
-    print(f"Figure saved as {filename}")
-
-    # Close the figure to free up memory
-    plt.close()
 
 if __name__ == '__main__':
-    cmap = colors.ListedColormap(
-        ['#000000', '#0074D9', '#FF4136', '#2ECC40', '#FFDC00',
-            '#AAAAAA', '#F012BE', '#FF851B', '#7FDBFF', '#870C25'])
-    norm = colors.Normalize(vmin=0, vmax=9)
+
     ids=[]
     train_path='arc-prize-2025/arc-agi_training_challenges.json'
+    
     with open(train_path, 'r') as f:
         train = json.load(f)
 
@@ -447,7 +334,7 @@ if __name__ == '__main__':
         ids.append(case_id) 
     count=0
     win=0
-    for case_id in train:
+    for case_id in ids:
         count +=1
         # if count ==2 :
         #     break
@@ -462,7 +349,7 @@ if __name__ == '__main__':
 
         # Solve the puzzle using the new method
         start_time = time.time()
-        solved_grid ,_= arrange_objects_mcts(a, b,device='cuda',save=True,load=False,iterations=10)
+        solved_grid ,_= find_soln_using_mcts(a, b,device='cuda',save=True,load=False,iterations=10)
         solved_grid = convert_np_to_native(solved_grid)
         print(time.time()-start_time)
         logging.debug(f"count: {count}")
@@ -476,7 +363,6 @@ if __name__ == '__main__':
             print(f"\nSolution is correct: {is_correct}")
             win +=1
             display(a, b, solved_grid)
-
 
             logging.debug(f'win,{win}')
 
