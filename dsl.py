@@ -108,7 +108,7 @@ def concat_v(grids, background=0):
     return result
 
 
-# --- Your Primitive Functions ---
+# --- Your TRANSFORM Functions ---
 def rotate(data):
     """Rotates the grid 90 degrees clockwise."""
     return np.rot90(data, k=-1)
@@ -190,7 +190,7 @@ def conv(input_matrix, kernel):
     return output
 
 
-PRIMITIVE = {
+TRANSFORM = {
         "rotate": rotate,
         "mirrorlr": mirrorlr,
         "mirrorud": mirrorud,
@@ -204,5 +204,40 @@ PRIMITIVE = {
         # "conv_with_input_kernel": functools.partial(conv, kernel=input_node),
         # "conv":conv
     }
+
+
+
+
+def move_up(position):
+    x, y = position
+    return  (x - 1, y)
+
+
+def move_down(position):
+    x, y = position
+
+    return  (x + 1, y)
+
+def move_left(position):
+    x, y = position
+    return  (x, y - 1)
+
+def move_right( position):
+    x, y = position
+
+    return (x, y + 1)
+
+
+def idle (position):
+    return position
+
+ACTIONS = {
+    "move_up": move_up,
+    "move_down": move_down,
+    "move_left": move_left,
+    "move_right": move_right ,
+    'idle':idle
+}
+
 
 

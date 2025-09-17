@@ -3,11 +3,28 @@ os.environ['PYTORCH_MPS_HIGH_WATERMARK_RATIO'] = '0.0'
 import time
 import numpy as np
 import torch
+import json
+import math
+import random
+import logging
+import seaborn as sns
+from matplotlib  import colors 
+import matplotlib.pyplot as plt
+import torch.nn as nn
+import torch.nn.functional as F
+
 if torch.mps.is_available(): torch.mps.empty_cache() 
 elif torch.cuda.is_available(): torch.cuda.empty_cache()
-import seaborn as sns
-import matplotlib.pyplot as plt
-import logging
+
+
+
+from helper import convert_np_to_native
+from dsl import find_objects , TRANSFORM , ACTIONS
+from env import placement
+from dl_models.reinforce import NeuralSymbolicSolverRL ,FeatureExtractor
+# from dl_models.RL_A2C import NeuralSymbolicSolverRL_A2C as neural
+from dl_models.q_learning import DQN_Solver  as neural
+
 
 # Configure logging
 logging.basicConfig(
@@ -18,55 +35,7 @@ logging.basicConfig(
 )
 
 
-
-import json
-import math
-import random
-
-from matplotlib  import colors 
-from dsl2 import convert_np_to_native
-from dsl import find_objects , PRIMITIVE
-from env import placement
-from neurosymbolic_reinforce import NeuralSymbolicSolverRL ,FeatureExtractor
-# from neurosymbolic_RL_A2C import NeuralSymbolicSolverRL_A2C as neural
-from nuerosymb_q_learning import DQN_Solver  as neural
-
-import torch.nn as nn
-import torch.nn.functional as F
 REWARDS=[]
-
-def move_up(position):
-    x, y = position
-    return  (x - 1, y)
-
-
-def move_down(position):
-    x, y = position
-
-    return  (x + 1, y)
-
-def move_left(position):
-    x, y = position
-    return  (x, y - 1)
-
-def move_right( position):
-    x, y = position
-
-    return (x, y + 1)
-
-
-def idle (position):
-    return position
-
-ACTIONS = {
-    "move_up": move_up,
-    "move_down": move_down,
-    "move_left": move_left,
-    "move_right": move_right ,
-    'idle':idle
-}
-
-
 
 
 
@@ -222,7 +191,7 @@ class MCTSNode:
                 # Pass the tuples to the store_experience method
                 neuro.store_experience(state, action_idx, reward, next_state)
 
-                # print(primitive,reward)
+                # print(TRANSFORM,reward)
                 current_obj = new_obj_info['grid']
                 
              
@@ -347,7 +316,7 @@ def arrange_objects_mcts(input_grid, output_grid,device='cpu',save=False,load=Fa
     spacial_feature_extractor = FeatureExtractor(input_channels=1)
 
     # Initialize each agent with its own, un-shared model
-    neuro = neural(PRIMITIVE, neuro_feature_extractor,device=device)
+    neuro = neural(TRANSFORM, neuro_feature_extractor,device=device)
     spacial = neural(ACTIONS, spacial_feature_extractor,device=device)
     if load:
      neuro.load()

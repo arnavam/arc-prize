@@ -11,7 +11,24 @@ from A_arc import train
 from dsl import PRIMITIVE
 import functools ,collections,time
 
+import random
+from collections import deque
 
+class ReplayMemory:
+    def __init__(self, capacity):
+        self.memory = deque([], maxlen=capacity)
+
+    def push(self, experience):
+        """Save an experience tuple (state, action, reward, next_state)"""
+        self.memory.append(experience)
+
+    def sample(self, batch_size):
+        """Sample a random batch of experiences"""
+        return random.sample(self.memory, batch_size)
+
+    def __len__(self):
+        return len(self.memory)
+    
 class QNetwork(nn.Module):
     def __init__(self, feature_extractor, num_actions):
         super().__init__()
@@ -34,24 +51,7 @@ class QNetwork(nn.Module):
         
         return q_values
 
-import random
-from collections import deque
 
-class ReplayMemory:
-    def __init__(self, capacity):
-        self.memory = deque([], maxlen=capacity)
-
-    def push(self, experience):
-        """Save an experience tuple (state, action, reward, next_state)"""
-        self.memory.append(experience)
-
-    def sample(self, batch_size):
-        """Sample a random batch of experiences"""
-        return random.sample(self.memory, batch_size)
-
-    def __len__(self):
-        return len(self.memory)
-    
 
 
 class DQN_Solver:
