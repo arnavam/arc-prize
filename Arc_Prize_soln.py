@@ -10,19 +10,15 @@ torch.autograd.set_detect_anomaly(True)
 
 from dsl import ALL_ACTIONS ,SHIFT_ACTIONS,TRANSFORM_ACTIONS
 from helper import find_objects , extract_target_region
-from helper_arc import  loader , display
+from helper_arc import  loader , display , get_module_logger
 from helper_env import  placement , place_object
 from helper_env import matrix_similarity
 from dl_models.feature_extractor import FeatureExtractor
 from dl_models.DQNAction_Classifier import DQN_Classifier
 from dl_models.ReinLikelihood import Likelihood
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler('app.log', mode='w')
-# handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
-logger.addHandler(handler)
-logger.propagate = False
+logger = get_module_logger(__name__)
+
 
 
 # Initialized parameters
@@ -81,20 +77,13 @@ class Example_Chooser:
 #---------------------------------------------------------------------
 
 
-def Arc_Prize_Solver(examples,output,load,save,max_iterations=100, max_steps_per_episode=4):
+def Arc_Prize_Solver(examples,output,action_classifier,likelihood_predictor,max_iterations=100, max_steps_per_episode=4,):
 
 
-    ft1 = FeatureExtractor(input_channels=1)
-    action_classifier = DQN_Classifier(feature_extractor=ft1, no_of_outputs=num_actions,no_of_inputs=3,device='cuda')
-
-    ft2 = FeatureExtractor(input_channels=1)
-    likelihood_predictor = Likelihood(feature_extractor= ft2, no_of_outputs=1,no_of_inputs=3,device='cuda')
 
     Placer = None #DQN_Solver(ft,len(examples[0]['output']),3)
 
-    if load == True:
-        action_classifier.load()
-        likelihood_predictor.load()
+
     
     logging.debug(f"output shape & no of examples{len(examples[0]['output']),len(examples)}")
 
@@ -114,11 +103,7 @@ def Arc_Prize_Solver(examples,output,load,save,max_iterations=100, max_steps_per
     for iteration in range(max_iterations):
         count += 1
         idx = bandit.select_example()
-        if idx == -1:
-            if save:
-                action_classifier.save()
-                likelihood_predictor.save()
-            return example['predicted_grid'], True
+        if idx == -1:    return example['predicted_grid'], True
         
         logging.debug(f'count{idx,count}')
         example = examples[idx]
@@ -189,18 +174,11 @@ def Arc_Prize_Solver(examples,output,load,save,max_iterations=100, max_steps_per
         # Global early stopping (optional)
         if iteration >= min_steps and steps_without_improvement >= patience * 2:
             logging.info("warning -  no improvement across examples")
-            if save:
-                action_classifier.save()
-                likelihood_predictor.save()
-                action_classifier.memory.clear()
+
             return predicted_grid, False
 
     logging.info("No solution found within iterations")
-    if save:
-        
-        action_classifier.save()
-        likelihood_predictor.save()
-        action_classifier.memory.clear()
+
     return predicted_grid, False
 
 #----------------------------------------------------------------------------------------------------
@@ -296,23 +274,40 @@ if __name__ == "__main__":
         # if count ==3:
         #     break
 
-        task = train[case_id]
+        task = train['00d62c1b']
         examples = task['train']  # Assume each task has a 'train' list of examples
         print(examples)
+        for i in range(4):
+            a = task['train'][i]['input']
+            b = task['train'][i]['output']
 
+            logger.debug(f'{np.matrix(a)}]\n {np.matrix(b)}')
         logging.debug(f"Processing task {case_id} with {len(examples)} examples")
 
         OUTPUT[case_id]={}
+        
+        ft1 = FeatureExtractor(input_channels=1)
+        action_classifier = DQN_Classifier(feature_extractor=ft1, no_of_outputs=num_actions,no_of_inputs=3,device='cuda')
 
-        predicted , success = Arc_Prize_Solver(examples,OUTPUT[case_id],load=True,save=True ,max_iterations=100 , max_steps_per_episode=4)
-        a = task['train'][0]['input']
-        b = task['train'][0]['output']
+        ft2 = FeatureExtractor(input_channels=1)
+        likelihood_predictor = Likelihood(feature_extractor= ft2, no_of_outputs=1,no_of_inputs=3,device='cuda')
+
+        action_classifier.load()
+        likelihood_predictor.load()
+
+        predicted , success = Arc_Prize_Solver(examples,OUTPUT[case_id], action_classifier,likelihood_predictor ,max_iterations=100 , max_steps_per_episode=4)
+
+                
+        action_classifier.save()
+        likelihood_predictor.save()
+        action_classifier.memory.clear()
+        
+ 
         display(a,b,predicted,)
-
         if success:
             print(f"Task {case_id} solved")
             
-            logger.debug(f'won')
+            logger.debug(f'won: {winning} ')
             winning +=1
         else:
             print(f"Task {case_id} not solved")

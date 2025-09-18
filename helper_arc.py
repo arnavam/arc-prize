@@ -13,6 +13,26 @@ pil_logger = logging.getLogger('PIL')
 # override the logger logging level to INFO
 pil_logger.setLevel(logging.INFO)
 
+
+
+def get_module_logger(name):
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.DEBUG)
+
+    log_filename = f"log/{name}.log"
+    handler = logging.FileHandler(log_filename, mode='w')
+
+    # formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    # handler.setFormatter(formatter)
+
+    # Prevent duplicate handlers if called multiple times
+    if not logger.handlers:
+        logger.addHandler(handler)
+        logger.propagate = False
+
+    return logger
+
+
 def clear(folder_path):
     for filename in os.listdir(folder_path):
         file_path = os.path.join(folder_path, filename)
@@ -29,7 +49,7 @@ norm = colors.Normalize(vmin=0, vmax=9)
 
 def display(input ,predicted,target,folder='train_ouputs',printing=True):
     
-    folder = 'visualizations' + folder
+    folder = 'visualizations/' + folder
     os.makedirs(folder, exist_ok=True)
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))

@@ -1,26 +1,25 @@
 import numpy as np
+import random
+from collections import deque
 import torch 
-torch.autograd.set_detect_anomaly(True)
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from torch.distributions import Categorical
+torch.autograd.set_detect_anomaly(True)
+import logging
+
+
 from dl_models.BaseDL import BaseDL
 from helper_env import placement , place_object
-from  helper_arc import display
-import logging
+from  helper_arc import display , get_module_logger
 from dsl import ALL_ACTIONS
+
+logger = get_module_logger(__name__)
+
 action_names= list(ALL_ACTIONS.keys())
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler('log/action_classifer.log', mode='w')
-# handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
-logger.addHandler(handler)
-logger.propagate = False
 
-import random
-from collections import deque
 
 # --- Replay Memory ---
 class ReplayMemory:
