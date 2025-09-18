@@ -19,7 +19,7 @@ from dl_models.ReinLikelihood import Likelihood
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler('log/Arc_Prize_soln.log', mode='w')
+handler = logging.FileHandler('app.log', mode='w')
 # handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
 logger.addHandler(handler)
 logger.propagate = False
@@ -105,14 +105,20 @@ def Arc_Prize_Solver(examples,output,load,save,max_iterations=100, max_steps_per
     objects = None
     obj_list={}
     count =0
+    # Add these parameters at the beginning of your function or as function parameters
+    min_steps = 50  # Minimum number of steps to run
+    patience = 20   # Number of steps to wait without improvement before stopping
+    best_score = -float('inf')
+    steps_without_improvement = 0
+
     for iteration in range(max_iterations):
-        count+=1
+        count += 1
         idx = bandit.select_example()
         if idx == -1:
-            if  save ==True:
+            if save:
                 action_classifier.save()
                 likelihood_predictor.save()
-            return example['predicted_grid'] , True
+            return example['predicted_grid'], True
         
         logging.debug(f'count{idx,count}')
         example = examples[idx]
@@ -122,49 +128,77 @@ def Arc_Prize_Solver(examples,output,load,save,max_iterations=100, max_steps_per
 
         logging.debug(f'input grid: {input_grid}')
         logging.debug(f'target grid: {target_grid}')
-        solved=0
+        solved = 0
         if idx not in obj_list:
-            output[idx]=[]
+            output[idx] = []
             objects = find_objects(input_grid)
-            obj_list[idx]=objects
-
+            obj_list[idx] = objects
             predicted_grid = np.zeros_like(target_grid)
             example['predicted_grid'] = predicted_grid 
         else:
-            objects=obj_list[idx]   
-            predicted_grid=example['predicted_grid']
+            objects = obj_list[idx]   
+            predicted_grid = example['predicted_grid']
 
         logging.debug(f"'predicted_grid',{predicted_grid},{type(predicted_grid)}")
         
-        old_reward=0
-        sim_score=0
+        old_reward = 0
+        sim_score = 0
+        
+        # Early stopping initialization for this episode
+        episode_best_score = -float('inf')
+        episode_steps_without_improvement = 0
+        
         for step in range(max_steps_per_episode):
-            new_grid ,new_reward= find_solution(predicted_grid,likelihood_predictor,action_classifier,Placer, target_grid,objects)
+            new_grid, new_reward = find_solution(predicted_grid, likelihood_predictor, action_classifier, Placer, target_grid, objects)
             
-            sim_score += new_reward-old_reward
-            old_reward=new_reward
+            sim_score += new_reward - old_reward
+            old_reward = new_reward
             
+            # Check for improvement
+            if new_reward > episode_best_score:
+                episode_best_score = new_reward
+                episode_steps_without_improvement = 0
+            else:
+                episode_steps_without_improvement += 1
+            
+            # Early stopping condition (but only after minimum steps)
+            if step >= min_steps and episode_steps_without_improvement >= patience:
+                logging.debug(f"Early stopping at step {step} for example {idx}")
+                break
+                
             if np.array_equal(new_grid, target_grid):
-                #remove the current example from the iterations
-                solved +=1 
+                solved += 1 
                 bandit.mark_as_solved(idx)
                 logging.debug(f'{idx} win no {solved} :{predicted_grid}')
-                #if no more to remove say we solved everyone and use maybe testing example to test the solution
                 break
 
-            example['predicted_grid']= new_grid
-            output[idx].append((predicted_grid.tolist(),sim_score))
+            example['predicted_grid'] = new_grid
+            output[idx].append((predicted_grid.tolist(), sim_score))
             print(sim_score)
             action_classifier.update_policy()
             likelihood_predictor.update_policy()
             bandit.update_arm(idx, sim_score)
         
+        # Update global early stopping tracking
+        if sim_score > best_score:
+            best_score = sim_score
+            steps_without_improvement = 0
+        else:
+            steps_without_improvement += 1
+            
+        # Global early stopping (optional)
+        if iteration >= min_steps and steps_without_improvement >= patience * 2:
+            logging.info("Global early stopping - no improvement across examples")
+            if save:
+                action_classifier.save()
+                likelihood_predictor.save()
+            return predicted_grid, False
 
     logging.info("No solution found within iterations")
-    if  save ==True:
+    if save:
         action_classifier.save()
         likelihood_predictor.save()
-    return predicted_grid , False  # No solution found
+    return predicted_grid, False
 
 #----------------------------------------------------------------------------------------------------
 
@@ -256,9 +290,10 @@ if __name__ == "__main__":
         print(examples)
 
         logging.debug(f"Processing task {case_id} with {len(examples)} examples")
-        OUTPUT[case_id]['train']={}
 
-        predicted , success = Arc_Prize_Solver(examples,OUTPUT[case_id],load=False,save=True ,max_iterations=100 , max_steps_per_episode=4)
+        OUTPUT[case_id]={}
+
+        predicted , success = Arc_Prize_Solver(examples,OUTPUT[case_id],load=True,save=True ,max_iterations=100 , max_steps_per_episode=4)
         a = task['train'][0]['input']
         b = task['train'][0]['output']
         display(a,b,predicted,)
