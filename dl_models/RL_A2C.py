@@ -1,16 +1,15 @@
 
 import numpy as np
-
+import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from torch.distributions import Categorical
 import json
 from itertools import product
-from A_arc import train 
-from dsl import PRIMITIVE
+from dsl import TRANSFORM
 import functools ,collections,time
-PRIMITIVE_NAMES = list(PRIMITIVE.keys())
+PRIMITIVE_NAMES = list(TRANSFORM.keys())
 
 
 

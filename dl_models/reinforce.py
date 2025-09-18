@@ -9,10 +9,9 @@ import torch.nn.functional as F
 from torch.distributions import Categorical
 import json
 from itertools import product
-from A_arc import train 
-from dsl import PRIMITIVE
+from dsl import TRANSFORM
 import functools ,collections,time
-PRIMITIVE_NAMES = list(PRIMITIVE.keys())
+PRIMITIVE_NAMES = list(TRANSFORM.keys())
 import random
 # --- Neural Feature Extractor (PyTorch) ---
 class FeatureExtractor(nn.Module):
@@ -24,7 +23,7 @@ class FeatureExtractor(nn.Module):
         self.pool2 = nn.AdaptiveAvgPool2d((1, 1))  # Safe pooling
         self.flatten = nn.Flatten()
         self.fc = nn.Linear(64, 32)  # final feature dim
-        self.primitive_names= list(PRIMITIVE.keys())
+        self.primitive_names= list(TRANSFORM.keys())
 
 
     def forward(self, x):
@@ -266,6 +265,10 @@ class NeuralSymbolicSolverRL:
 # --- Main Execution ---
 if __name__ == "__main__":
     
+    train_path='arc-prize-2025/arc-agi_training_challenges.json'
+    
+    with open(train_path, 'r') as f:
+        train = json.load(f)
 
     training_examples = []
     for case_data in train.values():

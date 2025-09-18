@@ -7,7 +7,7 @@ import torch.nn.functional as F
 from torch.distributions import Categorical
 import json
 from itertools import product
-from dsl import PRIMITIVE
+from dsl import TRANSFORM
 import functools ,collections,time
 
 import random
