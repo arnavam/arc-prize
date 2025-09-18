@@ -85,10 +85,10 @@ def Arc_Prize_Solver(examples,output,load,save,max_iterations=100, max_steps_per
 
 
     ft1 = FeatureExtractor(input_channels=1)
-    action_classifier = DQN_Classifier(feature_extractor=ft1, no_of_outputs=num_actions,no_of_inputs=3)
+    action_classifier = DQN_Classifier(feature_extractor=ft1, no_of_outputs=num_actions,no_of_inputs=3,device='cuda')
 
     ft2 = FeatureExtractor(input_channels=1)
-    likelihood_predictor = Likelihood(feature_extractor= ft2, no_of_outputs=1,no_of_inputs=3)
+    likelihood_predictor = Likelihood(feature_extractor= ft2, no_of_outputs=1,no_of_inputs=3,device='cuda')
 
     Placer = None #DQN_Solver(ft,len(examples[0]['output']),3)
 
@@ -96,7 +96,7 @@ def Arc_Prize_Solver(examples,output,load,save,max_iterations=100, max_steps_per
         action_classifier.load()
         likelihood_predictor.load()
     
-    logging.debug(f'output shape & no of examples{len(examples[0]['output']),len(examples)}')
+    logging.debug(f"output shape & no of examples{len(examples[0]['output']),len(examples)}")
 
     num_examples = len(examples)
 
@@ -188,16 +188,19 @@ def Arc_Prize_Solver(examples,output,load,save,max_iterations=100, max_steps_per
             
         # Global early stopping (optional)
         if iteration >= min_steps and steps_without_improvement >= patience * 2:
-            logging.info("Global early stopping - no improvement across examples")
+            logging.info("warning -  no improvement across examples")
             if save:
                 action_classifier.save()
                 likelihood_predictor.save()
+                action_classifier.memory.clear()
             return predicted_grid, False
 
     logging.info("No solution found within iterations")
     if save:
+        
         action_classifier.save()
         likelihood_predictor.save()
+        action_classifier.memory.clear()
     return predicted_grid, False
 
 #----------------------------------------------------------------------------------------------------
@@ -279,11 +282,19 @@ def find_solution(old_predicted_grid, likelihood_predictor,action_classifier, Pl
 if __name__ == "__main__":
     train, ids = loader(train_path='arc-prize-2025/arc-agi_training_challenges.json')
     count=0
+    winning=0
+    start_id = '009d5c81'
 
-    for case_id in ids:
-        count +=1
-        if count ==3:
-            break
+    # Find the index of the start_id
+    start_index = ids.index(start_id)
+
+    # Iterate from the specified start_id
+    for case_id in ids[start_index:]:
+
+
+        # count +=1
+        # if count ==3:
+        #     break
 
         task = train[case_id]
         examples = task['train']  # Assume each task has a 'train' list of examples
@@ -297,9 +308,17 @@ if __name__ == "__main__":
         a = task['train'][0]['input']
         b = task['train'][0]['output']
         display(a,b,predicted,)
+
         if success:
             print(f"Task {case_id} solved")
+            
+            logger.debug(f'won')
+            winning +=1
         else:
             print(f"Task {case_id} not solved")
+
+
     with open('output.json', 'w') as f:
-            json.dump(OUTPUT, f, indent=2)
+            json.dump(OUTPUT, f, indent=2)  
+    print('no of winnings: ', winning)
+    print('accruacy: ', winning/1000)

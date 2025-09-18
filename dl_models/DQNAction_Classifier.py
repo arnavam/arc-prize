@@ -36,7 +36,10 @@ class ReplayMemory:
     def __len__(self):
         return len(self.memory)
 
-
+    def clear(self):
+        """Clear the memory."""
+        self.memory.clear()
+        print("Memory cleared!")
 # --- Neural Network Definition ---
 # This remains a separate, modular component.
 class Policy(nn.Module):
@@ -110,7 +113,7 @@ class Policy(nn.Module):
 # ---  Multi-Head DQN ---
 class DQN_Classifier(BaseDL):
 
-    def __init__(self, feature_extractor, no_of_outputs, no_of_inputs=2, device='cpu', gamma=0.99, lr=1e-4, batch_size=128, memory_size=1000, target_update=10):
+    def __init__(self, feature_extractor, no_of_outputs, no_of_inputs=2, device='cpu', gamma=0.99, lr=1e-4, batch_size=30, memory_size=1000, target_update=10):
         super().__init__( device=device)
 
         # 1. Create a Policy 
@@ -185,7 +188,18 @@ class DQN_Classifier(BaseDL):
         states, actions, rewards, next_states, true_positions, is_place_flags = zip(*experiences)
         
         # upack states  & concat them to tensor
-        current_grids, obj_grids  = (torch.cat(tensors, dim=0) for tensors in zip(*states))
+        try:
+            # Attempt to concatenate tensors
+            current_grids, obj_grids = (torch.cat(tensors, dim=0) for tensors in zip(*states))
+        except Exception as e:
+            # Catch any exception and print the error message
+            print(f"An error occurred: {e}")
+            for state in states:
+                    for tensor in state:
+                        print(tensor.shape)
+                    for tensor in state: 
+                        print(tensor)
+        
         next_current_grids, next_obj_grids  = (torch.cat(tensors, dim=0) for tensors in zip(*states))
 
         target_grids = self.target_grid_tensor.repeat(self.batch_size, 1, 1, 1)

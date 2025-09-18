@@ -284,8 +284,8 @@ if __name__ == '__main__':
             position_losses.append(pos_loss)
             action_accuracies.append(acc)
 
-    # likelihood_predictor.save()
-    # action_classifier.save()
+    likelihood_predictor.save()
+    action_classifier.save()
 
 #----- plot the loss & accuracy
     plt.title('likelihood_predictor')

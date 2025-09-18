@@ -23,7 +23,7 @@ class BaseDL:
 
     def __init__(self, device):
         _device = torch.device(device if getattr(torch, device).is_available() else "cpu")
-        print(f'Using device: {_device} for Multi-Head Solver')
+        print(f'Using device: {_device} for  {self.__class__.__name__} Solver')
 
         self.device = _device
 
@@ -64,8 +64,7 @@ class BaseDL:
 
 
     def load(self):
-        self.policy_net.load_state_dict(torch.load(f'weights/{self.__class__.__name__}.pth'))
-        self.policy_net.load_state_dict(torch.load(f'weights/{self.__class__.__name__}.pth'))
+        self.policy_net.load_state_dict(torch.load(f'weights/{self.__class__.__name__}.pth', weights_only=True))
 
     def save(self):
         torch.save(self.policy_net.state_dict(), f'weights/{self.__class__.__name__}.pth')
