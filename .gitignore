@@ -1,3 +1,7 @@
+#custom
+data_loader/
+likelihood_predictions/
+*_examples/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -6,7 +10,6 @@ __pycache__/
 # C extensions
 *.so
 
-*_examples/
 # Distribution / packaging
 .Python
 build/
