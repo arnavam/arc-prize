@@ -2,6 +2,8 @@
 data_loader/
 likelihood_predictions/
 *_examples/
+visualizations/*
+!visualizations/Architecture.jpg
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
