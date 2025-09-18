@@ -94,9 +94,7 @@ def Arc_Prize_Solver(examples,output,action_classifier,likelihood_predictor,max_
     objects = None
     obj_list={}
     count =0
-    # Add these parameters at the beginning of your function or as function parameters
-      # Minimum number of steps to run
-       # Number of steps to wait without improvement before stopping
+
     best_score = -float('inf')
     
     steps_without_improvement = 0
@@ -137,7 +135,7 @@ def Arc_Prize_Solver(examples,output,action_classifier,likelihood_predictor,max_
         old_reward = 0
         sim_score = 0
         
-        # Early stopping initialization for this episode
+
         episode_best_score = -float('inf')
         episode_steps_without_improvement = 0
         
@@ -262,19 +260,17 @@ if __name__ == "__main__":
     count=0
     winning=0
 
-    # Find the index of the start_id
-
-    # Iterate from the specified start_id
     for case_id in ids:
 
 
         count +=1
+        start_time=time.time()
         # if count ==3:
         #     break
-        logger.debug(f'count: {count}')
+
         
         task = train[case_id]
-        examples = task['train']  # Assume each task has a 'train' list of examples
+        examples = task['train'] 
   
         print(f"Processing task {case_id} with {len(examples)} examples")
 
@@ -289,13 +285,12 @@ if __name__ == "__main__":
         # action_classifier.load()
         # likelihood_predictor.load()
 
-        example,success = Arc_Prize_Solver(examples,OUTPUT[case_id], action_classifier,likelihood_predictor ,max_iterations=100 , max_steps_per_episode=4)
-
+        example,success = Arc_Prize_Solver(examples,OUTPUT[case_id], action_classifier,likelihood_predictor ,max_iterations=100 , max_steps_per_episode=4,min_iterations=10)
                 
         action_classifier.save()
         likelihood_predictor.save()
         action_classifier.memory.clear()
-        
+        logger.debug(f'count: {count} time: {time.time()-start_time}')
         display(example['input'],example['output'],example['predicted_grid'])
         if success:
             print(f"Task {case_id} solved")
