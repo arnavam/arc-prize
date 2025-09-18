@@ -22,7 +22,7 @@ from helper_env import placement
 
 import logging
 
-logger = get_module_logger(__name__)
+logger = get_module_logger('arc_prize_pretraining')
 
 
 

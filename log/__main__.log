@@ -1,100 +1,4967 @@
-[[0 0 0 0 0 0 0 0 0 0]
- [0 0 3 3 3 3 0 0 0 0]
- [0 0 3 0 0 3 0 0 0 0]
- [0 0 3 0 0 3 0 3 0 0]
- [0 0 3 3 3 3 3 3 3 0]
- [0 0 0 3 0 0 0 0 3 0]
- [0 0 0 3 0 0 0 3 3 0]
- [0 0 0 3 3 0 0 3 0 3]
- [0 0 0 3 0 3 0 0 3 0]
- [0 0 0 0 3 0 0 0 0 0]]]
- [[0 0 0 0 0 0 0 0 0 0]
- [0 0 3 3 3 3 0 0 0 0]
- [0 0 3 4 4 3 0 0 0 0]
- [0 0 3 4 4 3 0 3 0 0]
- [0 0 3 3 3 3 3 3 3 0]
- [0 0 0 3 0 0 0 0 3 0]
- [0 0 0 3 0 0 0 3 3 0]
- [0 0 0 3 3 0 0 3 4 3]
- [0 0 0 3 4 3 0 0 3 0]
- [0 0 0 0 3 0 0 0 0 0]]
-[[0 0 0 0 0 0 0 0 0 0]
- [0 0 3 0 3 0 0 0 0 0]
- [0 0 0 3 0 3 0 0 0 0]
- [0 0 3 0 0 0 3 0 0 0]
- [0 0 0 0 0 3 0 3 0 0]
- [0 0 0 3 0 3 3 0 0 0]
- [0 0 3 3 3 0 0 0 0 0]
- [0 0 0 3 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 0]]]
- [[0 0 0 0 0 0 0 0 0 0]
- [0 0 3 0 3 0 0 0 0 0]
- [0 0 0 3 0 3 0 0 0 0]
- [0 0 3 0 0 0 3 0 0 0]
- [0 0 0 0 0 3 4 3 0 0]
- [0 0 0 3 0 3 3 0 0 0]
- [0 0 3 3 3 0 0 0 0 0]
- [0 0 0 3 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 0]]
-[[0 0 0 0 0 3 0 0 0 0]
- [0 0 0 0 3 0 0 0 0 0]
- [0 3 3 0 3 3 0 3 0 0]
- [3 0 0 3 0 0 3 0 3 0]
- [0 0 0 3 0 0 3 3 0 0]
- [0 0 0 3 0 0 3 0 0 0]
- [0 0 0 3 0 0 3 0 0 0]
- [0 0 0 0 3 3 0 3 0 0]
- [0 0 0 0 0 0 0 0 3 0]
- [0 0 0 0 0 0 0 0 0 0]]]
- [[0 0 0 0 0 3 0 0 0 0]
- [0 0 0 0 3 0 0 0 0 0]
- [0 3 3 0 3 3 0 3 0 0]
- [3 0 0 3 4 4 3 4 3 0]
- [0 0 0 3 4 4 3 3 0 0]
- [0 0 0 3 4 4 3 0 0 0]
- [0 0 0 3 4 4 3 0 0 0]
- [0 0 0 0 3 3 0 3 0 0]
- [0 0 0 0 0 0 0 0 3 0]
- [0 0 0 0 0 0 0 0 0 0]]
-[[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 3 3 3 3 0 3 3 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 3 0 3 0 0 0 0 0 0 0 3 0]
- [0 0 0 0 0 0 0 0 3 3 3 3 3 3 3 3 0 0 0 0]
- [0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 3 0 0 0 0]
- [0 0 0 0 3 0 0 0 3 0 0 0 0 0 0 3 0 0 0 0]
- [0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 3 0 0 0 0]
- [0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 3 0 0 0 0]
- [0 0 3 0 0 0 0 0 3 3 3 3 3 3 3 3 0 0 0 0]
- [0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 3 3 3 0 0 0 0 3 0 3 0 0]
- [0 0 0 0 0 0 3 3 0 0 3 0 0 3 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 3 0 0 3 3 0 0 3 0 0 3 0 0]
- [0 0 0 0 0 0 0 3 3 3 3 0 3 0 0 3 3 3 0 0]
- [0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 3 0 3 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 3 3 3 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]]]
- [[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 3 3 3 3 4 3 3 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 3 4 3 0 0 0 0 0 0 0 3 0]
- [0 0 0 0 0 0 0 0 3 3 3 3 3 3 3 3 0 0 0 0]
- [0 0 0 0 0 0 0 0 3 4 4 4 4 4 4 3 0 0 0 0]
- [0 0 0 0 3 0 0 0 3 4 4 4 4 4 4 3 0 0 0 0]
- [0 0 0 0 0 0 0 0 3 4 4 4 4 4 4 3 0 0 0 0]
- [0 0 0 0 0 0 0 0 3 4 4 4 4 4 4 3 0 0 0 0]
- [0 0 3 0 0 0 0 0 3 3 3 3 3 3 3 3 0 0 0 0]
- [0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 3 3 3 0 0 0 0 3 0 3 0 0]
- [0 0 0 0 0 0 3 3 4 4 3 0 0 3 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 3 4 4 3 3 0 0 3 0 0 3 0 0]
- [0 0 0 0 0 0 0 3 3 3 3 0 3 0 0 3 3 3 0 0]
- [0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 3 4 3 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 3 3 3 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]]
+output shape & no of examples(6, 2)
+count(0, 1)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0101
+count(1, 2)
+input grid: [[8 6]
+ [6 4]]
+target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [0, 3]
+new obj position(0.0, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 4]
+new obj position(0.5, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.0, 0.5)
+Arm 0: Mean=0.0069, Std=0.0069 -> Score=-0.0033
+Arm 1: Mean=0.0069, Std=0.0069 -> Score=0.0120
+count(1, 3)
+input grid: [[8 6]
+ [6 4]]
+target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [0, 3]
+new obj position(0.0, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.0, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.5, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.0, 0.5)
+Arm 0: Mean=0.0069, Std=0.0069 -> Score=-0.0003
+Arm 1: Mean=0.0069, Std=0.0045 -> Score=0.0120
+count(1, 4)
+input grid: [[8 6]
+ [6 4]]
+target grid: [[8 6 8 6 8 6]
+ [6 4 6 4 6 4]
+ [6 8 6 8 6 8]
+ [4 6 4 6 4 6]
+ [8 6 8 6 8 6]
+ [6 4 6 4 6 4]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.0, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 5]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0069, Std=0.0069 -> Score=0.0214
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0050
+count(0, 5)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [7 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [0, 4]
+new obj position(1.0, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 3]
+new obj position(0.0, 0.5)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0139, Std=0.0052 -> Score=0.0254
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0122
+count(0, 6)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [0 0 3 0 0 0]
+ [0 0 0 0 0 0]
+ [7 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.3333333333333333, 0.16666666666666666)
+Arm 0: Mean=0.0231, Std=0.0058 -> Score=0.0223
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0020
+count(0, 7)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [7 0 0 0 0 0]
+ [0 0 3 0 0 0]
+ [0 0 0 0 0 0]
+ [7 0 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.0, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [2, 3]
+new obj position(0.8333333333333334, 0.3333333333333333)
+Arm 0: Mean=0.0243, Std=0.0050 -> Score=0.0297
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0019
+count(0, 8)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [7 0 0 0 0 0]
+ [0 0 3 0 0 0]
+ [0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0222, Std=0.0043 -> Score=0.0254
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0086
+count(0, 9)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [7 0 0 0 0 0]
+ [0 0 9 0 0 0]
+ [0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 4]
+new obj position(0.5, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0208, Std=0.0038 -> Score=0.0155
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0019
+count(0, 10)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [7 0 0 0 0 0]
+ [0 0 4 0 0 0]
+ [0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.3333333333333333, 0.16666666666666666)
+Arm 0: Mean=0.0198, Std=0.0035 -> Score=0.0168
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0045
+count(0, 11)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [4 0 0 0 0 0]
+ [0 0 4 0 0 0]
+ [0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [5, 0]
+new obj position(0.8333333333333334, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [4, 0]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [4, 5]
+new obj position(0.6666666666666666, 0.8333333333333334)
+Arm 0: Mean=0.0208, Std=0.0031 -> Score=0.0233
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0081
+count(0, 12)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [4 0 0 0 0 0]
+ [0 0 4 0 0 0]
+ [0 0 0 0 7 0]
+ [0 7 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0239, Std=0.0032 -> Score=0.0232
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0045
+count(0, 13)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [4 0 0 0 0 0]
+ [0 0 9 0 0 0]
+ [0 0 0 0 7 0]
+ [0 7 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 4]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.0, 0.5)
+target_shape: (6, 6) , new pos_values: [2, 0]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0264, Std=0.0031 -> Score=0.0237
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0066
+count(0, 14)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [4 0 0 0 0 0]
+ [0 0 9 0 0 0]
+ [0 0 0 0 7 0]
+ [0 7 0 0 0 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.8333333333333334, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [0, 1]
+new obj position(0.8333333333333334, 0.8333333333333334)
+Arm 0: Mean=0.0297, Std=0.0033 -> Score=0.0313
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0075
+count(0, 15)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [4 0 0 0 0 0]
+ [0 0 9 0 0 0]
+ [0 0 0 0 0 0]
+ [0 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [5, 2]
+new obj position(0.8333333333333334, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [5, 0]
+new obj position(0.6666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0330, Std=0.0035 -> Score=0.0315
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0058
+count(0, 16)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [7 0 9 0 0 0]
+ [0 0 0 0 0 0]
+ [0 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [5, 4]
+new obj position(0.5, 0.6666666666666666)
+Arm 0: Mean=0.0337, Std=0.0034 -> Score=0.0374
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0070
+count(0, 17)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [7 0 0 4 0 0]
+ [0 0 0 0 0 0]
+ [0 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.6666666666666666, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [2, 2]
+new obj position(0.3333333333333333, 0.16666666666666666)
+Arm 0: Mean=0.0337, Std=0.0031 -> Score=0.0335
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0007
+count(0, 18)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [4 0 0 0 0 0]
+ [7 0 0 4 0 0]
+ [0 0 0 0 0 0]
+ [0 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [5, 2]
+new obj position(0.8333333333333334, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [1, 0]
+new obj position(0.16666666666666666, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.3333333333333333)
+Arm 0: Mean=0.0356, Std=0.0031 -> Score=0.0362
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0098
+count(0, 19)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [4 0 0 0 0 0]
+ [7 0 0 4 0 0]
+ [0 0 0 0 0 0]
+ [0 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [5, 5]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [5, 2]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+Arm 0: Mean=0.0365, Std=0.0030 -> Score=0.0357
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0061
+count(0, 20)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [3 0 0 0 0 0]
+ [7 0 0 4 0 0]
+ [0 0 0 0 0 0]
+ [0 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [5, 0]
+new obj position(0.0, 0.0)
+Arm 0: Mean=0.0368, Std=0.0028 -> Score=0.0383
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0042
+count(0, 21)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [3 0 0 0 0 0]
+ [7 0 0 4 0 0]
+ [0 0 0 0 0 0]
+ [0 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.16666666666666666, 0.0)
+Arm 0: Mean=0.0367, Std=0.0027 -> Score=0.0415
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0055
+count(0, 22)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [3 0 0 0 0 0]
+ [7 0 0 4 0 0]
+ [0 0 0 0 0 0]
+ [0 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.16666666666666666, 0.0)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+Arm 0: Mean=0.0362, Std=0.0026 -> Score=0.0347
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0008
+count(0, 23)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [3 0 0 0 0 0]
+ [7 0 0 4 0 0]
+ [0 0 0 0 0 0]
+ [0 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [1, 2]
+new obj position(1.0, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.0, 0.5)
+target_shape: (6, 6) , new pos_values: [1, 5]
+new obj position(0.3333333333333333, 0.0)
+Arm 0: Mean=0.0361, Std=0.0024 -> Score=0.0428
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0058
+count(0, 24)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [7 0 0 4 0 0]
+ [0 0 0 0 0 0]
+ [0 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0367, Std=0.0024 -> Score=0.0362
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0057
+count(0, 25)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [9 0 0 4 0 0]
+ [0 0 0 0 0 0]
+ [0 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [0, 4]
+new obj position(0.8333333333333334, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [2, 2]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0376, Std=0.0023 -> Score=0.0356
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0066
+count(0, 26)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 0 0 0 0 0]
+ [9 0 3 4 0 0]
+ [0 0 0 0 0 0]
+ [0 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 4]
+new obj position(0.8333333333333334, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [0, 2]
+new obj position(0.3333333333333333, 0.3333333333333333)
+Arm 0: Mean=0.0383, Std=0.0022 -> Score=0.0364
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0067
+count(0, 27)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [9 0 3 4 0 0]
+ [0 0 0 0 0 0]
+ [0 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.16666666666666666, 0.0)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.3333333333333333)
+Arm 0: Mean=0.0394, Std=0.0022 -> Score=0.0386
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0015
+count(0, 28)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [9 0 3 4 0 0]
+ [0 3 0 0 0 0]
+ [0 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [5, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.3333333333333333)
+Arm 0: Mean=0.0403, Std=0.0022 -> Score=0.0408
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0037
+count(0, 29)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [9 0 3 4 0 0]
+ [0 3 0 0 0 0]
+ [0 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [1, 2]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 5]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.0)
+Arm 0: Mean=0.0406, Std=0.0021 -> Score=0.0384
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0071
+count(0, 30)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [9 0 3 4 0 0]
+ [0 3 0 0 0 0]
+ [0 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 4]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(1.0, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.3333333333333333)
+Arm 0: Mean=0.0409, Std=0.0020 -> Score=0.0385
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0029
+count(0, 31)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [9 0 3 4 0 0]
+ [0 3 0 0 0 0]
+ [0 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(1.0, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(1.0, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+Arm 0: Mean=0.0417, Std=0.0020 -> Score=0.0424
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0011
+count(0, 32)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [9 0 3 4 0 0]
+ [0 3 0 0 0 0]
+ [4 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [5, 4]
+new obj position(0.8333333333333334, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [2, 0]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 2]
+new obj position(0.8333333333333334, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.5)
+Arm 0: Mean=0.0421, Std=0.0020 -> Score=0.0433
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=-0.0029
+count(0, 33)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [9 0 0 4 0 0]
+ [0 3 7 0 0 0]
+ [4 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 5]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 5]
+new obj position(0.5, 0.6666666666666666)
+Arm 0: Mean=0.0421, Std=0.0019 -> Score=0.0379
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=-0.0015
+count(0, 34)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [9 0 0 4 0 0]
+ [0 3 7 0 0 0]
+ [4 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(1.0, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.0, 0.5)
+target_shape: (6, 6) , new pos_values: [1, 0]
+new obj position(0.0, 0.5)
+Arm 0: Mean=0.0426, Std=0.0019 -> Score=0.0438
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0043
+count(0, 35)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [9 0 0 4 0 0]
+ [0 3 7 0 0 0]
+ [4 7 0 0 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [0, 2]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 0]
+new obj position(0.8333333333333334, 0.5)
+target_shape: (6, 6) , new pos_values: [5, 4]
+new obj position(0.8333333333333334, 0.6666666666666666)
+Arm 0: Mean=0.0432, Std=0.0018 -> Score=0.0437
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0057
+count(0, 36)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [9 0 0 4 0 0]
+ [0 3 7 0 0 0]
+ [4 7 0 7 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(1.0, 0.0)
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.0, 0.0)
+Arm 0: Mean=0.0436, Std=0.0018 -> Score=0.0444
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0062
+count(0, 37)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [9 0 0 4 0 0]
+ [0 3 7 0 0 0]
+ [4 7 0 7 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [0, 5]
+new obj position(0.8333333333333334, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0437, Std=0.0018 -> Score=0.0454
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0068
+count(0, 38)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [0 0 0 4 0 0]
+ [7 3 7 0 0 0]
+ [4 7 0 7 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.8333333333333334, 0.3333333333333333)
+Arm 0: Mean=0.0433, Std=0.0017 -> Score=0.0431
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0006
+count(0, 39)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [0 0 0 4 0 0]
+ [7 3 7 0 0 0]
+ [4 7 0 7 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(1.0, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.8333333333333334)
+Arm 0: Mean=0.0428, Std=0.0017 -> Score=0.0429
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0037
+count(0, 40)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [0 0 0 4 0 0]
+ [7 3 7 0 0 0]
+ [4 7 0 7 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 5]
+new obj position(0.3333333333333333, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [2, 4]
+new obj position(0.8333333333333334, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.8333333333333334, 0.3333333333333333)
+Arm 0: Mean=0.0424, Std=0.0017 -> Score=0.0415
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0040
+count(0, 41)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [0 0 0 4 0 0]
+ [7 3 7 0 0 0]
+ [4 7 0 7 7 0]
+ [0 0 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [5, 3]
+new obj position(0.8333333333333334, 0.5)
+target_shape: (6, 6) , new pos_values: [1, 3]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 4]
+new obj position(0.8333333333333334, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 5]
+new obj position(1.0, 0.3333333333333333)
+Arm 0: Mean=0.0420, Std=0.0016 -> Score=0.0409
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0050
+count(0, 42)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 0 0 0 0]
+ [0 7 0 0 0 0]
+ [0 0 0 4 0 0]
+ [7 3 7 0 0 0]
+ [4 0 0 7 7 0]
+ [0 7 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 3]
+new obj position(0.16666666666666666, 0.5)
+Arm 0: Mean=0.0418, Std=0.0016 -> Score=0.0427
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0066
+count(0, 43)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [0 7 0 0 0 0]
+ [0 0 0 4 0 0]
+ [7 3 7 0 0 0]
+ [4 0 0 7 7 0]
+ [0 7 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.8333333333333334, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [0, 1]
+new obj position(0.0, 0.5)
+target_shape: (6, 6) , new pos_values: [4, 0]
+new obj position(0.6666666666666666, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.6666666666666666, 0.5)
+Arm 0: Mean=0.0422, Std=0.0016 -> Score=0.0408
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0003
+count(0, 44)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [0 7 0 0 0 0]
+ [0 0 0 4 0 0]
+ [7 3 7 0 0 0]
+ [4 0 0 7 7 0]
+ [0 7 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [5, 2]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 5]
+new obj position(0.5, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.3333333333333333)
+Arm 0: Mean=0.0427, Std=0.0015 -> Score=0.0410
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0017
+count(0, 45)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [0 7 0 0 0 0]
+ [0 0 0 4 0 0]
+ [7 3 7 0 0 0]
+ [4 0 0 7 7 0]
+ [0 7 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(1.0, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0430, Std=0.0015 -> Score=0.0445
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0026
+count(0, 46)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [0 7 0 0 0 0]
+ [7 0 0 4 0 0]
+ [7 3 7 0 0 0]
+ [4 0 0 7 7 0]
+ [0 7 0 0 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(1.0, 0.6666666666666666)
+Arm 0: Mean=0.0433, Std=0.0015 -> Score=0.0410
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0010
+count(0, 47)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [0 7 0 0 0 0]
+ [7 0 0 4 0 0]
+ [7 3 7 0 0 0]
+ [4 0 0 0 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.6666666666666666)
+Arm 0: Mean=0.0436, Std=0.0015 -> Score=0.0441
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0041
+count(0, 48)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [0 7 0 0 0 0]
+ [7 0 0 4 0 0]
+ [7 3 7 0 0 0]
+ [4 0 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.6666666666666666, 0.5)
+Arm 0: Mean=0.0438, Std=0.0014 -> Score=0.0449
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=-0.0006
+count(0, 49)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [0 7 0 0 0 0]
+ [7 0 0 4 0 0]
+ [7 3 7 0 0 0]
+ [4 0 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 0]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [1, 3]
+new obj position(0.8333333333333334, 0.0)
+Arm 0: Mean=0.0441, Std=0.0014 -> Score=0.0441
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0073
+count(0, 50)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [0 7 0 0 0 0]
+ [7 0 0 4 0 0]
+ [7 3 7 0 0 0]
+ [0 0 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.8333333333333334, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.3333333333333333)
+Arm 0: Mean=0.0445, Std=0.0014 -> Score=0.0446
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0133
+count(0, 51)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [0 7 0 0 0 0]
+ [7 3 0 4 0 0]
+ [7 3 7 0 0 0]
+ [0 0 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 3]
+new obj position(0.6666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [5, 2]
+new obj position(0.16666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 5]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.3333333333333333)
+Arm 0: Mean=0.0447, Std=0.0014 -> Score=0.0445
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0049
+count(0, 52)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [0 7 0 0 0 0]
+ [7 3 0 4 0 0]
+ [7 3 7 0 0 0]
+ [0 0 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [4, 3]
+new obj position(0.8333333333333334, 0.3333333333333333)
+Arm 0: Mean=0.0449, Std=0.0014 -> Score=0.0448
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0056
+count(0, 53)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [0 7 0 0 0 0]
+ [7 3 0 4 0 0]
+ [7 3 7 0 0 0]
+ [0 4 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [5, 5]
+new obj position(1.0, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.16666666666666666, 0.5)
+Arm 0: Mean=0.0451, Std=0.0013 -> Score=0.0436
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0020
+count(0, 54)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [0 7 0 0 0 0]
+ [7 3 0 4 0 0]
+ [7 3 7 0 0 0]
+ [0 4 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.0)
+target_shape: (6, 6) , new pos_values: [4, 0]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [2, 3]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0456, Std=0.0013 -> Score=0.0476
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0030
+count(0, 55)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [0 7 0 0 0 0]
+ [7 3 9 4 0 0]
+ [7 3 7 0 0 0]
+ [0 4 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [0, 2]
+new obj position(0.6666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0463, Std=0.0014 -> Score=0.0473
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0101
+count(0, 56)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [0 7 0 0 0 0]
+ [7 3 9 4 0 0]
+ [7 3 7 0 0 0]
+ [0 4 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [1, 4]
+new obj position(0.5, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 5]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.6666666666666666, 0.0)
+Arm 0: Mean=0.0470, Std=0.0014 -> Score=0.0466
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0065
+count(0, 57)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [0 7 0 0 0 0]
+ [7 3 9 4 0 0]
+ [7 3 7 0 0 0]
+ [0 4 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 5]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0478, Std=0.0014 -> Score=0.0500
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0002
+count(0, 58)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [0 7 0 0 0 0]
+ [7 3 9 4 0 0]
+ [3 3 7 0 0 0]
+ [0 4 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 1]
+new obj position(0.6666666666666666, -0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 0]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [4, 4]
+new obj position(0.5, 0.3333333333333333)
+Arm 0: Mean=0.0491, Std=0.0015 -> Score=0.0491
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0069
+count(0, 59)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [0 7 0 0 0 0]
+ [7 3 9 4 0 0]
+ [3 3 7 0 0 0]
+ [0 4 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [5, 2]
+new obj position(0.6666666666666666, 0.0)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 5]
+new obj position(0.8333333333333334, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [0, 3]
+new obj position(0.3333333333333333, 0.16666666666666666)
+Arm 0: Mean=0.0502, Std=0.0016 -> Score=0.0492
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0017
+count(0, 60)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [4 7 0 0 0 0]
+ [7 3 9 4 0 0]
+ [3 3 7 0 0 0]
+ [0 4 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 2]
+new obj position(0.8333333333333334, 0.0)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 4]
+new obj position(0.0, 0.6666666666666666)
+Arm 0: Mean=0.0515, Std=0.0017 -> Score=0.0513
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=-0.0014
+count(0, 61)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [4 7 0 0 0 0]
+ [7 3 9 4 0 0]
+ [3 3 7 0 0 0]
+ [0 4 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0529, Std=0.0018 -> Score=0.0515
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0049
+count(0, 62)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [4 7 0 0 0 0]
+ [3 3 9 4 0 0]
+ [3 3 7 0 0 0]
+ [0 4 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 0]
+new obj position(0.16666666666666666, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 5]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+Arm 0: Mean=0.0541, Std=0.0019 -> Score=0.0537
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0041
+count(0, 63)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 0 0 0]
+ [3 3 9 4 0 0]
+ [3 3 7 0 0 0]
+ [0 4 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.0)
+target_shape: (6, 6) , new pos_values: [0, 0]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0551, Std=0.0019 -> Score=0.0552
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=-0.0063
+count(0, 64)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 0 0 0]
+ [3 3 9 4 0 0]
+ [7 3 7 0 0 0]
+ [0 4 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0557, Std=0.0019 -> Score=0.0555
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0006
+count(0, 65)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 0 0 0]
+ [3 3 9 4 0 0]
+ [7 3 7 0 0 0]
+ [0 4 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.8333333333333334, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0561, Std=0.0019 -> Score=0.0584
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0032
+count(0, 66)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 0 0 0]
+ [3 3 3 4 0 0]
+ [7 3 7 0 0 0]
+ [0 4 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [5, 2]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.3333333333333333, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.6666666666666666, 0.5)
+Arm 0: Mean=0.0562, Std=0.0019 -> Score=0.0586
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0077
+count(0, 67)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 0 0 0]
+ [3 3 3 4 0 0]
+ [7 3 7 0 0 0]
+ [0 4 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.6666666666666666, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 4]
+new obj position(0.3333333333333333, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 4]
+new obj position(0.8333333333333334, 0.16666666666666666)
+Arm 0: Mean=0.0563, Std=0.0019 -> Score=0.0586
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0036
+count(0, 68)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 0 0 0]
+ [3 3 3 4 0 0]
+ [0 3 7 0 0 0]
+ [7 4 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [0, 5]
+new obj position(0.0, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [2, 3]
+new obj position(0.3333333333333333, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.6666666666666666)
+Arm 0: Mean=0.0568, Std=0.0018 -> Score=0.0554
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0032
+count(0, 69)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 3 4 0 0]
+ [0 3 7 0 0 0]
+ [7 4 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.8333333333333334)
+Arm 0: Mean=0.0573, Std=0.0018 -> Score=0.0559
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0052
+count(0, 70)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 3 4 0 0]
+ [0 3 7 0 7 0]
+ [7 4 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 5]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 2]
+new obj position(0.6666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [5, 1]
+new obj position(0.8333333333333334, 0.3333333333333333)
+Arm 0: Mean=0.0578, Std=0.0018 -> Score=0.0579
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0010
+count(0, 71)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 3 4 0 0]
+ [0 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 3]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0582, Std=0.0018 -> Score=0.0604
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0039
+count(0, 72)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 7 4 0 0]
+ [0 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 4]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.3333333333333333, 0.6666666666666666)
+Arm 0: Mean=0.0586, Std=0.0018 -> Score=0.0571
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0026
+count(0, 73)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 7 4 0 0]
+ [0 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.8333333333333334, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.8333333333333334, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.16666666666666666, 0.0)
+Arm 0: Mean=0.0589, Std=0.0018 -> Score=0.0605
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0023
+count(0, 74)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 7 4 0 0]
+ [0 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [4, 3]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.8333333333333334, 0.0)
+Arm 0: Mean=0.0594, Std=0.0018 -> Score=0.0576
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0041
+count(0, 75)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 7 4 0 0]
+ [0 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 3]
+new obj position(0.3333333333333333, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.3333333333333333)
+Arm 0: Mean=0.0598, Std=0.0018 -> Score=0.0612
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0080
+count(0, 76)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 7 4 0 0]
+ [0 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 4]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0602, Std=0.0017 -> Score=0.0592
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0089
+count(0, 77)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 7 4 0 0]
+ [0 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.16666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [1, 3]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 0]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0606, Std=0.0017 -> Score=0.0580
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0052
+count(0, 78)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 9 4 0 0]
+ [0 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 5]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.8333333333333334, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0613, Std=0.0017 -> Score=0.0604
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0035
+count(0, 79)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [7 3 9 4 0 0]
+ [0 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 0]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.8333333333333334, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.8333333333333334, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0620, Std=0.0018 -> Score=0.0614
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0053
+count(0, 80)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [7 3 9 4 0 0]
+ [7 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0624, Std=0.0017 -> Score=0.0648
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0051
+count(0, 81)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [7 3 9 4 0 0]
+ [7 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.0, 0.5)
+target_shape: (6, 6) , new pos_values: [2, 4]
+new obj position(0.3333333333333333, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0630, Std=0.0018 -> Score=0.0615
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0068
+count(0, 82)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [7 3 9 4 0 0]
+ [7 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [1, 3]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [3, 4]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.8333333333333334)
+Arm 0: Mean=0.0636, Std=0.0018 -> Score=0.0671
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0070
+count(0, 83)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [7 3 9 4 0 0]
+ [7 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [2, 3]
+new obj position(0.0, 0.0)
+Arm 0: Mean=0.0642, Std=0.0018 -> Score=0.0645
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0071
+count(0, 84)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [7 3 9 4 0 0]
+ [7 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.8333333333333334, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.16666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0648, Std=0.0018 -> Score=0.0648
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0100
+count(0, 85)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 9 4 0 0]
+ [7 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.3333333333333333, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0654, Std=0.0018 -> Score=0.0677
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0054
+count(0, 86)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 9 4 0 0]
+ [7 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [1, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.8333333333333334, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [1, 3]
+new obj position(0.3333333333333333, 0.6666666666666666)
+Arm 0: Mean=0.0659, Std=0.0018 -> Score=0.0672
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0098
+count(0, 87)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 9 4 0 0]
+ [7 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.16666666666666666, 0.0)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+Arm 0: Mean=0.0665, Std=0.0018 -> Score=0.0655
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0055
+count(0, 88)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 9 4 0 0]
+ [7 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [5, 3]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [0, 0]
+new obj position(0.3333333333333333, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 4]
+new obj position(0.3333333333333333, 0.3333333333333333)
+Arm 0: Mean=0.0670, Std=0.0018 -> Score=0.0672
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0017
+count(0, 89)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 9 4 0 0]
+ [7 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 3]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0677, Std=0.0018 -> Score=0.0681
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0057
+count(0, 90)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 9 4 0 0]
+ [3 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [0, 1]
+new obj position(0.3333333333333333, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [2, 3]
+new obj position(0.5, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 4]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0684, Std=0.0018 -> Score=0.0695
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0036
+count(0, 91)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 3 4 0 0]
+ [3 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 0]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0688, Std=0.0018 -> Score=0.0699
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0022
+count(0, 92)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 3 4 0 0]
+ [3 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [5, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 4]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [2, 4]
+new obj position(0.16666666666666666, -0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 2]
+new obj position(0.8333333333333334, 0.8333333333333334)
+Arm 0: Mean=0.0693, Std=0.0018 -> Score=0.0661
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0028
+count(0, 93)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 3 4 0 0]
+ [3 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0698, Std=0.0018 -> Score=0.0696
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0010
+count(0, 94)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 3 4 0 0]
+ [7 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [2, 3]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0699, Std=0.0018 -> Score=0.0705
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0039
+count(0, 95)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [4 3 3 4 0 0]
+ [7 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.6666666666666666, 0.3333333333333333)
+Arm 0: Mean=0.0700, Std=0.0017 -> Score=0.0697
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0028
+count(0, 96)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [4 3 3 4 0 0]
+ [7 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0702, Std=0.0017 -> Score=0.0702
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0040
+count(0, 97)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [4 3 3 4 0 0]
+ [7 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0703, Std=0.0017 -> Score=0.0692
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0011
+count(0, 98)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[0 0 7 0 0 0]
+ [3 7 0 9 0 0]
+ [3 3 3 4 0 0]
+ [7 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [1, 2]
+new obj position(0.6666666666666666, 0.0)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [1, 4]
+new obj position(0.16666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0705, Std=0.0017 -> Score=0.0699
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0053
+count(0, 99)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 0 9 0 0]
+ [3 3 3 4 0 0]
+ [7 3 7 0 7 0]
+ [7 3 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [4, 0]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.8333333333333334, 0.3333333333333333)
+Arm 0: Mean=0.0706, Std=0.0017 -> Score=0.0692
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0070
+count(0, 100)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 0 9 0 0]
+ [3 3 3 4 0 0]
+ [7 3 7 0 7 0]
+ [7 7 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.6666666666666666, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0708, Std=0.0017 -> Score=0.0697
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0074
+count(0, 101)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 0 9 0 0]
+ [3 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [1, 4]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.8333333333333334, 0.16666666666666666)
+Arm 0: Mean=0.0710, Std=0.0017 -> Score=0.0714
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=-0.0029
+count(0, 102)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 0 9 0 0]
+ [3 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [0, 3]
+new obj position(0.16666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [5, 5]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0711, Std=0.0016 -> Score=0.0689
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0061
+count(0, 103)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 0 9 0 0]
+ [4 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 2]
+new obj position(0.5, 0.3333333333333333)
+Arm 0: Mean=0.0712, Std=0.0016 -> Score=0.0717
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0027
+count(0, 104)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 0 9 0 0]
+ [4 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [1, 4]
+new obj position(0.8333333333333334, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 4]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.0)
+Arm 0: Mean=0.0714, Std=0.0016 -> Score=0.0677
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0031
+count(0, 105)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 0 9 0 0]
+ [0 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [1, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.3333333333333333)
+Arm 0: Mean=0.0716, Std=0.0016 -> Score=0.0709
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=-0.0001
+count(0, 106)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 0 9 0 0]
+ [0 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 4]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0717, Std=0.0016 -> Score=0.0721
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0021
+count(0, 107)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 0 9 0 0]
+ [7 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.0, 0.0)
+target_shape: (6, 6) , new pos_values: [5, 3]
+new obj position(0.8333333333333334, 0.5)
+target_shape: (6, 6) , new pos_values: [1, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, -0.16666666666666666)
+Arm 0: Mean=0.0718, Std=0.0016 -> Score=0.0719
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0024
+count(0, 108)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 0 9 0 0]
+ [7 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [1, 4]
+new obj position(0.16666666666666666, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 3]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.3333333333333333)
+Arm 0: Mean=0.0719, Std=0.0016 -> Score=0.0715
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0011
+count(0, 109)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 0 9 0 0]
+ [7 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 0]
+new obj position(0.6666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.0)
+target_shape: (6, 6) , new pos_values: [1, 1]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [2, 0]
+new obj position(0.3333333333333333, 0.5)
+Arm 0: Mean=0.0721, Std=0.0015 -> Score=0.0720
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0074
+count(0, 110)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 4 9 0 0]
+ [7 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 5]
+new obj position(0.5, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 5]
+new obj position(0.3333333333333333, 0.6666666666666666)
+Arm 0: Mean=0.0724, Std=0.0015 -> Score=0.0726
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0017
+count(0, 111)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 4 9 0 0]
+ [7 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 2]
+new obj position(0.3333333333333333, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [1, 5]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 5]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [2, 4]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0729, Std=0.0015 -> Score=0.0734
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=-0.0003
+count(0, 112)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 4 9 0 0]
+ [9 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 2]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.8333333333333334, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0734, Std=0.0015 -> Score=0.0725
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0067
+count(0, 113)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 4 9 0 0]
+ [9 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 5]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 4]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0739, Std=0.0016 -> Score=0.0747
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0093
+count(0, 114)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 4 9 0 0]
+ [9 3 3 4 0 0]
+ [7 3 7 0 7 0]
+ [7 7 0 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.8333333333333334, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.8333333333333334, 0.5)
+Arm 0: Mean=0.0744, Std=0.0016 -> Score=0.0752
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0059
+count(0, 115)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 4 9 0 0]
+ [9 3 3 4 0 0]
+ [7 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [0, 4]
+new obj position(0.16666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.5)
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 1]
+new obj position(0.0, 0.16666666666666666)
+Arm 0: Mean=0.0750, Std=0.0016 -> Score=0.0749
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0068
+count(0, 116)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 4 9 0 0]
+ [9 3 3 4 0 0]
+ [7 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 5]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+Arm 0: Mean=0.0755, Std=0.0016 -> Score=0.0762
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=-0.0027
+count(0, 117)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 4 9 0 0]
+ [9 3 3 4 0 0]
+ [7 3 7 0 7 0]
+ [4 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [4, 5]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0758, Std=0.0016 -> Score=0.0781
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0054
+count(0, 118)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 4 9 0 0]
+ [3 3 3 4 0 0]
+ [7 3 7 0 7 0]
+ [4 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 2]
+new obj position(0.16666666666666666, -0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.16666666666666666, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 2]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0758, Std=0.0016 -> Score=0.0758
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0108
+count(0, 119)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 4 9 0 0]
+ [7 3 3 4 0 0]
+ [7 3 7 0 7 0]
+ [4 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [0, 1]
+new obj position(0.0, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 5]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0759, Std=0.0016 -> Score=0.0760
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0032
+count(0, 120)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 4 9 0 0]
+ [7 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [4 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.0, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 3]
+new obj position(0.3333333333333333, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [3, 4]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0759, Std=0.0015 -> Score=0.0767
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0047
+count(0, 121)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 4 9 0 0]
+ [7 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [4 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 3]
+new obj position(0.6666666666666666, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [5, 3]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0760, Std=0.0015 -> Score=0.0755
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0017
+count(0, 122)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 4 9 0 0]
+ [7 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [4 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.0, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.0)
+Arm 0: Mean=0.0760, Std=0.0015 -> Score=0.0765
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0063
+count(0, 123)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 4 9 0 0]
+ [0 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [4 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0761, Std=0.0015 -> Score=0.0783
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0037
+count(0, 124)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 0 0 0]
+ [0 7 4 9 0 0]
+ [3 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [4 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.8333333333333334, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [1, 4]
+new obj position(0.16666666666666666, 0.6666666666666666)
+Arm 0: Mean=0.0762, Std=0.0015 -> Score=0.0767
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0049
+count(0, 125)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [3 3 3 4 0 0]
+ [9 3 7 0 7 0]
+ [4 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.8333333333333334, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [2, 3]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.16666666666666666, 0.0)
+target_shape: (6, 6) , new pos_values: [2, 4]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0762, Std=0.0015 -> Score=0.0755
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0059
+count(0, 126)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [3 3 7 4 0 0]
+ [9 3 7 0 7 0]
+ [4 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0763, Std=0.0015 -> Score=0.0750
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=-0.0007
+count(0, 127)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [3 3 7 4 0 0]
+ [4 3 7 0 7 0]
+ [4 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 5]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 4]
+new obj position(0.5, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, -0.16666666666666666)
+Arm 0: Mean=0.0763, Std=0.0015 -> Score=0.0785
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0065
+count(0, 128)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [3 3 7 4 0 0]
+ [4 3 7 0 7 0]
+ [4 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [5, 0]
+new obj position(0.8333333333333334, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0764, Std=0.0014 -> Score=0.0789
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0099
+count(0, 129)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [3 3 4 4 0 0]
+ [4 3 7 0 7 0]
+ [4 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [0, 3]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0765, Std=0.0014 -> Score=0.0794
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0006
+count(0, 130)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [4 3 4 4 0 0]
+ [4 3 7 0 7 0]
+ [4 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 0]
+new obj position(0.8333333333333334, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0766, Std=0.0014 -> Score=0.0785
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0049
+count(0, 131)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [3 3 4 4 0 0]
+ [4 3 7 0 7 0]
+ [4 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 5]
+new obj position(0.0, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [4, 5]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0767, Std=0.0014 -> Score=0.0778
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0033
+count(0, 132)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [7 3 4 4 0 0]
+ [4 3 7 0 7 0]
+ [4 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.6666666666666666, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 3]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [0, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+Arm 0: Mean=0.0768, Std=0.0014 -> Score=0.0775
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0072
+count(0, 133)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [7 3 4 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.16666666666666666, 0.0)
+Arm 0: Mean=0.0770, Std=0.0014 -> Score=0.0747
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0047
+count(0, 134)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [7 3 4 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.16666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0773, Std=0.0014 -> Score=0.0748
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0067
+count(0, 135)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [7 3 4 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.8333333333333334, 0.5)
+target_shape: (6, 6) , new pos_values: [2, 3]
+new obj position(0.0, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0775, Std=0.0014 -> Score=0.0778
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0122
+count(0, 136)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [3 3 4 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 3]
+new obj position(0.6666666666666666, -0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 4]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 3]
+new obj position(0.0, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.3333333333333333)
+Arm 0: Mean=0.0778, Std=0.0014 -> Score=0.0791
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0026
+count(0, 137)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [3 9 4 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.16666666666666666, 0.0)
+target_shape: (6, 6) , new pos_values: [2, 5]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 2]
+new obj position(0.16666666666666666, 0.5)
+Arm 0: Mean=0.0780, Std=0.0014 -> Score=0.0779
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0042
+count(0, 138)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [3 9 4 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [0, 4]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.0, 1.0)
+target_shape: (6, 6) , new pos_values: [5, 0]
+new obj position(0.8333333333333334, 0.0)
+Arm 0: Mean=0.0782, Std=0.0014 -> Score=0.0784
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0088
+count(0, 139)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [3 9 4 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [1, 1]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 0]
+new obj position(0.0, 0.5)
+target_shape: (6, 6) , new pos_values: [2, 0]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0785, Std=0.0014 -> Score=0.0755
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0064
+count(0, 140)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [3 9 4 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 3]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0787, Std=0.0014 -> Score=0.0791
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0094
+count(0, 141)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [4 9 4 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.16666666666666666, 0.5)
+Arm 0: Mean=0.0789, Std=0.0014 -> Score=0.0789
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0078
+count(0, 142)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [4 9 4 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 2]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0791, Std=0.0014 -> Score=0.0794
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0091
+count(0, 143)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [0 7 4 9 0 0]
+ [4 9 4 4 0 0]
+ [7 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 4]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+Arm 0: Mean=0.0794, Std=0.0014 -> Score=0.0793
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0051
+count(0, 144)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [4 9 4 4 0 0]
+ [7 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [0, 4]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [4, 3]
+new obj position(0.6666666666666666, 0.0)
+target_shape: (6, 6) , new pos_values: [5, 5]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 5]
+new obj position(0.5, 0.0)
+Arm 0: Mean=0.0798, Std=0.0014 -> Score=0.0790
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0032
+count(0, 145)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [0 9 4 4 0 0]
+ [7 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 1]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [4, 0]
+new obj position(0.16666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 5]
+new obj position(0.8333333333333334, 0.16666666666666666)
+Arm 0: Mean=0.0803, Std=0.0014 -> Score=0.0769
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0070
+count(0, 146)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [0 9 4 4 0 0]
+ [7 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 3]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [0, 2]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 4]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0807, Std=0.0014 -> Score=0.0792
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0087
+count(0, 147)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [0 9 4 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [5, 2]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 2]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0811, Std=0.0014 -> Score=0.0792
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0029
+count(0, 148)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [0 9 4 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [0, 1]
+new obj position(0.0, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.5)
+Arm 0: Mean=0.0816, Std=0.0014 -> Score=0.0814
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0032
+count(0, 149)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [0 9 4 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.16666666666666666, 0.5)
+Arm 0: Mean=0.0819, Std=0.0014 -> Score=0.0827
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0031
+count(0, 150)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [0 9 4 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 0]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0823, Std=0.0014 -> Score=0.0844
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0043
+count(0, 151)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [3 9 4 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 4]
+new obj position(0.5, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [5, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0827, Std=0.0014 -> Score=0.0821
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0109
+count(0, 152)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [3 9 7 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [5, 0]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 0]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 0]
+new obj position(0.8333333333333334, 0.5)
+Arm 0: Mean=0.0830, Std=0.0014 -> Score=0.0824
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0052
+count(0, 153)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [3 9 7 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [1, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 4]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0833, Std=0.0014 -> Score=0.0837
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0092
+count(0, 154)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [7 9 7 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 4]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0837, Std=0.0014 -> Score=0.0850
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0053
+count(0, 155)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [4 9 7 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [1, 4]
+new obj position(0.8333333333333334, -0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 5]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0841, Std=0.0014 -> Score=0.0831
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0042
+count(0, 156)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [4 9 7 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 5]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0845, Std=0.0014 -> Score=0.0828
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0045
+count(0, 157)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [4 9 7 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 4]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 5]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 5]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0848, Std=0.0014 -> Score=0.0845
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0077
+count(0, 158)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [4 9 9 4 0 0]
+ [9 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 5]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0853, Std=0.0014 -> Score=0.0875
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0060
+count(0, 159)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [4 9 9 4 0 0]
+ [7 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 0]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0858, Std=0.0014 -> Score=0.0886
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0015
+count(0, 160)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [4 9 9 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.0, 0.6666666666666666)
+Arm 0: Mean=0.0863, Std=0.0015 -> Score=0.0862
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0008
+count(0, 161)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [4 9 9 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.0, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [4, 3]
+new obj position(0.6666666666666666, 0.5)
+Arm 0: Mean=0.0868, Std=0.0015 -> Score=0.0866
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0049
+count(0, 162)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [4 9 9 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.0, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 0]
+new obj position(0.5, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0873, Std=0.0015 -> Score=0.0885
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=-0.0007
+count(0, 163)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [7 9 9 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 1]
+new obj position(0.3333333333333333, 0.3333333333333333)
+Arm 0: Mean=0.0878, Std=0.0015 -> Score=0.0898
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0010
+count(0, 164)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [7 9 9 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [0, 5]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [1, 0]
+new obj position(0.3333333333333333, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 2]
+new obj position(0.3333333333333333, 0.16666666666666666)
+Arm 0: Mean=0.0883, Std=0.0015 -> Score=0.0883
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0079
+count(0, 165)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [7 9 9 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [1, 2]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 5]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0887, Std=0.0015 -> Score=0.0871
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0062
+count(0, 166)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [7 9 3 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.8333333333333334, 0.3333333333333333)
+Arm 0: Mean=0.0890, Std=0.0015 -> Score=0.0908
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0050
+count(0, 167)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [7 9 3 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.16666666666666666, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.5)
+target_shape: (6, 6) , new pos_values: [4, 2]
+new obj position(0.5, 0.3333333333333333)
+Arm 0: Mean=0.0893, Std=0.0015 -> Score=0.0883
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0046
+count(0, 168)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [7 9 3 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.3333333333333333, 0.5)
+target_shape: (6, 6) , new pos_values: [0, 0]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.0, 0.8333333333333334)
+Arm 0: Mean=0.0896, Std=0.0015 -> Score=0.0905
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0045
+count(0, 169)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [7 9 3 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.3333333333333333)
+Arm 0: Mean=0.0899, Std=0.0015 -> Score=0.0891
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0068
+count(0, 170)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [7 9 3 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [1, 3]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0902, Std=0.0015 -> Score=0.0874
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0076
+count(0, 171)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [4 9 3 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [5, 1]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0905, Std=0.0015 -> Score=0.0899
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0056
+count(0, 172)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [7 9 3 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 5]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 3]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [0, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0908, Std=0.0015 -> Score=0.0894
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0068
+count(0, 173)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [4 9 3 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [5, 2]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+Arm 0: Mean=0.0911, Std=0.0015 -> Score=0.0915
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0104
+count(0, 174)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [4 9 3 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.5)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0913, Std=0.0015 -> Score=0.0892
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0071
+count(0, 175)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [4 9 3 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.6666666666666666, 0.5)
+Arm 0: Mean=0.0916, Std=0.0015 -> Score=0.0906
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0064
+count(0, 176)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [4 9 3 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 4 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.6666666666666666)
+Arm 0: Mean=0.0919, Std=0.0015 -> Score=0.0921
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0083
+count(0, 177)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [4 9 3 4 0 0]
+ [4 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.0, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.0, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0922, Std=0.0015 -> Score=0.0936
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0004
+count(0, 178)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [4 9 3 4 0 0]
+ [7 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 1]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0926, Std=0.0015 -> Score=0.0918
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0086
+count(0, 179)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [4 9 3 4 0 0]
+ [3 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [5, 4]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.0, 0.8333333333333334)
+Arm 0: Mean=0.0930, Std=0.0015 -> Score=0.0926
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0005
+count(0, 180)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [4 7 4 9 0 0]
+ [4 9 3 4 0 0]
+ [3 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [5, 2]
+new obj position(0.16666666666666666, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 2]
+new obj position(0.3333333333333333, 0.16666666666666666)
+Arm 0: Mean=0.0934, Std=0.0015 -> Score=0.0982
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0011
+count(0, 181)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [3 7 4 9 0 0]
+ [4 9 3 4 0 0]
+ [3 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.3333333333333333)
+Arm 0: Mean=0.0937, Std=0.0015 -> Score=0.0920
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0075
+count(0, 182)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [3 7 4 9 0 0]
+ [4 7 3 4 0 0]
+ [3 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 3]
+new obj position(0.8333333333333334, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 0]
+new obj position(0.5, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 0]
+new obj position(0.5, 0.0)
+Arm 0: Mean=0.0940, Std=0.0015 -> Score=0.0947
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0009
+count(0, 183)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [3 7 4 9 0 0]
+ [4 7 3 4 0 0]
+ [3 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 2]
+new obj position(0.3333333333333333, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 5]
+new obj position(0.8333333333333334, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0944, Std=0.0015 -> Score=0.0947
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0003
+count(0, 184)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [3 7 4 9 0 0]
+ [4 7 3 4 0 0]
+ [3 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, -0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0948, Std=0.0015 -> Score=0.0965
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0051
+count(0, 185)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [3 7 4 9 0 0]
+ [4 7 3 4 0 0]
+ [3 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [2, 4]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [4, 5]
+new obj position(0.8333333333333334, 0.6666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 5]
+new obj position(0.5, 0.8333333333333334)
+Arm 0: Mean=0.0952, Std=0.0015 -> Score=0.0922
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0057
+count(0, 186)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [3 7 4 9 0 0]
+ [4 7 3 4 7 0]
+ [3 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 0]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 0]
+new obj position(0.3333333333333333, 0.0)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+Arm 0: Mean=0.0956, Std=0.0015 -> Score=0.0929
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0051
+count(0, 187)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [3 7 4 9 0 0]
+ [4 7 3 4 7 0]
+ [4 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [4, 5]
+new obj position(0.6666666666666666, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [5, 5]
+new obj position(0.3333333333333333, 0.8333333333333334)
+Arm 0: Mean=0.0958, Std=0.0015 -> Score=0.0967
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0018
+count(0, 188)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [3 7 4 9 3 0]
+ [4 7 3 4 7 0]
+ [4 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [5, 3]
+new obj position(0.5, 0.0)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 1]
+new obj position(0.6666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0961, Std=0.0015 -> Score=0.1004
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0051
+count(0, 189)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [3 7 4 9 3 0]
+ [3 7 3 4 7 0]
+ [4 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.0, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 4]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.5, 0.5)
+Arm 0: Mean=0.0963, Std=0.0015 -> Score=0.0978
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0057
+count(0, 190)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 0 7 4 0 0]
+ [3 7 4 9 3 0]
+ [3 7 7 4 7 0]
+ [4 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [5, 4]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 2]
+new obj position(0.16666666666666666, 0.3333333333333333)
+Arm 0: Mean=0.0966, Std=0.0015 -> Score=0.0948
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0055
+count(0, 191)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 3 7 4 0 0]
+ [3 7 4 9 3 0]
+ [3 7 7 4 7 0]
+ [4 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.0, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [0, 4]
+new obj position(0.16666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.3333333333333333, 0.16666666666666666)
+Arm 0: Mean=0.0968, Std=0.0015 -> Score=0.0958
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0007
+count(0, 192)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 3 7 4 0 0]
+ [3 7 4 9 3 0]
+ [3 7 7 4 7 0]
+ [4 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.5)
+target_shape: (6, 6) , new pos_values: [2, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 1]
+new obj position(0.8333333333333334, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0970, Std=0.0015 -> Score=0.0999
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0082
+count(0, 193)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 3 7 4 0 0]
+ [3 7 4 9 3 0]
+ [3 7 7 4 7 0]
+ [4 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.3333333333333333, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [1, 5]
+new obj position(0.0, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.8333333333333334, 0.5)
+Arm 0: Mean=0.0972, Std=0.0015 -> Score=0.0966
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0047
+count(0, 194)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 3 7 4 0 0]
+ [3 7 4 9 3 0]
+ [3 7 7 4 7 0]
+ [4 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [0, 2]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 5]
+new obj position(0.3333333333333333, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0975, Std=0.0015 -> Score=0.0981
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0049
+count(0, 195)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 3 7 4 0 0]
+ [3 7 4 9 3 0]
+ [9 7 7 4 7 0]
+ [4 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [2, 0]
+new obj position(0.5, 0.5)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0978, Std=0.0015 -> Score=0.0965
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0010
+count(0, 196)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 3 7 4 0 0]
+ [3 7 4 9 3 0]
+ [4 7 7 4 7 0]
+ [4 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [0, 1]
+new obj position(0.16666666666666666, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 0]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [4, 1]
+new obj position(0.6666666666666666, 0.8333333333333334)
+target_shape: (6, 6) , new pos_values: [3, 0]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0980, Std=0.0015 -> Score=0.0967
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=-0.0033
+count(0, 197)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 3 7 4 0 0]
+ [3 7 4 9 3 0]
+ [3 7 7 4 7 0]
+ [4 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [1, 2]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 0]
+new obj position(0.3333333333333333, 0.3333333333333333)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0982, Std=0.0015 -> Score=0.0984
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0018
+count(0, 198)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 3 7 4 0 0]
+ [3 7 4 9 3 0]
+ [4 7 7 4 7 0]
+ [4 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [2, 0]
+new obj position(0.6666666666666666, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [1, 3]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 2]
+new obj position(0.5, 0.16666666666666666)
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)
+Arm 0: Mean=0.0985, Std=0.0015 -> Score=0.0972
+Arm 1: Mean=0.0046, Std=0.0031 -> Score=0.0040
+count(0, 199)
+input grid: [[7 9]
+ [4 3]]
+target grid: [[7 9 7 9 7 9]
+ [4 3 4 3 4 3]
+ [9 7 9 7 9 7]
+ [3 4 3 4 3 4]
+ [7 9 7 9 7 9]
+ [4 3 4 3 4 3]]
+'predicted_grid',[[3 3 7 4 0 0]
+ [3 7 4 9 3 0]
+ [3 7 7 4 7 0]
+ [4 3 7 0 7 0]
+ [7 7 3 7 7 0]
+ [0 7 0 7 0 0]],<class 'numpy.ndarray'>
+target_shape: (6, 6) , new pos_values: [3, 1]
+new obj position(0.5, 0.16666666666666666)

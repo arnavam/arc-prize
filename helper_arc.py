@@ -6,6 +6,8 @@ import seaborn as sns
 import time
 import os
 from datetime import datetime
+
+
 import logging
 
 plt.set_loglevel (level = 'warning')
@@ -76,12 +78,6 @@ def display(input ,predicted,target,folder='train_ouputs',printing=True):
     plt.close()
 
 
-train_path='arc-prize-2025/arc-agi_training_challenges.json'
-with open(train_path, 'r') as f:
-    train = json.load(f)
-
-
-
 def loader(train_path):
 
     with open(train_path, 'r') as f:
@@ -91,31 +87,3 @@ def loader(train_path):
         ids.append(case_id)
     return train , ids 
 
-ids=[]
-for case_id in train:
-    ids.append(case_id)
-
-
-
-def new_func(train, cmap, ids, data, i):
-    for j in ('input','output'):
-        a=train[ids[1]][data][i]['input']
-        target=train[ids[1]][data][i]['output']
-        print(input)
-        sns.heatmap(input,cmap=cmap)
-        plt.show()
-    return input,target
-
-if __name__ == '__main__':
-    data='train'
-    for i in range(2):
-        input, target = new_func(train, cmap, ids, data, i)
-
-    input=np.array(input)
-    target=np.array(target)
-
-    if target.size <= input.size:
-        print('output')
-
-    else :
-        print('input')
