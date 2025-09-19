@@ -1,6 +1,6 @@
 # ARC Prize 2025 – Neuro-Symbolic Solver
 
-This project is focused on solving tasks from the [ARC (Abstraction and Reasoning Corpus)](https://github.com/fchollet/ARC) using a combination of **symbolic algorithms**  and **neural models**, integrating them in a neuro-symbolic framework. The goal is to develop systems that generalize from few examples and mimic human-like reasoning.
+This project is focused on solving tasks from the [ARC (Abstraction and Reasoning Corpus)](https://github.com/arcprize/ARC-AGI-2) using a combination of **symbolic algorithms**  and **neural models**, integrating them in a neuro-symbolic framework. The goal is to develop systems that generalize from few examples and mimic human-like reasoning.
 
 - For dataset & prediction visualization: https://arc-prize-visualizer.streamlit.app/
 
