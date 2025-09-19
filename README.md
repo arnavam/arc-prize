@@ -2,6 +2,8 @@
 
 This project is focused on solving tasks from the [ARC (Abstraction and Reasoning Corpus)](https://github.com/fchollet/ARC) using a combination of **symbolic algorithms**  and **neural models**, integrating them in a neuro-symbolic framework. The goal is to develop systems that generalize from few examples and mimic human-like reasoning.
 
+- For dataset & prediction visualization: https://arc-prize-visualizer.streamlit.app/
+
 
 
 ## 📂 File Structure
@@ -28,11 +30,13 @@ This project is focused on solving tasks from the [ARC (Abstraction and Reasonin
 
 
 
+---
+
+### **Visual Overview**
+The described process is summarized in the following architecture diagram:
+![Architecture](visualizations/Architecture.jpg)
 
 
-- for dataset & prediction visualization: https://arc-prize-visualizer.streamlit.app/
-
-Of course. Here is a refined and clarified description of your architecture and training process.
 
 ### **Objective**
 This system is designed to iteratively transform an `input image` into a `target image` through a sequence of object-based arrangment . It uses a combination of CNN and reinforcement learning to intelligently select and manipulate objects over `n` steps.
@@ -66,11 +70,7 @@ The system operates in a loop, with each iteration performing the following step
 This entire loop repeats for 'n' iterations, progressively refining the image toward the target.
 the final output can be seen on `visualizations/train_outputs`
 
----
 
-### **Visual Overview**
-The described process is summarized in the following architecture diagram:
-![Architecture](visualizations/Architecture.jpg)
 
 ---
 
