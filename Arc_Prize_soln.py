@@ -101,7 +101,7 @@ def Arc_Prize_Solver(examples,output,action_classifier,likelihood_predictor,max_
     previous_shape=0
     iterations=0
 
-    while iterations != max_iterations:
+    while iterations <= max_iterations:
         count += 1
         idx = bandit.select_example()
         if idx == -1:   return example , True
@@ -165,16 +165,16 @@ def Arc_Prize_Solver(examples,output,action_classifier,likelihood_predictor,max_
         else:
             steps_without_improvement += 1
             
-
+        iterations +=1
         if iterations >= min_iterations and steps_without_improvement >= patience * 2  :
-
+ 
             logger.info("warning -  no improvement across examples")
             return example, False
 
 
         elif iterations >= max_iterations:
             logger.info("No solution found within iterations")
-            iterations +=1
+
             return example, False
 
 
@@ -285,7 +285,7 @@ if __name__ == "__main__":
         # action_classifier.load()
         # likelihood_predictor.load()
 
-        example,success = Arc_Prize_Solver(examples,OUTPUT[case_id], action_classifier,likelihood_predictor ,max_iterations=100 , max_steps_per_episode=4,min_iterations=10)
+        example,success = Arc_Prize_Solver(examples,OUTPUT[case_id], action_classifier,likelihood_predictor ,max_iterations=25 , max_steps_per_episode=4,min_iterations=10)
                 
         action_classifier.save()
         likelihood_predictor.save()

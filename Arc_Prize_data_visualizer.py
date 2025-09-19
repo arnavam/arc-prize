@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import time
 
+from helper_arc import norm, cmap
+
 # --- Configuration and Styling ---
 st.set_page_config(
     page_title="ARC Dataset Viewer with RL Predictions",
@@ -13,18 +15,26 @@ st.set_page_config(
 )
 
 # --- Helper Functions ---
-def plot_grid(grid, title=None, cmap_name="tab20"):
-    """Create a matplotlib figure to display a grid."""
+def plot_grid(grid):
+
     grid = np.array(grid)
-    cmap = plt.get_cmap(cmap_name)
+
     fig, ax = plt.subplots()
-    ax.imshow(grid, cmap=cmap, interpolation='nearest')
-    if title:
-        plt.title(title)
+    ax.imshow(grid, cmap=cmap,norm=norm)
+
+    # Add grid lines between cells
+    ax.set_xticks(np.arange(-0.5, grid.shape[1], 1), minor=True)
+    ax.set_yticks(np.arange(-0.5, grid.shape[0], 1), minor=True)
+    ax.grid(which='minor', color='w', linestyle='-', linewidth=1)
+
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+
     plt.axis("off")
     return fig
 
-def visualize_prediction_grid(grid_data, cmap_name="tab20"):
+def visualize_prediction_grid(grid_data):
     """Creates a matplotlib figure to display a single grid state for predictions."""
     if not grid_data or not isinstance(grid_data[0], list):
         # Handle empty or malformed grid data
@@ -35,18 +45,13 @@ def visualize_prediction_grid(grid_data, cmap_name="tab20"):
 
     grid = np.array(grid_data)
     
-    # Create a discrete colormap (0=black, 1=blue, 2=red, etc.)
-    colors = ['black', 'blue', 'red', 'green', 'yellow', 'grey', 'magenta', 'orange', 'cyan', 'brown']
-    cmap = mcolors.ListedColormap(colors)
-    bounds = np.arange(-0.5, 10.5, 1)
-    norm = mcolors.BoundaryNorm(bounds, cmap.N)
 
     fig, ax = plt.subplots(figsize=(5, 5))
     ax.imshow(grid, cmap=cmap, norm=norm)
 
     # Add grid lines for clarity
-    ax.set_xticks(np.arange(-.5, grid.shape[1], 1), minor=True)
-    ax.set_yticks(np.arange(-.5, grid.shape[0], 1), minor=True)
+    ax.set_xticks(np.arange(-0.5, grid.shape[1], 1), minor=True)
+    ax.set_yticks(np.arange(-0.5, grid.shape[0], 1), minor=True)
     ax.grid(which='minor', color='w', linestyle='-', linewidth=1)
     
     ax.set_xticks([])
@@ -72,9 +77,9 @@ def load_prediction_data(file_path):
 def main(
     CHALLENGES_FILE='arc-prize-2025/arc-agi_training_challenges.json',
     SOLUTIONS_FILE='arc-prize-2025/arc-agi_training_solutions.json',
-    PREDICTIONS_FILE='output.json'
+    PREDICTIONS_FILE='output-2.json'
 ):
-    st.title("ARC Dataset Viewer with RL Predictions")
+    st.title("ARC Dataset & Predictions Viewer")
 
     # Load challenge file
     try:
@@ -122,28 +127,31 @@ def main(
             st.warning("No solution found for this test example.")
             output = None
     
-    # Create two columns for side-by-side comparison
-    col1, col2 = st.columns(2)
+    # Create three columns for side-by-side comparison
+    col1, col2, col3 = st.columns(3)
     
     with col1:
-        st.header("Target Solution")
-        
-        # Display input and output
-        st.subheader("Input")
-        fig = plot_grid(pair["input"], f"{section.capitalize()} {example_idx+1} Input")
+        st.header("Input")
+        fig = plot_grid(pair["input"])
         st.pyplot(fig)
         plt.close(fig)
-        
-        if output is not None:
-            st.subheader("Expected Output")
-            fig = plot_grid(output, f"{section.capitalize()} {example_idx+1} Output")
-            st.pyplot(fig)
-            plt.close(fig)
     
     with col2:
+        st.header("Target Output")
+        if output is not None:
+            fig = plot_grid(output)
+            st.pyplot(fig)
+            plt.close(fig)
+        else:
+            st.warning("No target output available")
+    
+    with col3:
         st.header("RL Agent Predictions")
         
-        if prediction_data is None:
+        if section!= "train":
+            st.info("Predictions are only available for training examples.")
+        elif prediction_data is None:
+            
             st.warning("No prediction data available. Please check if the prediction file exists.")
         elif selected_id not in prediction_data:
             st.warning(f"No prediction data available for task {selected_id}.")
@@ -155,8 +163,7 @@ def main(
                 st.warning("No episodes found for this task.")
             else:
                 # Find the episode that corresponds to the selected example
-                # Since episodes start at 0, we need to add 1 to match the example index
-                target_episode = str(example_idx)  # Convert to string as episode IDs are strings
+                target_episode = str(example_idx)
                 
                 if target_episode not in episode_ids:
                     st.warning(f"No prediction found for example {example_idx+1} (episode {target_episode}).")
@@ -166,13 +173,13 @@ def main(
                     sequence = prediction_data[selected_id][target_episode]
                     num_steps = len(sequence)
                     
+                    
+                    grid_placeholder = st.empty()
+                    score_placeholder = st.empty()
+                    vis_mode = st.radio("", ("🎬 Animate Sequence", "👣 Step-by-Step"), horizontal=True)
                     st.info(f"Episode **{target_episode}** (Example {example_idx+1}) has **{num_steps}** steps.")
-                    
-                    # Option to play as animation or view step-by-step
-                    vis_mode = st.radio("Visualization Mode:", ("🎬 Animate Sequence", "👣 Step-by-Step"), horizontal=True)
-                    
+
                     if vis_mode == "🎬 Animate Sequence":
-                        st.markdown("Click the button below to play the sequence of predictions.")
                         
                         # Animation speed control
                         animation_speed = st.slider("Animation Speed (delay in seconds)", 0.1, 2.0, 0.5, 0.1)
@@ -197,7 +204,7 @@ def main(
                                 
                                 # Update grid image
                                 fig = visualize_prediction_grid(grid_state)
-                                image_placeholder.pyplot(fig)
+                                grid_placeholder.pyplot(fig)
                                 plt.close(fig)
                                 
                                 time.sleep(animation_speed)
@@ -205,7 +212,6 @@ def main(
                             st.success("Animation complete! 🎉")
                     
                     elif vis_mode == "👣 Step-by-Step":
-                        st.markdown("Use the slider to manually inspect each step of the prediction sequence.")
                         
                         # Slider to select a specific step
                         step_index = st.slider("Select a step to display", 0, num_steps - 1, num_steps - 1)
@@ -214,28 +220,14 @@ def main(
                         similarity_score = sequence[step_index][1]
                         
                         # Display the metric and the grid
-                        st.metric(label=f"Similarity Score (at step {step_index + 1})", value=f"{similarity_score:.4f}")
                         fig = visualize_prediction_grid(grid_state)
-                        st.pyplot(fig)
+                        grid_placeholder.pyplot(fig)
                         plt.close(fig)
+
+                        st.metric(label=f"Similarity Score (at step {step_index + 1})", value=f"{similarity_score:.4f}")
+
                         
-                        # Show final step comparison if available
-                        if step_index == num_steps - 1 and output is not None:
-                            st.subheader("Final Prediction vs Expected Output")
-                            
-                            comp_col1, comp_col2 = st.columns(2)
-                            
-                            with comp_col1:
-                                st.markdown("**Final Prediction**")
-                                fig = visualize_prediction_grid(grid_state)
-                                st.pyplot(fig)
-                                plt.close(fig)
-                            
-                            with comp_col2:
-                                st.markdown("**Expected Output**")
-                                fig = plot_grid(output)
-                                st.pyplot(fig)
-                                plt.close(fig)
+
 
 if __name__ == "__main__":
     main()
