@@ -2,7 +2,7 @@ import streamlit as st
 import json
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
+import matplotlib.colors as colors
 import time
 
 from helper_arc import norm, cmap
@@ -13,6 +13,11 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+cmap = colors.ListedColormap(
+    ['#000000', '#0074D9', '#FF4136', '#2ECC40', '#FFDC00',
+        '#AAAAAA', '#F012BE', '#FF851B', '#7FDBFF', '#870C25'])
+norm = colors.Normalize(vmin=0, vmax=9)
 
 # --- Helper Functions ---
 def plot_grid(grid):
