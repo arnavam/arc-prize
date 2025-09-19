@@ -5,8 +5,6 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 import time
 
-from helper_arc import norm, cmap
-
 # --- Configuration and Styling ---
 st.set_page_config(
     page_title="ARC Dataset Viewer with RL Predictions",
