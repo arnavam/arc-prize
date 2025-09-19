@@ -6,6 +6,7 @@ import torch.nn.functional as F
 from torch.distributions import Categorical
 
 
+
 class FeatureExtractor(nn.Module):
     def __init__(self, input_channels=1):
         super().__init__()

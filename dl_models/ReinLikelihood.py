@@ -9,17 +9,13 @@ import torch.nn.functional as F
 from torch.distributions import Categorical
 
 from helper_env import placement , place_object
-from helper_arc import display , clear
+from helper_arc import display , clear ,get_module_logger
 from dl_models.BaseDL import BaseDL
 import random  
-import logging
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler('log/likelihood.log', mode='w')
-# handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
-logger.addHandler(handler)
-logger.propagate = False
+
+logger = get_module_logger(__name__)
+
 
 
 class Policy(nn.Module):

@@ -1,26 +1,25 @@
 import numpy as np
+import random
+from collections import deque
 import torch 
-torch.autograd.set_detect_anomaly(True)
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 from torch.distributions import Categorical
+torch.autograd.set_detect_anomaly(True)
+import logging
+
+
 from dl_models.BaseDL import BaseDL
 from helper_env import placement , place_object
-from  helper_arc import display
-import logging
+from  helper_arc import display , get_module_logger
 from dsl import ALL_ACTIONS
+
+logger = get_module_logger(__name__)
+
 action_names= list(ALL_ACTIONS.keys())
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler('log/action_classifer.log', mode='w')
-# handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
-logger.addHandler(handler)
-logger.propagate = False
 
-import random
-from collections import deque
 
 # --- Replay Memory ---
 class ReplayMemory:
@@ -36,7 +35,10 @@ class ReplayMemory:
     def __len__(self):
         return len(self.memory)
 
-
+    def clear(self):
+        """Clear the memory."""
+        self.memory.clear()
+        print("Memory cleared!")
 # --- Neural Network Definition ---
 # This remains a separate, modular component.
 class Policy(nn.Module):
@@ -110,7 +112,7 @@ class Policy(nn.Module):
 # ---  Multi-Head DQN ---
 class DQN_Classifier(BaseDL):
 
-    def __init__(self, feature_extractor, no_of_outputs, no_of_inputs=2, device='cpu', gamma=0.99, lr=1e-4, batch_size=128, memory_size=1000, target_update=10):
+    def __init__(self, feature_extractor, no_of_outputs, no_of_inputs=2, device='cpu', gamma=0.99, lr=1e-4, batch_size=30, memory_size=1000, target_update=10):
         super().__init__( device=device)
 
         # 1. Create a Policy 
@@ -185,7 +187,18 @@ class DQN_Classifier(BaseDL):
         states, actions, rewards, next_states, true_positions, is_place_flags = zip(*experiences)
         
         # upack states  & concat them to tensor
-        current_grids, obj_grids  = (torch.cat(tensors, dim=0) for tensors in zip(*states))
+        try:
+            # Attempt to concatenate tensors
+            current_grids, obj_grids = (torch.cat(tensors, dim=0) for tensors in zip(*states))
+        except Exception as e:
+            # Catch any exception and print the error message
+            print(f"An error occurred: {e}")
+            for state in states:
+                    for tensor in state:
+                        print(tensor.shape)
+                    for tensor in state: 
+                        print(tensor)
+        
         next_current_grids, next_obj_grids  = (torch.cat(tensors, dim=0) for tensors in zip(*states))
 
         target_grids = self.target_grid_tensor.repeat(self.batch_size, 1, 1, 1)

@@ -1,13 +1,9 @@
 import numpy as np
 import logging
-
+from helper_arc import get_module_logger
 import random 
-logging.basicConfig(
-    level=logging.DEBUG,  # Set the minimum log level to DEBUG
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    filename='app.log',  # Log output to current_grid file named app.log
-    filemode='w'  # Overwrite the log file each time the program runs
-)
+
+logger = get_module_logger(__name__)
 
 def matrix_similarity(a, b, direction=None):
     if a.shape == b.shape:
@@ -28,8 +24,8 @@ def matrix_similarity(a, b, direction=None):
 
     # Ensure shapes now match
     if padded_a.shape != b.shape:
-        logging.warning(a)
-        logging.warning(b)
+        logger.warning(a)
+        logger.warning(b)
 
         raise ValueError("Shapes do not match after padding.")
 

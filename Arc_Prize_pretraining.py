@@ -12,7 +12,7 @@ from collections import Counter
 from helper_env import place_object , coordinate_converter
 action_counter = Counter()
 
-from helper_arc import display,clear
+from helper_arc import display,clear , get_module_logger
 from dl_models.DQNAction_Classifier import DQN_Classifier
 from dl_models.feature_extractor import FeatureExtractor
 from dl_models.ReinLikelihood import Likelihood
@@ -22,12 +22,8 @@ from helper_env import placement
 
 import logging
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler('log/Arc_Prize_pretraining.log', mode='w')
-# handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
-logger.addHandler(handler)
-logger.propagate = False
+logger = get_module_logger('arc_prize_pretraining')
+
 
 
 Shift_Actions = SHIFT_ACTIONS.keys()
@@ -284,8 +280,8 @@ if __name__ == '__main__':
             position_losses.append(pos_loss)
             action_accuracies.append(acc)
 
-    # likelihood_predictor.save()
-    # action_classifier.save()
+    likelihood_predictor.save()
+    action_classifier.save()
 
 #----- plot the loss & accuracy
     plt.title('likelihood_predictor')

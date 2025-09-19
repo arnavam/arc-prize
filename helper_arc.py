@@ -6,12 +6,34 @@ import seaborn as sns
 import time
 import os
 from datetime import datetime
+
+
 import logging
 
 plt.set_loglevel (level = 'warning')
 pil_logger = logging.getLogger('PIL')  
 # override the logger logging level to INFO
 pil_logger.setLevel(logging.INFO)
+
+
+
+def get_module_logger(name):
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.DEBUG)
+
+    log_filename = f"log/{name}.log"
+    handler = logging.FileHandler(log_filename, mode='w')
+
+    # formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    # handler.setFormatter(formatter)
+
+    # Prevent duplicate handlers if called multiple times
+    if not logger.handlers:
+        logger.addHandler(handler)
+        logger.propagate = False
+
+    return logger
+
 
 def clear(folder_path):
     for filename in os.listdir(folder_path):
@@ -29,7 +51,7 @@ norm = colors.Normalize(vmin=0, vmax=9)
 
 def display(input ,predicted,target,folder='train_ouputs',printing=True):
     
-    folder = 'visualizations' + folder
+    folder = 'visualizations/' + folder
     os.makedirs(folder, exist_ok=True)
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
@@ -56,12 +78,6 @@ def display(input ,predicted,target,folder='train_ouputs',printing=True):
     plt.close()
 
 
-train_path='arc-prize-2025/arc-agi_training_challenges.json'
-with open(train_path, 'r') as f:
-    train = json.load(f)
-
-
-
 def loader(train_path):
 
     with open(train_path, 'r') as f:
@@ -71,31 +87,3 @@ def loader(train_path):
         ids.append(case_id)
     return train , ids 
 
-ids=[]
-for case_id in train:
-    ids.append(case_id)
-
-
-
-def new_func(train, cmap, ids, data, i):
-    for j in ('input','output'):
-        a=train[ids[1]][data][i]['input']
-        target=train[ids[1]][data][i]['output']
-        print(input)
-        sns.heatmap(input,cmap=cmap)
-        plt.show()
-    return input,target
-
-if __name__ == '__main__':
-    data='train'
-    for i in range(2):
-        input, target = new_func(train, cmap, ids, data, i)
-
-    input=np.array(input)
-    target=np.array(target)
-
-    if target.size <= input.size:
-        print('output')
-
-    else :
-        print('input')

@@ -1,9 +1,11 @@
 #custom
 data_loader/
-likelihood_predictions/
+weights/
+test.py
 *_examples/
 visualizations/*
 !visualizations/Architecture.jpg
+!visualizations/train_ouputs/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
