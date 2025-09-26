@@ -7,10 +7,10 @@ import json
 import os
 from tqdm import tqdm
 import math
-from typing import Optional, Tuple, List
+from typing import Optional, Tuple
 from dl_models.mamba import MambaBlock ,ModelArgs
-from helper_arc import get_module_logger
-
+from helper_arc import get_module_logger , plot_metrics
+import matplotlib.pyplot as plt
 PREDICTION_DICT={}
 
 logger = get_module_logger(__name__)
@@ -152,12 +152,16 @@ def get_sinusoidal_pos_embedding(seq_len, d_model):
     return pe.unsqueeze(0) 
 
 
+
+
+
 from dataset_generator import dataset_creater, create_data_loader
 from helper_arc import loader
 
 
-def train_mamba_model(train_dataset):
-
+def train_mamba_model(train_dataset,save,load):
+    train_losses = []
+    train_accuracies = []       
     # Hyperparameters
     d_model = 512
     d_state = 16
@@ -170,7 +174,7 @@ def train_mamba_model(train_dataset):
     batch_size = 10
     learning_rate = 1e-3
     weight_decay = 0.01
-    num_epochs = 50
+    num_epochs = 10
     
     # Device
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -188,6 +192,10 @@ def train_mamba_model(train_dataset):
         patch_size=patch_size
     ).to(device)
     # Print model size
+
+    if load:
+        model.load_state_dict(torch.load('mamba_ssm_model.pth'))
+
     num_params = sum(p.numel() for p in model.parameters())
     print(f"Model parameters: {num_params:,}")
     
@@ -236,8 +244,6 @@ def train_mamba_model(train_dataset):
 
             pos_loss = pos_criterion(pos_outputs.float(), pos_labels.float())
             total_loss = action_loss + pos_loss
-            logger.debug(f'action_outputs: {action_outputs} ,\n action_labels:{action_labels}\n')
-            logger.debug(f'pos_outputs: {pos_outputs},\n pos_labels{pos_labels}\n')
 
             # Backward pass
             total_loss.backward()
@@ -258,26 +264,41 @@ def train_mamba_model(train_dataset):
                 'Acc': f'{100.*train_correct/train_total:.2f}%'
             })
         
+            # Log action predictions vs real
+            logger.debug(f'[Batch {epoch+1}] Predicted Actions: {predicted.cpu().tolist()}')
+            logger.debug(f'[Batch {epoch+1}] Actual Actions:    {action_labels.cpu().tolist()}')
+
+            # Log position predictions vs real
+            logger.debug(f'[Batch {epoch+1}] Predicted Positions: {pos_outputs.detach().cpu().numpy().tolist()}')
+            logger.debug(f'[Batch {epoch+1}] Actual Positions:    {pos_labels.cpu().tolist()}')
+
+
+        
         # Validation phase (you'll need to implement this)
         model.eval()
         scheduler.step()
         
         # Print epoch results
+
+        epoch_loss = train_loss / int(no_of_batch*(len(batch)))
+        epoch_acc = 100. * train_correct / train_total
+        train_losses.append(epoch_loss)
+        train_accuracies.append(epoch_acc)
+
         print(f'Epoch {epoch+1}/{num_epochs}:')
-        print(f'Train Loss: {train_loss/len(batch)*no_of_batch:.4f}')
-        # print(f'Train Accuracy: {100.*train_correct/train_total:.2f}%')
-        
-        # Add validation code here
-        # ...
-        
+        print(f'Train Loss: {epoch_loss:.4f}')
+        print(f'Train Accuracy: {epoch_acc:.2f}%')
         print('-' * 50)
-    
+        
+    if save:
+        torch.save(model.state_dict(), 'mamba_ssm_model.pth')
     print(f'Training completed. Best validation accuracy: {best_val_acc:.2f}%')
+    plot_metrics(train_losses, train_accuracies)
 
 
 if __name__ == '__main__':
     dataset = dataset_creater(create=False) # dataset_creater -> function which creates the dataset.
-    train_mamba_model(dataset)
+    train_mamba_model(dataset,save=True, load=True)
 
     # train, ids = loader(dataset_path='arc-prize-2025/arc-agi_training_challenges.json')
     # for id in ids:

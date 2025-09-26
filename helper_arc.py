@@ -97,6 +97,28 @@ def display(input, predicted, target, folder='train_outputs', printing=True):
     plt.close()
 
 
+def plot_metrics(train_losses: list[float], train_accuracies: list[float], folder='accuracy_and_loss_plot'):
+    epochs = list(range(1, len(train_losses) + 1))
+    
+    fig, ax1 = plt.subplots()
+
+    ax1.set_xlabel('Epoch')
+    ax1.set_ylabel('Loss', color='tab:red')
+    ax1.plot(epochs, train_losses, label='Train Loss', color='tab:red')
+    ax1.tick_params(axis='y', labelcolor='tab:red')
+
+    ax2 = ax1.twinx()
+    ax2.set_ylabel('Accuracy (%)', color='tab:blue')
+    ax2.plot(epochs, train_accuracies, label='Train Accuracy', color='tab:blue')
+    ax2.tick_params(axis='y', labelcolor='tab:blue')
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S,%f")[:-3]
+    filename = f"heatmap_{timestamp}.png"
+
+    plt.savefig(os.path.join(folder, filename))
+    fig.tight_layout()
+    plt.title('Training Loss and Accuracy Over Epochs')
+    plt.grid(True)
+    plt.show()
 
 
 
