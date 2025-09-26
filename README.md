@@ -59,10 +59,10 @@ Split into x_conv and x_ssm
       ├───────────────────────────────────┐
       │                                   │
       ▼                                   ▼
-x_conv: (batch_size, seq_len, d_inner)   x_ssm: (batch_size, seq_len, d_inner)
+x_ssm: (batch_size, seq_len, d_inner)   x_conv: (batch_size, seq_len, d_inner)
       │                                   │
       ▼                                   ▼
-Conv1D → SiLU                            │
+ x_ssm → SiLU                             │
       │                                   │
       │              Generate Parameters:                  
       │              Δ = dt_proj(x_conv) → softplus

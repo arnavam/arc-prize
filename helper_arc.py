@@ -12,6 +12,8 @@ plt.set_loglevel (level = 'warning')
 pil_logger = logging.getLogger('PIL')  
 pil_logger.setLevel(logging.INFO) # override the logger logging level to INFO
 
+# Global set to keep track of cleared folders
+cleared_folders = set()
 
 cmap = colors.ListedColormap(
     ['#000000', '#0074D9', '#FF4136', '#2ECC40', '#FFDC00',
@@ -21,8 +23,22 @@ norm = colors.Normalize(vmin=0, vmax=9)
 
 
 
-# Global set to keep track of cleared folders
-cleared_folders = set()
+def get_module_logger(name):
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.DEBUG)
+
+    log_filename = f"log/{name}.log"
+    handler = logging.FileHandler(log_filename, mode='w')
+
+    # formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    # handler.setFormatter(formatter)
+
+    # Prevent duplicate handlers if called multiple times
+    if not logger.handlers:
+        logger.addHandler(handler)
+        logger.propagate = False
+
+    return logger
 
 
 
@@ -79,6 +95,7 @@ def display(input, predicted, target, folder='train_outputs', printing=True):
         print(f"Figure saved as {filename}")
 
     plt.close()
+
 
 
 
