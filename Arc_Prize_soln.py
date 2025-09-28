@@ -298,7 +298,7 @@ def train_mamba_model(train_dataset,save,load):
 
 if __name__ == '__main__':
     dataset = dataset_creater(create=False) # dataset_creater -> function which creates the dataset.
-    train_mamba_model(dataset,save=True, load=True)
+    train_mamba_model(dataset,save=True, load=False)
 
     # train, ids = loader(dataset_path='arc-prize-2025/arc-agi_training_challenges.json')
     # for id in ids:
