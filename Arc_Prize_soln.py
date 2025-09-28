@@ -30,6 +30,8 @@ class MambaSSM(nn.Module):
         self.patch_embed = PatchEmbedding(patch_size, d_model)
         self.sep_token_embedding = nn.Parameter(torch.randn(1, 1, d_model))
         
+        nn.init.xavier_uniform_(self.sep_token_embedding)
+        
         self.pos_embedding = nn.Embedding(max_seq_len, d_model) # Positional encoding (learnable)
         self.segment_embedding = nn.Embedding(3, d_model)
 
@@ -50,15 +52,22 @@ class MambaSSM(nn.Module):
         )
         # Initialize weights
         self.apply(self._init_weights)
-    
+
     def _init_weights(self, module):
         if isinstance(module, nn.Linear):
-            nn.init.normal_(module.weight, mean=0.0, std=0.02)
+            # Xavier uniform for linear layers
+            nn.init.xavier_uniform_(module.weight)
             if module.bias is not None:
                 nn.init.zeros_(module.bias)
         elif isinstance(module, nn.LayerNorm):
             nn.init.zeros_(module.bias)
             nn.init.ones_(module.weight)
+        elif isinstance(module, nn.Embedding):
+            nn.init.xavier_uniform_(module.weight)
+        elif isinstance(module, nn.Conv1d):  # If your MambaBlock uses conv layers
+            nn.init.xavier_uniform_(module.weight)
+            if module.bias is not None:
+                nn.init.zeros_(module.bias)
     
     def forward(self, current_grid: torch.Tensor, obj_grid: torch.Tensor, target_grid: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
         # Input shapes: (batch, 1, height, width) - add channel dimension
@@ -178,7 +187,7 @@ def train_mamba_model(train_dataset,save,load):
     batch_size = 10
     learning_rate = 1e-3
     weight_decay = 0.01
-    num_epochs = 10
+    num_epochs = 100
     
     # Device
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -244,15 +253,18 @@ def train_mamba_model(train_dataset,save,load):
             current_grids = normalize_grid(torch.tensor(current_grids)).to(device)
             obj_grids = normalize_grid(torch.tensor(obj_grids)).to(device)
             target_grids = normalize_grid(torch.tensor(target_grids)).to(device)
-            print(current_grids.shape)
-            # Forward pass
+            pos_labels_normalized = pos_labels.clone().float()
+            pos_labels_normalized[:, 0] = pos_labels[:, 0] / 10  # normalize x (width)
+            pos_labels_normalized[:, 1] = pos_labels[:, 1] / 10  # normalize y (height)
+             # Forward pass
             optimizer.zero_grad()
+            
             action_outputs, pos_outputs = model(current_grids, obj_grids, target_grids)
             
             # Calculate losses
             action_loss = action_criterion(action_outputs.float(), action_labels)
 
-            pos_loss = pos_criterion(pos_outputs.float(), pos_labels.float())
+            pos_loss = pos_criterion(pos_outputs.float(), pos_labels_normalized.float())
             total_loss = action_loss + pos_loss
 
             # Backward pass
