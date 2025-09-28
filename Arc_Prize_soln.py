@@ -43,8 +43,11 @@ class MambaSSM(nn.Module):
         # Output layers for classification and position prediction
         self.norm = nn.LayerNorm(d_model)
         self.action_classifier = nn.Linear(d_model, n_classes)
-        self.position_predictor = nn.Linear(d_model, 2)  # x, y coordinates
-        
+
+        self.position_predictor = nn.Sequential(
+            nn.Linear(d_model, 2),
+            nn.Sigmoid()  # Outputs between 0-1, scale to grid size
+        )
         # Initialize weights
         self.apply(self._init_weights)
     
@@ -101,6 +104,7 @@ class MambaSSM(nn.Module):
         # Process through Mamba blocks
         for block in self.blocks:
             x = block(x)
+            
         
         # Use the last token's representation for prediction
         x = self.norm(x)
@@ -233,7 +237,13 @@ def train_mamba_model(train_dataset,save,load):
             target_grids = torch.tensor(target_grids).to(device)
             action_labels = torch.tensor(action_labels).to(device)
             pos_labels = torch.tensor(pos_labels).to(device)
-            
+            # Add normalization
+            def normalize_grid(grid):
+                return grid.float() / 10.0  # Assuming values 0-9
+
+            current_grids = normalize_grid(torch.tensor(current_grids)).to(device)
+            obj_grids = normalize_grid(torch.tensor(obj_grids)).to(device)
+            target_grids = normalize_grid(torch.tensor(target_grids)).to(device)
             print(current_grids.shape)
             # Forward pass
             optimizer.zero_grad()
@@ -247,6 +257,19 @@ def train_mamba_model(train_dataset,save,load):
 
             # Backward pass
             total_loss.backward()
+            # After backward pass, check gradients
+
+        # Add gradient checking
+            total_grad_norm = 0
+            for name, param in model.named_parameters():
+                if param.grad is not None:
+                    grad_norm = param.grad.norm().item()
+                    total_grad_norm += grad_norm
+                    if torch.isnan(param.grad).any():
+                        print(f"NaN gradients in {name}")
+
+            print(f"Gradient norm: {total_grad_norm}")
+
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
             
