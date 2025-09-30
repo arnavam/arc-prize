@@ -2,6 +2,7 @@
 data_loader/
 weights/
 test.py
+mamba-env/
 Trash
 visualizations/*
 !visualizations/Architecture.jpg

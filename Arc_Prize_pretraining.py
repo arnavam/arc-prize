@@ -7,6 +7,9 @@ import os
 from tqdm import tqdm
 import math
 from typing import  Tuple
+from datetime import datetime
+from torch.utils.tensorboard import SummaryWriter
+
 from dl_models.mamba import MambaBlock ,ModelArgs
 from helper_arc import get_module_logger , plot_metrics
 PREDICTION_DICT={}
@@ -173,7 +176,7 @@ def train_mamba_model(train_dataset,save,load):
     d_state = 16
     d_conv = 4
     expand = 2
-    n_layers = 8
+    n_layers = 2
     n_classes = 10  # Adjust based on ARC task
     max_seq_len = 1024
     patch_size = 2
@@ -181,7 +184,8 @@ def train_mamba_model(train_dataset,save,load):
     learning_rate = 1e-3
     weight_decay = 0.01
     num_epochs = 10
-    
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    writer = SummaryWriter(f'runs/mamba_ssm_{timestamp}')
     # Device
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Using device: {device}")
@@ -198,9 +202,20 @@ def train_mamba_model(train_dataset,save,load):
         patch_size=patch_size
     ).to(device)
     # Print model size
+    # Log hyperparameters
+    hparams = {
+        'd_model': d_model,
+        'd_state': d_state,
+        'n_layers': n_layers,
+        'learning_rate': learning_rate,
+        'batch_size': batch_size
+    }
+    writer.add_hparams(hparams, {})
 
     if load:
         model.load_state_dict(torch.load('mamba_ssm_model.pth'))
+
+
 
     num_params = sum(p.numel() for p in model.parameters())
     print(f"Model parameters: {num_params:,}")
@@ -219,43 +234,40 @@ def train_mamba_model(train_dataset,save,load):
     
     # Training loop
     best_val_acc = 0.0
+    global_step = 0
+    train_loader = create_data_loader(train_dataset, batch_size=batch_size, shuffle=True)
+
+    batch = next(iter(train_loader))
     for epoch in range(num_epochs):
         # Training phase
         model.train()
         train_loss = 0.0
         train_correct = 0
         train_total = 0
-        train_loader = create_data_loader(train_dataset, batch_size=batch_size, shuffle=True)
 
         pbar = tqdm(train_loader, desc=f'Epoch {epoch+1}/{num_epochs} [Train]')
         
-        for batch in pbar:
+        for batch_idx ,batchs in enumerate(pbar):
             current_grids, obj_grids, target_grids, pos_labels , action_labels,  = batch
 
             
-            # Move to device
-            current_grids = torch.tensor(current_grids).to(device)
-            obj_grids = torch.tensor(obj_grids).to(device)
-            target_grids = torch.tensor(target_grids).to(device)
+
             action_labels = torch.tensor(action_labels).to(device)
             pos_labels = torch.tensor(pos_labels).to(device)
+            current_grids = normalize_grid(current_grids).to(device)
+            obj_grids = normalize_grid(obj_grids).to(device)
+            target_grids = normalize_grid(target_grids).to(device)
 
-            current_grids = normalize_grid(torch.tensor(current_grids)).to(device)
-            obj_grids = normalize_grid(torch.tensor(obj_grids)).to(device)
-            target_grids = normalize_grid(torch.tensor(target_grids)).to(device)
-            # Forward pass
             optimizer.zero_grad()
             action_outputs, pos_outputs = model(current_grids, obj_grids, target_grids)
             
-            # Calculate losses
             action_loss = action_criterion(action_outputs.float(), action_labels)
-
             pos_loss = pos_criterion(pos_outputs.float(), pos_labels.float())
+
             total_loss = action_loss + pos_loss
 
-            # Backward pass
             total_loss.backward()
-            # After backward pass, check gradients
+
 
         # Add gradient checking
             total_grad_norm = 0
@@ -270,20 +282,41 @@ def train_mamba_model(train_dataset,save,load):
 
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
+
+                        # ========== TENSORBOARD LOGGING ==========
+
+            # After backward pass, check gradients
+            if epoch == 0 and batch_idx == 0:
+                try:
+                    # Use actual batch data instead of random
+                    writer.add_graph(model, (current_grids[:1], obj_grids[:1], target_grids[:1]))
+                except Exception as e:
+                    print(f"Failed to log graph: {e}")
+            if batch_idx % 100 == 0:
+                for name, param in model.named_parameters():
+                    if param.grad is not None:
+                        writer.add_histogram(f'Gradients/{name}', param.grad, global_step)
+                        writer.add_histogram(f'Weights/{name}', param, global_step)
+ 
+
             
             # Update metrics
-            train_loss += total_loss.item()
             _, predicted = action_outputs.max(1)
-            train_total += action_labels.size(0)
-            train_correct += predicted.eq(action_labels).sum().item()
+            accuracy = (predicted == action_labels).float().mean()
+            current_lr = optimizer.param_groups[0]['lr']
+            pos_error = torch.mean(torch.abs(pos_outputs - pos_labels)).item()
+
             
-            # Update progress bar
-            pbar.set_postfix({
-                'total_loss': f'{total_loss.item():.4f}',
-                'action_loss': f'{action_loss.item():.4f}',
-                'pos_loss': f'{pos_loss.item():.4f}',
-                'Acc': f'{100.*train_correct/train_total:.2f}%'
-            })
+            # Log losses (per batch)
+            writer.add_scalar('Loss/total', total_loss.item(), global_step)
+            writer.add_scalar('Loss/action', action_loss.item(), global_step)
+            writer.add_scalar('Loss/position', pos_loss.item(), global_step)
+            writer.add_scalar('Accuracy/train', accuracy.item(), global_step)
+            writer.add_scalar('Error/position', pos_error, global_step)
+            writer.add_scalar('Learning_rate', current_lr, global_step)
+            global_step += 1
+
+
         
             # Log action predictions vs real
             logger.debug(f'[Batch {epoch+1}] Predicted Actions: {predicted.cpu().tolist()}')
@@ -292,13 +325,32 @@ def train_mamba_model(train_dataset,save,load):
             # Log position predictions vs real
             logger.debug(f'[Batch {epoch+1}] Predicted Positions: {pos_outputs.detach().cpu().numpy().tolist()}')
             logger.debug(f'[Batch {epoch+1}] Actual Positions:    {pos_labels.cpu().tolist()}')
+            
+            train_loss += total_loss.item()
+            train_total += action_labels.size(0)
+            train_correct += predicted.eq(action_labels).sum().item()
 
+            # Update progress bar
+            pbar.set_postfix({
+                'total_loss': f'{total_loss.item():.4f}',
+                'action_loss': f'{action_loss.item():.4f}',
+                'pos_loss': f'{pos_loss.item():.4f}',
+                'Acc': f'{100.*train_correct/train_total:.2f}%'
+            })
 
-        
         # Validation phase (you'll need to implement this)
         model.eval()
         scheduler.step()
-        
+
+
+        total_norm = 0
+        for name, param in model.named_parameters():
+            if param.grad is not None:
+                param_norm = param.grad.data.norm(2)
+                total_norm += param_norm.item() ** 2
+                writer.add_scalar(f'Grad_norms/{name}', param_norm.item(), epoch)
+        total_norm = total_norm ** 0.5
+        writer.add_scalar('Grad_norms/total', total_norm, epoch)
         # Print epoch results
 
         epoch_loss = train_loss / int(no_of_batch*(len(batch)))
@@ -311,6 +363,17 @@ def train_mamba_model(train_dataset,save,load):
         print(f'Train Accuracy: {epoch_acc:.2f}%')
         print('-' * 50)
         
+    # Final logging
+    writer.add_hparams(
+        hparams,
+        {
+            'hparam/final_accuracy': accuracy.item(),
+            'hparam/final_loss': total_loss.item()
+        }
+    )
+    
+    writer.close()
+
     if save:
         torch.save(model.state_dict(), 'mamba_ssm_model.pth')
     print(f'Training completed. Best validation accuracy: {best_val_acc:.2f}%')
