@@ -184,12 +184,13 @@ def train_mamba_model(train_dataset,save,load):
     learning_rate = 1e-3
     weight_decay = 0.01
     num_epochs = 10
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    writer = SummaryWriter(f'runs/mamba_ssm_{timestamp}')
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    writer = SummaryWriter(f'runs/{timestamp}')
     # Device
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Using device: {device}")
-    
+    # pos_values = [int(x * target_grid.shape[1]), int(y * target_grid.shape[0])]
+
     # Create model
     model = MambaSSM(
         d_model=d_model,
