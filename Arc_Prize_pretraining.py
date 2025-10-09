@@ -9,7 +9,8 @@ import math
 from typing import  Tuple
 from datetime import datetime
 from torch.utils.tensorboard import SummaryWriter
-
+from torch.utils.data import DataLoader
+from dataset_generator2 import create_dataset , GridDataset
 from dl_models.mamba import MambaBlock ,ModelArgs
 from helper_arc import get_module_logger , plot_metrics
 PREDICTION_DICT={}
@@ -183,9 +184,9 @@ def train_mamba_model(train_dataset,save,load):
     batch_size = 10
     learning_rate = 1e-3
     weight_decay = 0.01
-    num_epochs = 10
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    writer = SummaryWriter(f'runs/mamba_ssm_{timestamp}')
+    num_epochs = 50
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    writer = SummaryWriter(f'runs/{timestamp}')
     # Device
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Using device: {device}")
@@ -235,33 +236,30 @@ def train_mamba_model(train_dataset,save,load):
     # Training loop
     best_val_acc = 0.0
     global_step = 0
-    train_loader = create_data_loader(train_dataset, batch_size=batch_size, shuffle=True)
+    single_batch_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    single_batch = next(iter(single_batch_loader))
 
-    batch = next(iter(train_loader))
     for epoch in range(num_epochs):
-        # Training phase
         model.train()
+        current_grids, obj_grids, target_grids, pos_labels, action_labels = single_batch
+
         train_loss = 0.0
         train_correct = 0
         train_total = 0
 
-        pbar = tqdm(train_loader, desc=f'Epoch {epoch+1}/{num_epochs} [Train]')
+        pbar = tqdm(single_batch_loader, desc=f'Epoch {epoch+1}/{num_epochs} [Train]')
         
         for batch_idx ,batchs in enumerate(pbar):
-            current_grids, obj_grids, target_grids, pos_labels , action_labels,  = batch
+            # current_grids, obj_grids, target_grids, pos_labels , action_labels,  = batchs
 
             
-
-            action_labels = torch.tensor(action_labels).to(device)
-            pos_labels = torch.tensor(pos_labels).to(device)
-            current_grids = normalize_grid(current_grids).to(device)
-            obj_grids = normalize_grid(obj_grids).to(device)
-            target_grids = normalize_grid(target_grids).to(device)
 
             optimizer.zero_grad()
             action_outputs, pos_outputs = model(current_grids, obj_grids, target_grids)
             
             action_loss = action_criterion(action_outputs.float(), action_labels)
+            grid_size = 10  # Max value + 1
+            pos_labels = pos_labels / (grid_size - 1)
             pos_loss = pos_criterion(pos_outputs.float(), pos_labels.float())
 
             total_loss = action_loss + pos_loss
@@ -292,12 +290,37 @@ def train_mamba_model(train_dataset,save,load):
                     writer.add_graph(model, (current_grids[:1], obj_grids[:1], target_grids[:1]))
                 except Exception as e:
                     print(f"Failed to log graph: {e}")
+            
+            if batch_idx % 100 == 0:
+                    for name, param in model.named_parameters():
+                        print(f"Parameter {name}: shape={param.shape}, numel={param.numel()}, requires_grad={param.requires_grad}")
+                        if param.grad is not None:
+                            print(f"Gradient {name}: shape={param.grad.shape}, numel={param.grad.numel()}")
+                        
+            # Add proper checks before logging
             if batch_idx % 100 == 0:
                 for name, param in model.named_parameters():
-                    if param.grad is not None:
-                        writer.add_histogram(f'Gradients/{name}', param.grad, global_step)
-                        writer.add_histogram(f'Weights/{name}', param, global_step)
- 
+                    # Check if parameter has values and is not empty
+                    if param.numel() > 0 and param.requires_grad:
+                        # Ensure tensor is on CPU for logging
+                        param_cpu = param.detach().cpu()
+                        grad_cpu = param.grad.detach().cpu() if param.grad is not None else None
+                        
+                        # Log weights
+                        if not torch.isnan(param_cpu).any() and not torch.isinf(param_cpu).any():
+                            writer.add_histogram(f'Weights/{name}', param_cpu, global_step)
+                        else:
+                            print(f"Warning: NaN or Inf in weights {name}")
+                        
+                        # Log gradients
+                        if grad_cpu is not None and grad_cpu.numel() > 0:
+                            if not torch.isnan(grad_cpu).any() and not torch.isinf(grad_cpu).any():
+                                writer.add_histogram(f'Gradients/{name}', grad_cpu, global_step)
+                            else:
+                                print(f"Warning: NaN or Inf in gradients {name}")
+
+                                writer.add_histogram(f'Weights/{name}', param, global_step)
+            
 
             
             # Update metrics
@@ -319,12 +342,12 @@ def train_mamba_model(train_dataset,save,load):
 
         
             # Log action predictions vs real
-            logger.debug(f'[Batch {epoch+1}] Predicted Actions: {predicted.cpu().tolist()}')
-            logger.debug(f'[Batch {epoch+1}] Actual Actions:    {action_labels.cpu().tolist()}')
+            logger.debug(f'[epoch {epoch+1}] Predicted Actions: {predicted.cpu().tolist()}')
+            logger.debug(f'[epoch {epoch+1}] Actual Actions:    {action_labels.cpu().tolist()}')
 
             # Log position predictions vs real
-            logger.debug(f'[Batch {epoch+1}] Predicted Positions: {pos_outputs.detach().cpu().numpy().tolist()}')
-            logger.debug(f'[Batch {epoch+1}] Actual Positions:    {pos_labels.cpu().tolist()}')
+            logger.debug(f'[epoch {epoch+1}] Predicted Positions: {pos_outputs.detach().cpu().numpy().tolist()}')
+            logger.debug(f'[epoch {epoch+1}] Actual Positions:    {pos_labels.cpu().tolist()}')
             
             train_loss += total_loss.item()
             train_total += action_labels.size(0)
@@ -353,13 +376,13 @@ def train_mamba_model(train_dataset,save,load):
         writer.add_scalar('Grad_norms/total', total_norm, epoch)
         # Print epoch results
 
-        epoch_loss = train_loss / int(no_of_batch*(len(batch)))
+        # epoch_loss = train_loss / int(no_of_batch*(len(batchs)))
         epoch_acc = 100. * train_correct / train_total
-        train_losses.append(epoch_loss)
+        # train_losses.append(epoch_loss)
         train_accuracies.append(epoch_acc)
 
         print(f'Epoch {epoch+1}/{num_epochs}:')
-        print(f'Train Loss: {epoch_loss:.4f}')
+        # print(f'Train Loss: {epoch_loss:.4f}')
         print(f'Train Accuracy: {epoch_acc:.2f}%')
         print('-' * 50)
         
@@ -377,11 +400,34 @@ def train_mamba_model(train_dataset,save,load):
     if save:
         torch.save(model.state_dict(), 'mamba_ssm_model.pth')
     print(f'Training completed. Best validation accuracy: {best_val_acc:.2f}%')
-    plot_metrics(train_losses, train_accuracies)
+    # plot_metrics(train_losses, train_accuracies)
 
 
 if __name__ == '__main__':
-    dataset = dataset_creater(create=False) # dataset_creater -> function which creates the dataset.
+   
+    # tasks = create_dataset(
+    #     create=False,
+    #     num_simple_tasks=10,
+    #     num_intermediate_tasks=30,
+    #     grid_size=(10, 10),
+    #     num_bg_objects=5,
+    #     simple_examples_per_task=5,
+    #     intermediate_examples_per_task=10
+    # )
+    input_grids, obj_grids, target_grids, obj_positions, action_labels = create_dataset(
+        create=False,
+        num_simple_tasks=10,
+        num_intermediate_tasks=30,
+        grid_size=(10, 10),
+        num_bg_objects=5,
+        simple_examples_per_task=5,
+        intermediate_examples_per_task=10
+    )
+    
+    # Create dataset
+    dataset = GridDataset(input_grids, obj_grids, target_grids, obj_positions, action_labels)
+    
+
     train_mamba_model(dataset,save=True, load=False)
 
     # train, ids = loader(dataset_path='arc-prize-2025/arc-agi_training_challenges.json')

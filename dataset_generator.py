@@ -1,4 +1,5 @@
 import numpy as np
+from dataclasses import dataclass
 import random
 import torch
 import torch.nn as nn
@@ -29,6 +30,19 @@ Shift_Actions = SHIFT_ACTIONS.keys()
 Transform_Actions = TRANSFORM_ACTIONS.keys()
 action_names=list(ALL_ACTIONS.keys())
 action_counter = Counter()
+
+@dataclass
+class GridObject:
+    grid: np.ndarray
+    color: int
+    size: tuple
+    position: tuple = (0, 0)
+    
+    def __getitem__(self, key):
+        return getattr(self, key)
+    
+    def __setitem__(self, key, value):
+        setattr(self, key, value)
 
 def create_random_object(max_size=3, max_color=9):
 
