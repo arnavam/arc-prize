@@ -156,14 +156,20 @@ def generate_tasks(num_simple_tasks=10, num_intermediate_tasks=10, grid_size=(10
                 # Convert to DataLoader format directly
                 obj_grid_for_dataloader = place_object(np.zeros_like(target_grid), new_obj.grid, new_obj.position)
                 
-                all_input_grids.append(new_target_grid)
-                all_obj_grids.append(obj_grid_for_dataloader)
-                all_target_grids.append(target_grid.copy())
+                all_input_grids.append(normalize(new_target_grid))
+                all_obj_grids.append(normalize(obj_grid_for_dataloader))
+                all_target_grids.append(normalize(target_grid.copy()))
                 all_obj_positions.append(new_obj.position)
                 all_action_labels.append(action_idx)
                 i += 1
 
     return all_input_grids, all_obj_grids, all_target_grids, all_obj_positions, all_action_labels
+
+def normalize_grid(grid_data):
+    if isinstance(grid_data, list):
+        grid_data = np.array(grid_data)  # Convert list to numpy array first
+    grid_tensor = torch.tensor(grid_data, dtype=torch.float32)
+    return grid_tensor / 10.0  
 
 def create_dataset(create=True, **kwargs):
     """Create or load the complete dataset with both simple and intermediate tasks"""

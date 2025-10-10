@@ -158,11 +158,6 @@ def get_sinusoidal_pos_embedding(seq_len, d_model):
     return pe.unsqueeze(0) 
 
 
-def normalize_grid(grid_data):
-    if isinstance(grid_data, list):
-        grid_data = np.array(grid_data)  # Convert list to numpy array first
-    grid_tensor = torch.tensor(grid_data, dtype=torch.float32)
-    return grid_tensor / 10.0  
 
 
 from dataset_generator import dataset_creater, create_data_loader
@@ -237,16 +232,20 @@ def train_mamba_model(train_dataset,save,load):
     # Training loop
     best_val_acc = 0.0
     global_step = 0
-    single_batch_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    single_batch_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True,pin_memory =True)
     single_batch = next(iter(single_batch_loader))
+    current_grids, obj_grids, target_grids, pos_labels, action_labels = [tensor.to(device) for tensor in single_batch]
 
+    current_grids = current_grids / 9.0
+    obj_grids = obj_grids / 9.0
+    target_grids = target_grids / 9.0
     for epoch in range(num_epochs):
         model.train()
-        current_grids, obj_grids, target_grids, pos_labels, action_labels = single_batch
 
         train_loss = 0.0
         train_correct = 0
         train_total = 0
+
 
         pbar = tqdm(single_batch_loader, desc=f'Epoch {epoch+1}/{num_epochs} [Train]')
         
@@ -260,8 +259,9 @@ def train_mamba_model(train_dataset,save,load):
             
             action_loss = action_criterion(action_outputs.float(), action_labels)
             grid_size = 10  # Max value + 1
-            pos_labels = pos_labels / (grid_size - 1)
-            pos_loss = pos_criterion(pos_outputs.float(), pos_labels.float())
+            pos_labels_norm = pos_labels / (grid_size - 1)
+            # print(pos_labels)
+            pos_loss = pos_criterion(pos_outputs.float(), pos_labels_norm.float())
 
             total_loss = action_loss + pos_loss
 
@@ -328,7 +328,7 @@ def train_mamba_model(train_dataset,save,load):
             _, predicted = action_outputs.max(1)
             accuracy = (predicted == action_labels).float().mean()
             current_lr = optimizer.param_groups[0]['lr']
-            pos_error = torch.mean(torch.abs(pos_outputs - pos_labels)).item()
+            pos_error = torch.mean(torch.abs(pos_outputs - pos_labels_norm)).item()
 
             
             # Log losses (per batch)
@@ -348,7 +348,7 @@ def train_mamba_model(train_dataset,save,load):
 
             # Log position predictions vs real
             logger.debug(f'[epoch {epoch+1}] Predicted Positions: {pos_outputs.detach().cpu().numpy().tolist()}')
-            logger.debug(f'[epoch {epoch+1}] Actual Positions:    {pos_labels.cpu().tolist()}')
+            logger.debug(f'[epoch {epoch+1}] Actual Positions:    {pos_labels_norm.float().cpu().tolist()}')
             
             train_loss += total_loss.item()
             train_total += action_labels.size(0)
