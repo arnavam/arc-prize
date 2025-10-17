@@ -10,9 +10,11 @@ from typing import  Tuple
 from datetime import datetime
 from torch.utils.tensorboard import SummaryWriter
 from torch.utils.data import DataLoader
-from dataset_generator2 import create_dataset , GridDataset
+
+from dataset_generator import create_dataset , GridDataset
 from dl_models.mamba import MambaBlock ,ModelArgs
-from helper_arc import get_module_logger , plot_metrics
+from helper_arc import get_module_logger , plot_metrics , display
+
 PREDICTION_DICT={}
 
 logger = get_module_logger(__name__)
@@ -62,6 +64,7 @@ class MambaSSM(nn.Module):
             nn.init.zeros_(module.bias)
             nn.init.ones_(module.weight)
     
+
     def forward(self, current_grid: torch.Tensor, obj_grid: torch.Tensor, target_grid: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
         # Input shapes: (batch, 1, height, width) - add channel dimension
         batch_size=current_grid.shape[0]
@@ -99,7 +102,7 @@ class MambaSSM(nn.Module):
             seq_len = self.max_seq_len
         pos_embedding = get_sinusoidal_pos_embedding(x.size(1), self.d_model).to(x.device)
         x = x + segment_embeddings 
-        x =  x +pos_embedding
+        x =  x + pos_embedding
         
         # x = x +  + self.pos_embedding[:, :seq_len, :]
         
@@ -117,6 +120,7 @@ class MambaSSM(nn.Module):
         position_output = self.position_predictor(x)
         
         return action_output, position_output
+
 
 class PatchEmbedding(nn.Module):
     """2D Patch Embedding with ViT-style patching"""
@@ -160,11 +164,11 @@ def get_sinusoidal_pos_embedding(seq_len, d_model):
 
 
 
-from dataset_generator import dataset_creater, create_data_loader
 from helper_arc import loader
 
 
 def train_mamba_model(train_dataset,save,load):
+
     train_losses = []
     train_accuracies = []       
     # Hyperparameters
@@ -179,7 +183,8 @@ def train_mamba_model(train_dataset,save,load):
     batch_size = 10
     learning_rate = 1e-3
     weight_decay = 0.01
-    num_epochs = 50
+    num_epochs = 100
+
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     writer = SummaryWriter(f'runs/{timestamp}')
     # Device
@@ -198,6 +203,7 @@ def train_mamba_model(train_dataset,save,load):
         max_seq_len=max_seq_len,
         patch_size=patch_size
     ).to(device)
+
     # Print model size
     # Log hyperparameters
     hparams = {
@@ -232,13 +238,17 @@ def train_mamba_model(train_dataset,save,load):
     # Training loop
     best_val_acc = 0.0
     global_step = 0
+
     single_batch_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True,pin_memory =True)
     single_batch = next(iter(single_batch_loader))
+
     current_grids, obj_grids, target_grids, pos_labels, action_labels = [tensor.to(device) for tensor in single_batch]
 
     current_grids = current_grids / 9.0
     obj_grids = obj_grids / 9.0
     target_grids = target_grids / 9.0
+
+
     for epoch in range(num_epochs):
         model.train()
 
@@ -255,6 +265,7 @@ def train_mamba_model(train_dataset,save,load):
             
 
             optimizer.zero_grad()
+
             action_outputs, pos_outputs = model(current_grids, obj_grids, target_grids)
             
             action_loss = action_criterion(action_outputs.float(), action_labels)
@@ -309,7 +320,7 @@ def train_mamba_model(train_dataset,save,load):
                         
                         # Log weights
                         if not torch.isnan(param_cpu).any() and not torch.isinf(param_cpu).any():
-                            writer.add_histogram(f'Weights/{name}', param_cpu, global_step)
+                            writer. (f'Weights/{name}', param_cpu, global_step)
                         else:
                             print(f"Warning: NaN or Inf in weights {name}")
                         
@@ -415,6 +426,7 @@ if __name__ == '__main__':
     #     simple_examples_per_task=5,
     #     intermediate_examples_per_task=10
     # )
+
     input_grids, obj_grids, target_grids, obj_positions, action_labels = create_dataset(
         create=False,
         num_simple_tasks=10,
@@ -422,15 +434,15 @@ if __name__ == '__main__':
         grid_size=(10, 10),
         num_bg_objects=5,
         simple_examples_per_task=5,
-        intermediate_examples_per_task=10
+        intermediate_examples_per_task=0
     )
     
+    # for x,y,z in zip(input_grids, obj_grids , target_grids):
+    #     display(x,y,z)
+
     # Create dataset
     dataset = GridDataset(input_grids, obj_grids, target_grids, obj_positions, action_labels)
-    
+
 
     train_mamba_model(dataset,save=True, load=False)
 
-    # train, ids = loader(dataset_path='arc-prize-2025/arc-agi_training_challenges.json')
-    # for id in ids:
-    #     train_mamba_model(train['id'])

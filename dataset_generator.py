@@ -1,5 +1,4 @@
 import numpy as np
-from dataclasses import dataclass
 import random
 import torch
 import torch.nn as nn
@@ -11,24 +10,23 @@ from typing import List, Tuple, Any
 import itertools
 from collections import Counter
 import logging
+from dataclasses import dataclass
+from torch.utils.data import Dataset, DataLoader
 
-from helper_env import place_object , coordinate_converter
-from helper_arc import display,clear
+from helper_env import place_object, coordinate_converter
+from helper_arc import display, clear
 from helper_env import placement
-from dsl import ALL_ACTIONS , SHIFT_ACTIONS , TRANSFORM_ACTIONS
-
+from dsl import ALL_ACTIONS, SHIFT_ACTIONS, TRANSFORM_ACTIONS
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler('log/dataset_generator.log', mode='w')
-# handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
 logger.addHandler(handler)
 logger.propagate = False
 
-
 Shift_Actions = SHIFT_ACTIONS.keys()
 Transform_Actions = TRANSFORM_ACTIONS.keys()
-action_names=list(ALL_ACTIONS.keys())
+action_names = list(ALL_ACTIONS.keys())
 action_counter = Counter()
 
 @dataclass
@@ -44,16 +42,13 @@ class GridObject:
     def __setitem__(self, key, value):
         setattr(self, key, value)
 
-def create_random_object(max_size=3, max_color=9):
-
+def create_random_object(max_size=3, max_color=9) -> GridObject:
     size = (random.randint(1, max_size), random.randint(1, max_size))
     color = random.randint(1, max_color)
     obj_grid = np.full(size, color)
-    return {'grid': obj_grid, 'color': color, 'size': size,'position':(0,0)}
-    # return obj_grid
+    return GridObject(grid=obj_grid, color=color, size=size, position=(0, 0))
 
-def find_empty_spot(grid, obj_size):
-
+def find_empty_spot(grid, obj_size) -> Tuple[int, int]:
     grid_h, grid_w = grid.shape
     obj_h, obj_w = obj_size
     possible_spots = []
@@ -63,190 +58,170 @@ def find_empty_spot(grid, obj_size):
                 possible_spots.append((y, x))
     return random.choice(possible_spots) if possible_spots else None
 
-
- 
-# --- Task-Specific Generation Functions ---
-def generate_simple_task(grid_size=(10, 10), num_bg_objects=3, training_eg=4):
-    inputs = []
-    objects=[]
-    obj_labels=[]
-    action_labels=[]
-    target_grid = np.zeros(grid_size, dtype=int)
-
-    for _ in range(num_bg_objects):
-        objects.append(create_random_object())
-    
-    i=0
-    while i < training_eg:
-
-        obj_idx= random.randint(0,num_bg_objects-1) # choose one random object from the lsit
-        obj=objects[obj_idx]
-        
-        position = find_empty_spot(target_grid, obj['size']) # looks if the obj can be placed on target
-        
-        if position: # if can be placed
-
-            current_grid=target_grid.copy()
-            target_grid = place_object(target_grid, obj['grid'], position)
-           
-            if np.array_equal(target_grid, current_grid):
-                print('grid: \n' , current_grid,'\n',target_grid)
-                continue
-                # raise ValueError("Both grids can't be the same")
-        
-            inputs.append((current_grid,objects,target_grid.copy(),position))
-            obj_labels.append(obj_idx)       
-            action_labels.append(action_names.index('place'))
-
-            obj['position']=position
-            
-
-
-
-            i +=1
-
-    return inputs , obj_labels , action_labels
-
-
-def generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5, training_eg=4):
-    inputs = []
-    objects=[]
-    obj_labels=[]
-    action_labels=[]
-    target_grid = np.zeros(grid_size, dtype=int)
-    
-    i = 0
-    while i < num_bg_objects: # place random objects  in  target_grid
-        
-        obj=create_random_object()
-        pos = find_empty_spot(target_grid, obj['size'])
-
-        if pos:
-            target_grid = place_object(target_grid, obj, pos)
-            obj['position']=pos
-            objects.append(obj)
-            i+=1
-
-    object_action_combinations = all_pair_combinations(num_bg_objects,len(action_names) ) 
-    i = 0
-
-    while i < training_eg:
-
-        new_target_grid=None
-
-        obj_idx,action_idx=next(object_action_combinations)
-        obj=objects[obj_idx]
-
-        action_name = random.choice(action_names)
-        action_idx = action_names.index(action_name)
-        new_obj = copy.deepcopy(obj)
-
-
-        if action_name in ['place', 'remove']: # do nothing for this two actions
-            continue 
-
-
-        elif action_name in Transform_Actions:
-            new_obj['grid'] = ALL_ACTIONS[action_name](obj['grid']) # performs action on the grid
-            new_target_grid = placement(target_grid.copy(), obj, new_obj, background=0) # update the obj on the grid
-
-        elif action_name in Shift_Actions:
-            new_obj['position'] = ALL_ACTIONS[action_name](obj['position']) # peforms action on the position
-            new_target_grid = placement(target_grid.copy(), obj, new_obj, background=0)# update the obj on the grid
-
-        if new_target_grid is not  None: # the update has happend
-            i+=1
-            inputs.append((new_target_grid,objects,target_grid.copy(),new_obj['position']))
-            
-            obj_labels.append(obj_idx)
-            action_labels.append(action_idx)
-
-    return inputs, obj_labels, action_labels
-
-
 def all_pair_combinations(a, b):
     pool = list(itertools.product(range(a), range(b)))
     while True:
         for pair in np.random.permutation(pool):
             yield pair
 
-
-
-def create_data_loader(tasks: List[Tuple], batch_size: int, shuffle: bool = True,printing=False):
- 
+def generate_tasks(num_simple_tasks=10, num_intermediate_tasks=10, grid_size=(10, 10), 
+                   num_bg_objects=5, simple_examples_per_task=4, intermediate_examples_per_task=16):
+    """Generate both simple and intermediate tasks combined - using original approach"""
+    all_input_grids = []
+    all_obj_grids = []
+    all_target_grids = []
+    all_obj_positions = []
+    all_action_labels = []
     
-    all_examples:      List[Any] = []
-    all_input_grids =[]
-    all_obj_grids=[]
-    all_target_grids=[]
-    all_obj_labels:    List[int] = []
-    all_action_labels: List[int] = []
-    inputs=[]
-    for all_inputs, obj_labels, action_labels in tasks:
-        for (input_grid, objects, target_grid , obj_pos) ,obj_label ,action_idx in zip(all_inputs, obj_labels ,action_labels):
-            
-            # place object inside a target shaped input 
-            obj = objects[obj_label]
-            obj_grid = place_object(np.zeros_like(target_grid.copy()),obj['grid'],obj['position'])
+    # Generate simple tasks (same as original generate_simple_task but with dataclass)
+    for _ in range(num_simple_tasks):
+        objects = []
+        obj_labels = []
+        action_labels = []
+        target_grid = np.zeros(grid_size, dtype=int)
 
-            # all_examples.append([input_grid,obj_grid,target_grid])
-            all_input_grids.append(input_grid)
-            all_obj_grids.append(obj_grid)
-            all_target_grids.append(target_grid)
-            all_obj_labels.append(obj_pos)
-            all_action_labels.append(action_idx)
-
-            obj=objects[obj_label]
-            action_counter[action_idx] += 1
-
-
-            if printing == True:
-                logger.debug(f"dataset: \n {input_grid} ,\n {obj['grid']} ,\n{target_grid},{action_names[action_idx]},")
-                obj_grid= placement(np.zeros_like(target_grid),obj,obj,0)
-                display(input_grid,obj_grid,target_grid,'data_loader') 
-
-                
-
-    # for finding no of each actions each timed it used it train
-    print("Function counts:")
-    for action_idx, count in action_counter.items():
-        print(f"{action_names[action_idx]}: {count}")
-
-    indices = list(range(len(all_action_labels))) #create and shuffle indices
-    if shuffle:
-        random.shuffle(indices)
-
-    # Yield mini-batches one by one
-    for i in range(0, len(indices), batch_size):
-        # Get the indices for the current batch
-        batch_indices = indices[i:i + batch_size]
+        # Create background objects
+        for _ in range(num_bg_objects):
+            objects.append(create_random_object())
         
-        # Use the indices to get the data for the batch
-        # batch_examples = [all_examples[j] for j in batch_indices]
-        batch_target_grids = [all_target_grids[j] for j in batch_indices]
-        batch_input_grids = [all_input_grids[j] for j in batch_indices]
-        batch_obj_grids = [all_obj_grids[j] for j in batch_indices]
-        batch_obj_labels = [all_obj_labels[j] for j in batch_indices]
-        batch_action_labels = [all_action_labels[j] for j in batch_indices]
+        i = 0
+        while i < simple_examples_per_task:
+            obj_idx = random.randint(0, num_bg_objects - 1)
+            obj = objects[obj_idx]
+            
+            position = find_empty_spot(target_grid, obj.size)
+            
+            if position:
+                current_grid = target_grid.copy()
+                # Use the original approach - pass obj.grid directly to place_object
+                target_grid = place_object(target_grid, obj.grid, position)
+               
+                if not np.array_equal(target_grid, current_grid):
+                    # Convert to DataLoader format directly
+                    obj_grid_for_dataloader = place_object(np.zeros_like(target_grid), obj.grid, position)
+                    
+                    all_input_grids.append(current_grid)
+                    all_obj_grids.append(obj_grid_for_dataloader)
+                    all_target_grids.append(target_grid.copy())
+                    all_obj_positions.append(position)
+                    all_action_labels.append(action_names.index('place'))
+                    
+                    obj.position = position
+                    i += 1
 
-        yield batch_input_grids,batch_obj_grids,batch_target_grids, batch_obj_labels, batch_action_labels
+    # Generate intermediate tasks (same as original generate_intermediate_task but with dataclass)
+    for _ in range(num_intermediate_tasks):
+        objects = []
+        obj_labels = []
+        action_labels = []
+        target_grid = np.zeros(grid_size, dtype=int)
+        
+        # Place initial objects
+        i = 0
+        while i < num_bg_objects:
+            obj = create_random_object()
+            pos = find_empty_spot(target_grid, obj.size)
+            if pos:
+                target_grid = place_object(target_grid, obj.grid, pos)
+                obj.position = pos
+                objects.append(obj)
+                i += 1
 
+        object_action_combinations = all_pair_combinations(num_bg_objects, len(action_names))
+        i = 0
 
+        while i < intermediate_examples_per_task:
+            obj_idx, action_idx = next(object_action_combinations)
+            obj = objects[obj_idx]
+            action_name = action_names[action_idx]
+            new_obj = copy.deepcopy(obj)
 
+            if action_name in ['place', 'remove']:
+                continue
 
-def dataset_creater( create):
-    if create==True:
+            new_target_grid = None
+            if action_name in Transform_Actions:
+                # Use the original approach - apply action to grid directly
+                new_obj.grid = ALL_ACTIONS[action_name](obj.grid)
+                # Use placement function as in original code
+                if new_obj.grid.size == 0 or 0 in new_obj.grid.shape:
+                        continue  
+                new_target_grid = placement(target_grid.copy(), obj, new_obj, background=0)
+            elif action_name in Shift_Actions:
+                # Use the original approach - apply action to position directly
+                new_obj.position = ALL_ACTIONS[action_name](obj.position)
+                new_target_grid = placement(target_grid.copy(), obj, new_obj, background=0)
 
-        tasks1 = [      generate_simple_task(grid_size=(10, 10), num_bg_objects=5 , training_eg=4 ) for _ in range(10)] 
-        tasks2 = [generate_intermediate_task(grid_size=(10, 10), num_bg_objects=5 , training_eg=16) for _ in range(10)]
+            if new_target_grid is not None:
+                # Convert to DataLoader format directly
+                obj_grid_for_dataloader = place_object(np.zeros_like(target_grid), new_obj.grid, new_obj.position)
+                
+                all_input_grids.append(normalize(new_target_grid))
+                all_obj_grids.append(normalize(obj_grid_for_dataloader))
+                all_target_grids.append(normalize(target_grid.copy()))
+                all_obj_positions.append(new_obj.position)
+                all_action_labels.append(action_idx)
+                i += 1
 
-        tasks1.extend(tasks2)
+    return all_input_grids, all_obj_grids, all_target_grids, all_obj_positions, all_action_labels
 
+def normalize_grid(grid_data):
+    if isinstance(grid_data, list):
+        grid_data = np.array(grid_data)  # Convert list to numpy array first
+    grid_tensor = torch.tensor(grid_data, dtype=torch.float32)
+    return grid_tensor / 10.0  
+
+def create_dataset(create=True, **kwargs):
+    """Create or load the complete dataset with both simple and intermediate tasks"""
+    if create:
+        tasks = generate_tasks(**kwargs)
+        
         with open("generated_training_data.pkl", "wb") as f:
-            pickle.dump(tasks1, f) 
-
+            pickle.dump((tasks), f)
     else:
         with open("generated_training_data.pkl", "rb") as f:
-            tasks1 = pickle.load(f)
-    return tasks1
+            tasks = pickle.load(f)
+    
+    return tasks
 
+class GridDataset(Dataset):
+    def __init__(self, input_grids, obj_grids, target_grids, obj_positions, action_labels):
+        self.input_grids = input_grids
+        self.obj_grids = obj_grids
+        self.target_grids = target_grids
+        self.obj_positions = obj_positions
+        self.action_labels = action_labels
+        
+    def __len__(self):
+        return len(self.action_labels)
+    
+    def __getitem__(self, idx):
+        input_grid = torch.tensor(self.input_grids[idx], dtype=torch.float32)
+        obj_grid = torch.tensor(self.obj_grids[idx], dtype=torch.float32)
+        target_grid = torch.tensor(self.target_grids[idx], dtype=torch.float32)
+        obj_position = torch.tensor(self.obj_positions[idx], dtype=torch.long)
+        action_label = torch.tensor(self.action_labels[idx], dtype=torch.long)
+        
+        return input_grid, obj_grid, target_grid, obj_position, action_label
+
+if __name__ == "__main__":
+    # Create dataset with both simple and intermediate tasks
+    dataset = create_dataset(
+        create=True,
+        num_simple_tasks=10,
+        num_intermediate_tasks=30,
+        grid_size=(10, 10),
+        num_bg_objects=5,
+        simple_examples_per_task=5,
+        intermediate_examples_per_task=10
+    )
+    
+
+            # action_labels = torch.tensor(action_labels).to(device)
+            # pos_labels = torch.tensor(pos_labels).to(device)
+            # current_grids = normalize_grid(current_grids).to(device)
+            # obj_grids = normalize_grid(obj_grids).to(device)
+            # target_grids = normalize_grid(target_grids).to(device)
+
+    print(f"Input grids shape example: {len(dataset[0])}")
+    print(f"Action labels distribution: {Counter(dataset[4])}")
