@@ -14,15 +14,11 @@ from dataclasses import dataclass
 from torch.utils.data import Dataset, DataLoader
 
 from helper_env import place_object, coordinate_converter
-from helper_arc import display, clear
-from helper_env import placement
+from helper_arc import display, clear , get_module_logger
+from helper_env import placement 
 from dsl import ALL_ACTIONS, SHIFT_ACTIONS, TRANSFORM_ACTIONS
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler('log/dataset_generator.log', mode='w')
-logger.addHandler(handler)
-logger.propagate = False
+logger=get_module_logger('dataset_generator')
 
 Shift_Actions = SHIFT_ACTIONS.keys()
 Transform_Actions = TRANSFORM_ACTIONS.keys()
@@ -58,116 +54,181 @@ def find_empty_spot(grid, obj_size) -> Tuple[int, int]:
                 possible_spots.append((y, x))
     return random.choice(possible_spots) if possible_spots else None
 
-def all_pair_combinations(a, b):
-    pool = list(itertools.product(range(a), range(b)))
-    while True:
-        for pair in np.random.permutation(pool):
-            yield pair
+def is_valid_position(grid, obj_size, position):
+    """Check if position is valid for placing object"""
+    y, x = position
+    obj_h, obj_w = obj_size
+    grid_h, grid_w = grid.shape
+    
+    # Check bounds
+    if y < 0 or x < 0 or y + obj_h > grid_h or x + obj_w > grid_w:
+        return False
+    
+    # Check if area is empty
+    return np.all(grid[y:y+obj_h, x:x+obj_w] == 0)
+
+def normalize(grid):
+    """Normalize grid values between 0 and 1"""
+    return grid / 10.0
 
 def generate_tasks(num_simple_tasks=10, num_intermediate_tasks=10, grid_size=(10, 10), 
                    num_bg_objects=5, simple_examples_per_task=4, intermediate_examples_per_task=16):
-    """Generate both simple and intermediate tasks combined - using original approach"""
+    """Generate both simple and intermediate tasks combined - with fixes for duplicates"""
     all_input_grids = []
     all_obj_grids = []
     all_target_grids = []
     all_obj_positions = []
     all_action_labels = []
     
-    # Generate simple tasks (same as original generate_simple_task but with dataclass)
-    for _ in range(num_simple_tasks):
+    # Track seen examples to avoid duplicates
+    seen_examples = set()
+    
+    # Generate simple tasks
+    for task_idx in range(num_simple_tasks):
         objects = []
-        obj_labels = []
-        action_labels = []
-        target_grid = np.zeros(grid_size, dtype=int)
+        input_grid = np.zeros(grid_size, dtype=int)
 
         # Create background objects
         for _ in range(num_bg_objects):
             objects.append(create_random_object())
         
-        i = 0
-        while i < simple_examples_per_task:
+        examples_generated = 0
+        attempts = 0
+        max_attempts = simple_examples_per_task * 10  # Prevent infinite loop
+        
+        while examples_generated < simple_examples_per_task and attempts < max_attempts:
             obj_idx = random.randint(0, num_bg_objects - 1)
             obj = objects[obj_idx]
             
-            position = find_empty_spot(target_grid, obj.size)
+            position = find_empty_spot(input_grid, obj.size)
             
             if position:
-                current_grid = target_grid.copy()
-                # Use the original approach - pass obj.grid directly to place_object
-                target_grid = place_object(target_grid, obj.grid, position)
                
-                if not np.array_equal(target_grid, current_grid):
-                    # Convert to DataLoader format directly
-                    obj_grid_for_dataloader = place_object(np.zeros_like(target_grid), obj.grid, position)
-                    
-                    all_input_grids.append(current_grid)
-                    all_obj_grids.append(obj_grid_for_dataloader)
-                    all_target_grids.append(target_grid.copy())
-                    all_obj_positions.append(position)
-                    all_action_labels.append(action_names.index('place'))
-                    
-                    obj.position = position
-                    i += 1
 
-    # Generate intermediate tasks (same as original generate_intermediate_task but with dataclass)
-    for _ in range(num_intermediate_tasks):
+                target_grid = place_object(input_grid.copy(), obj.grid, position)
+               
+                if not np.array_equal(input_grid, target_grid):
+                    # Create unique identifier for this example
+                    example_id = (tuple(input_grid.flatten()), tuple(obj.grid.flatten()), position, 'place')
+                    
+                    if example_id not in seen_examples:
+                        # Convert to DataLoader format directly
+                        obj_grid_for_dataloader = place_object(np.zeros_like(input_grid), obj.grid, position)
+                        
+                        all_input_grids.append(input_grid.copy())
+                        all_obj_grids.append(obj_grid_for_dataloader)
+                        all_target_grids.append(target_grid.copy())
+                        all_obj_positions.append(position)
+                        all_action_labels.append(action_names.index('place'))
+                        
+                        seen_examples.add(example_id)
+                        examples_generated += 1
+                        input_grid = target_grid.copy()  # Update target grid
+                        
+                        # Update object position
+                        obj.position = position
+            
+            attempts += 1
+
+    # Generate intermediate tasks
+    for task_idx in range(num_intermediate_tasks):
         objects = []
-        obj_labels = []
-        action_labels = []
-        target_grid = np.zeros(grid_size, dtype=int)
+        input_grid = np.zeros(grid_size, dtype=int)
         
         # Place initial objects
-        i = 0
-        while i < num_bg_objects:
+        placed_objects = 0
+        attempts = 0
+        max_placement_attempts = num_bg_objects * 10
+        
+        while placed_objects < num_bg_objects and attempts < max_placement_attempts:
             obj = create_random_object()
-            pos = find_empty_spot(target_grid, obj.size)
+            pos = find_empty_spot(input_grid, obj.size)
             if pos:
-                target_grid = place_object(target_grid, obj.grid, pos)
+                input_grid = place_object(input_grid, obj.grid, pos)
                 obj.position = pos
                 objects.append(obj)
-                i += 1
+                placed_objects += 1
+            attempts += 1
 
-        object_action_combinations = all_pair_combinations(num_bg_objects, len(action_names))
-        i = 0
+        examples_generated = 0
+        attempts = 0
+        max_attempts = intermediate_examples_per_task * 20
 
-        while i < intermediate_examples_per_task:
-            obj_idx, action_idx = next(object_action_combinations)
+        while examples_generated < intermediate_examples_per_task and attempts < max_attempts:
+            obj_idx = random.randint(0, len(objects) - 1)
+            action_idx = random.randint(0, len(action_names) - 1)
+            
             obj = objects[obj_idx]
             action_name = action_names[action_idx]
             new_obj = copy.deepcopy(obj)
+            
 
+            # Skip place and remove actions for intermediate tasks
             if action_name in ['place', 'remove']:
+                attempts += 1
                 continue
 
-            new_target_grid = None
-            if action_name in Transform_Actions:
-                # Use the original approach - apply action to grid directly
+            elif action_name in Transform_Actions:
+                # Apply transformation
                 new_obj.grid = ALL_ACTIONS[action_name](obj.grid)
-                # Use placement function as in original code
-                if new_obj.grid.size == 0 or 0 in new_obj.grid.shape:
-                        continue  
-                new_target_grid = placement(target_grid.copy(), obj, new_obj, background=0)
-            elif action_name in Shift_Actions:
-                # Use the original approach - apply action to position directly
-                new_obj.position = ALL_ACTIONS[action_name](obj.position)
-                new_target_grid = placement(target_grid.copy(), obj, new_obj, background=0)
-
-            if new_target_grid is not None:
-                # Convert to DataLoader format directly
-                obj_grid_for_dataloader = place_object(np.zeros_like(target_grid), new_obj.grid, new_obj.position)
                 
-                all_input_grids.append(normalize(new_target_grid))
-                all_obj_grids.append(normalize(obj_grid_for_dataloader))
-                all_target_grids.append(normalize(target_grid.copy()))
-                all_obj_positions.append(new_obj.position)
-                all_action_labels.append(action_idx)
-                i += 1
+                # Skip if transformation results in invalid object
+                if new_obj.grid.size == 0 or 0 in new_obj.grid.shape:
+                    print('happend')
+                    attempts += 1
+                    continue
+                    
+                # Try to place transformed object
+                target_grid = placement(input_grid.copy(), obj, new_obj, background=0)
+                
+            elif action_name in Shift_Actions:
+                # Apply shift
+                new_pos = ALL_ACTIONS[action_name](obj.position)
+                new_obj.position = new_pos
+                
+                # Check if new position is valid
+                # if is_valid_position(target_grid, new_obj.size, new_pos):
+                target_grid = placement(input_grid.copy(), obj, new_obj, background=0)
+
+            if np.array_equal(input_grid, target_grid) :
+                display(input_grid,place_object(np.zeros_like(target_grid), obj.grid, obj.position),target_grid,input_title='image',predicted_title=new_obj.position,target_title=action_names[action_idx],folder='wrong_patterns')
+
+            if (target_grid is not None and 
+                not np.array_equal(input_grid, target_grid)):
+                
+                # Create unique identifier
+                example_id = (tuple(target_grid.flatten()), 
+                             tuple(new_obj.grid.flatten()), 
+                             new_obj.position, 
+                             action_name)
+                
+                if example_id not in seen_examples:
+                    # Convert to DataLoader format
+                    obj_grid = place_object(np.zeros_like(target_grid), obj.grid, obj.position)
+
+                    display(input_grid,obj_grid,target_grid,input_title='image',predicted_title=new_obj.position,target_title=action_names[action_idx])
+                    all_input_grids.append(input_grid.copy())
+                    all_obj_grids.append(obj_grid)
+                    all_target_grids.append(target_grid.copy())
+                    all_obj_positions.append(new_obj.position)
+                    all_action_labels.append(action_idx)
+                    
+                    seen_examples.add(example_id)
+                    examples_generated += 1
+                    # Update the target grid for next iteration
+                    input_grid = target_grid.copy()
+                    # Update the object in our list
+                    objects[obj_idx] = new_obj
+            
+            attempts += 1
+
+        logger.info(f"Intermediate task {task_idx}: Generated {examples_generated}/{intermediate_examples_per_task} examples")
 
     return all_input_grids, all_obj_grids, all_target_grids, all_obj_positions, all_action_labels
 
 def normalize_grid(grid_data):
     if isinstance(grid_data, list):
-        grid_data = np.array(grid_data)  # Convert list to numpy array first
+        grid_data = np.array(grid_data)
     grid_tensor = torch.tensor(grid_data, dtype=torch.float32)
     return grid_tensor / 10.0  
 
@@ -177,7 +238,7 @@ def create_dataset(create=True, **kwargs):
         tasks = generate_tasks(**kwargs)
         
         with open("generated_training_data.pkl", "wb") as f:
-            pickle.dump((tasks), f)
+            pickle.dump(tasks, f)
     else:
         with open("generated_training_data.pkl", "rb") as f:
             tasks = pickle.load(f)
@@ -215,13 +276,33 @@ if __name__ == "__main__":
         simple_examples_per_task=5,
         intermediate_examples_per_task=10
     )
+
+    input_grids, obj_grids, target_grids, obj_positions, action_labels = dataset
+    # for x,y,z in zip(input_grids, obj_grids , target_grids):
+    #     display(x,y,z)
+    print(f"Total examples generated: {len(action_labels)}")
+    print(f"Input grids shape example: {input_grids[0].shape if len(input_grids) > 0 else 'No examples'}")
+    print(f"Action labels distribution: {Counter(action_labels)}")
     
-
-            # action_labels = torch.tensor(action_labels).to(device)
-            # pos_labels = torch.tensor(pos_labels).to(device)
-            # current_grids = normalize_grid(current_grids).to(device)
-            # obj_grids = normalize_grid(obj_grids).to(device)
-            # target_grids = normalize_grid(target_grids).to(device)
-
-    print(f"Input grids shape example: {len(dataset[0])}")
-    print(f"Action labels distribution: {Counter(dataset[4])}")
+    # Check for duplicates and same input/target
+    same_input_target = 0
+    for i in range(len(input_grids)):
+        if np.array_equal(input_grids[i], target_grids[i]):
+            same_input_target += 1
+    
+    print(f"Examples where input == target: {same_input_target}")
+    
+    # Check for duplicate examples
+    example_set = set()
+    duplicates = 0
+    for i in range(len(input_grids)):
+        example_id = (tuple(input_grids[i].flatten()), 
+                     tuple(obj_grids[i].flatten()), 
+                     obj_positions[i], 
+                     action_labels[i])
+        if example_id in example_set:
+            duplicates += 1
+        else:
+            example_set.add(example_id)
+    
+    print(f"Duplicate examples: {duplicates}")

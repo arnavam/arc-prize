@@ -1,127 +1,28 @@
 import torch
+torch.set_float32_matmul_precision('high')
 import torch.nn as nn
-import torch.optim as optim
 import numpy as np
 import json
 import os
 from tqdm import tqdm
 import math
-from typing import  Tuple
+from typing import Tuple, Optional
 from datetime import datetime
-from torch.utils.tensorboard import SummaryWriter
+import torchmetrics 
+import pytorch_lightning as pl
+from pytorch_lightning.loggers import TensorBoardLogger
+from pytorch_lightning.callbacks import ModelCheckpoint, LearningRateMonitor, EarlyStopping
 from torch.utils.data import DataLoader
+from dsl import ALL_ACTIONS
+from dataset_generator import create_dataset, GridDataset
+from dl_models.mamba import MambaBlock, ModelArgs
+from helper_arc import get_module_logger, plot_metrics , display
 
-from dataset_generator import create_dataset , GridDataset
-from dl_models.mamba import MambaBlock ,ModelArgs
-from helper_arc import get_module_logger , plot_metrics , display
-
-PREDICTION_DICT={}
-
+PREDICTION_DICT = {}
 logger = get_module_logger(__name__)
-class MambaSSM(nn.Module):
-    
-    def __init__(self, d_model: int = 512, d_state: int = 16, d_conv: int = 4, 
-                 expand: int = 2, n_layers: int = 8, n_classes: int = 10,
-                 max_seq_len: int = 1024, patch_size: int = 2):
-        super().__init__()
-        self.d_model = d_model
-        self.d_state = d_state
-        self.n_layers = n_layers
-        self.max_seq_len = max_seq_len
-        self.patch_size = patch_size
-        
-        # Patch embedding for 2D grids
-        self.patch_embed = PatchEmbedding(patch_size, d_model)
-        self.sep_token_embedding = nn.Parameter(torch.randn(1, 1, d_model))
-        
-        self.pos_embedding = nn.Embedding(max_seq_len, d_model) # Positional encoding (learnable)
-        self.segment_embedding = nn.Embedding(3, d_model)
-
-        # Create Mamba blocks
-        args= ModelArgs(d_model=d_model, d_state=d_state ,d_conv= d_conv,expand= expand)
-        self.blocks = nn.ModuleList([
-            MambaBlock(args)
-            for _ in range(n_layers)
-        ])
-        
-        # Output layers for classification and position prediction
-        self.norm = nn.LayerNorm(d_model)
-        self.action_classifier = nn.Linear(d_model, n_classes)
-
-        self.position_predictor = nn.Sequential(
-            nn.Linear(d_model, 2),
-            nn.Sigmoid()  # Outputs between 0-1, scale to grid size
-        )
-        # Initialize weights
-        self.apply(self._init_weights)
-    
-    def _init_weights(self, module):
-        if isinstance(module, nn.Linear):
-            nn.init.normal_(module.weight, mean=0.0, std=0.02)
-            if module.bias is not None:
-                nn.init.zeros_(module.bias)
-        elif isinstance(module, nn.LayerNorm):
-            nn.init.zeros_(module.bias)
-            nn.init.ones_(module.weight)
-    
-
-    def forward(self, current_grid: torch.Tensor, obj_grid: torch.Tensor, target_grid: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
-        # Input shapes: (batch, 1, height, width) - add channel dimension
-        batch_size=current_grid.shape[0]
-
-        # print('        print(current_grid.shape); ',current_grid.shape)
-        current_emb = self.patch_embed(current_grid.unsqueeze(1))  #   Process each grid through patch embedding & Add channel dim
-        obj_emb = self.patch_embed(obj_grid.unsqueeze(1))
-        target_emb = self.patch_embed(target_grid.unsqueeze(1))
-        # print('       print(current_emb.shape)',current_emb.shape)
-        # Concatenate embeddings along sequence dimension
-
-        sep_token = self.sep_token_embedding.expand(batch_size, -1, -1) # (batch_size, 1, d_model)
-        x = torch.cat([current_emb, sep_token, obj_emb, sep_token, target_emb], dim=1)
-
-        # print('        print(x.shape)   ',x.shape)     
-
-
-        segment_ids = torch.cat([
-            torch.full((current_emb.size(1),), 0),
-            torch.full((1,), 1),
-            torch.full((obj_emb.size(1),), 1),
-            torch.full((1,), 2),
-            torch.full((target_emb.size(1),), 2),
-        ], dim=0).to(x.device)
-
-        segment_embeddings = self.segment_embedding(segment_ids)  # (seq_len, embed_dim)
-        segment_embeddings = segment_embeddings.unsqueeze(0).expand(batch_size, -1, -1)  # (batch, seq_len, embed_dim)
-
-
-        # Add positional encoding
-        seq_len = x.shape[1]
-        if seq_len > self.max_seq_len:
-            # Truncate if necessary
-            x = x[:, :self.max_seq_len, :]
-            seq_len = self.max_seq_len
-        pos_embedding = get_sinusoidal_pos_embedding(x.size(1), self.d_model).to(x.device)
-        x = x + segment_embeddings 
-        x =  x + pos_embedding
-        
-        # x = x +  + self.pos_embedding[:, :seq_len, :]
-        
-        # Process through Mamba blocks
-        for block in self.blocks:
-            x = block(x)
-            
-        
-        # Use the last token's representation for prediction
-        x = self.norm(x)
-        x = x[:, -1, :]  # Take the last token representation
-        
-        # Dual outputs
-        action_output = self.action_classifier(x)
-        position_output = self.position_predictor(x)
-        
-        return action_output, position_output
-
-
+accuracy_metric = torchmetrics.Accuracy(task='multiclass',num_classes=10)
+f1_metric = torchmetrics.F1Score(task="multiclass", num_classes=10)
+action_names=list(ALL_ACTIONS.keys())
 class PatchEmbedding(nn.Module):
     """2D Patch Embedding with ViT-style patching"""
     
@@ -131,14 +32,11 @@ class PatchEmbedding(nn.Module):
         self.projection = nn.Linear(patch_size * patch_size, d_model)
         
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        # x shape: (batch, channels, height, width)
-        # For ARC, channels=1 (grid values)
         batch_size, _, height, width = x.shape
         
-        # Pad if necessary to make divisible by patch_size
-        pad_h = (self.patch_size - height % self.patch_size) % self.patch_size
-        pad_w = (self.patch_size - width % self.patch_size) % self.patch_size
-        
+        pad_h = (-height) % self.patch_size
+        pad_w = (-width) % self.patch_size
+
         if pad_h > 0 or pad_w > 0:
             x = nn.functional.pad(x, (0, pad_w, 0, pad_h), mode='constant', value=0)
         
@@ -151,298 +49,429 @@ class PatchEmbedding(nn.Module):
         
         return embeddings
 
-
-
-def get_sinusoidal_pos_embedding(seq_len, d_model):
+def get_sinusoidal_pos_embedding(seq_len: int, d_model: int) -> torch.Tensor:
+    """Generate sinusoidal positional embeddings"""
     position = torch.arange(seq_len).unsqueeze(1)
     div_term = torch.exp(torch.arange(0, d_model, 2) * -(math.log(10000.0) / d_model))
     pe = torch.zeros(seq_len, d_model)
     pe[:, 0::2] = torch.sin(position * div_term)
     pe[:, 1::2] = torch.cos(position * div_term)
-    return pe.unsqueeze(0) 
+    return pe.unsqueeze(0)
+
+class MambaSSM(pl.LightningModule):
+    def __init__(
+        self,
+        d_model: int = 512,
+        d_state: int = 16,
+        d_conv: int = 4,
+        expand: int = 2,
+        n_layers: int = 8,
+        n_classes: int = 10,
+        max_seq_len: int = 1024,
+        patch_size: int = 2,
+        learning_rate: float = 1e-3,
+        weight_decay: float = 0.01,
+        batch_size: int = 10,
+        grid_size: int = 10,
+        action_loss_weight: float = 2.0,
+        pos_loss_weight: float = 1.0
+    ):
+        super().__init__()
+        self.save_hyperparameters()
+        
+        self.d_model = d_model
+        self.d_state = d_state
+        self.n_layers = n_layers
+        self.max_seq_len = max_seq_len
+        self.patch_size = patch_size
+        self.learning_rate = learning_rate
+        self.weight_decay = weight_decay
+        self.batch_size = batch_size
+        self.grid_size = grid_size
+        self.action_loss_weight = action_loss_weight
+        self.pos_loss_weight = pos_loss_weight
+        
+        # Patch embedding for 2D grids
+        self.patch_embed = PatchEmbedding(patch_size, d_model)
+        self.sep_token_embedding = nn.Parameter(torch.randn(1, 1, d_model))
+        
+        self.pos_embedding = nn.Embedding(max_seq_len, d_model)
+        self.segment_embedding = nn.Embedding(3, d_model)
+
+        # Create Mamba blocks
+        args = ModelArgs(d_model=d_model, d_state=d_state, d_conv=d_conv, expand=expand)
+        self.blocks = nn.ModuleList([
+            MambaBlock(args)
+            for _ in range(n_layers)
+        ])
+        
+        # Output layers for classification and position prediction
+        self.norm = nn.LayerNorm(d_model)
+        self.action_classifier = nn.Linear(d_model, n_classes)
+        self.position_predictor = nn.Sequential(
+            nn.Linear(d_model, 2),
+            nn.Sigmoid()
+        )
+        
+        # Loss functions
+        self.action_criterion = nn.CrossEntropyLoss()
+        self.pos_criterion = nn.SmoothL1Loss()
+        
+        # Initialize weights
+        self.apply(self._init_weights)
+
+    def _init_weights(self, module):
+        if isinstance(module, nn.Linear):
+            nn.init.xavier_normal_(module.weight)
+            if module.bias is not None:
+                nn.init.zeros_(module.bias)
+        elif isinstance(module, nn.LayerNorm):
+            nn.init.zeros_(module.bias)
+            nn.init.ones_(module.weight)
+
+    def forward(self, current_grid: torch.Tensor, obj_grid: torch.Tensor, target_grid: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
+        batch_size = current_grid.shape[0]
+
+        # Process each grid through patch embedding
+        current_emb = self.patch_embed(current_grid.unsqueeze(1))
+        obj_emb = self.patch_embed(obj_grid.unsqueeze(1))
+        target_emb = self.patch_embed(target_grid.unsqueeze(1))
+
+        # Concatenate embeddings along sequence dimension
+        sep_token = self.sep_token_embedding.expand(batch_size, -1, -1)
+        x = torch.cat([current_emb, sep_token, obj_emb, sep_token, target_emb], dim=1)
+
+        # Segment embeddings
+        segment_ids = torch.cat([
+            torch.full((current_emb.size(1),), 0),
+            torch.full((1,), 1),
+            torch.full((obj_emb.size(1),), 1),
+            torch.full((1,), 2),
+            torch.full((target_emb.size(1),), 2),
+        ], dim=0).to(x.device)
+
+        segment_embeddings = self.segment_embedding(segment_ids)
+        segment_embeddings = segment_embeddings.unsqueeze(0).expand(batch_size, -1, -1)
+
+        # Add positional encoding
+        seq_len = x.shape[1]
+        if seq_len > self.max_seq_len:
+            x = x[:, :self.max_seq_len, :]
+            seq_len = self.max_seq_len
+            
+        pos_embedding = get_sinusoidal_pos_embedding(x.size(1), self.d_model).to(x.device)
+        x = x + segment_embeddings + pos_embedding
+        
+        # Process through Mamba blocks
+        for block in self.blocks:
+            x = block(x)
+            
+        # Use the last token's representation for prediction
+        x = self.norm(x)
+        x = x[:, -1, :]  # Take the last token representation
+        
+        # Dual outputs
+        action_output = self.action_classifier(x)
+        position_output = self.position_predictor(x)
+        
+        return action_output, position_output
+
+    def training_step(self, batch, batch_idx):
+        current_grids, obj_grids, target_grids, pos_labels, action_labels = batch
+        
+        # Normalize inputs
+        current_grids = current_grids / 9.0
+        obj_grids = obj_grids / 9.0
+        target_grids = target_grids / 9.0
+        
+        # Forward pass
+        action_outputs, pos_outputs = self(current_grids, obj_grids, target_grids)
+        
+        # Calculate losses
+        action_loss = self.action_criterion(action_outputs, action_labels)
+        pos_labels_norm = pos_labels / (self.grid_size - 1)
+        pos_loss = self.pos_criterion(pos_outputs, pos_labels_norm.float())
+        total_loss = self.action_loss_weight * action_loss + self.pos_loss_weight * pos_loss
+        self.eval()
+        # Calculate accuracy
+        _, predicted = action_outputs.max(1)
+        accuracy = accuracy_metric(predicted.to('cpu') , action_labels.to('cpu'))
+        f1score = f1_metric(predicted.to('cpu') , action_labels.to('cpu'))
+        # print(accuracy)
+        pos_error = torch.mean(torch.abs(pos_outputs - pos_labels_norm)).item()
+        
+        # Log metrics
+
+        self.log('learning_rate', self.trainer.optimizers[0].param_groups[0]['lr'], prog_bar=False, logger=True)
+        self.log('train_loss', total_loss, prog_bar=True, logger=True, on_epoch=True)
+        self.log('train_action_loss', action_loss, prog_bar=False, logger=True,  on_epoch=True)
+        self.log('train_pos_loss', pos_loss, prog_bar=False, logger=True,  on_epoch=True)
+        self.log('train_accuracy', accuracy, prog_bar=True, logger=True, on_epoch=True)
+        self.log('train_f1loss', f1score, prog_bar=False, logger=True, on_epoch=True)
+
+        self.log('train_pos_error', pos_error, prog_bar=False, logger=True,  on_epoch=True)
+        # Log predictions for debugging
+        if batch_idx % 100 == 0:
+            self._log_predictions(action_outputs, action_labels, pos_outputs, pos_labels_norm, batch_idx)
+        
+        return total_loss
+
+    def validation_step(self, batch, batch_idx):
+        current_grids, obj_grids, target_grids, pos_labels, action_labels = batch
+        # Normalize inputs
+        current_grids = current_grids / 9.0
+        obj_grids = obj_grids / 9.0
+        target_grids = target_grids / 9.0
+        
+        # Forward pass
+        action_outputs, pos_outputs = self(current_grids, obj_grids, target_grids)
+        
+        # Calculate losses
+        action_loss = self.action_criterion(action_outputs, action_labels)
+        pos_labels_norm = pos_labels / (self.grid_size - 1)
+        pos_loss = self.pos_criterion(pos_outputs, pos_labels_norm.float())
+        total_loss = self.action_loss_weight * action_loss + self.pos_loss_weight * pos_loss
+        self.eval()
+        # Calculate accuracy
+        _, predicted = action_outputs.max(1)
+        accuracy= accuracy_metric(predicted.to('cpu') , action_labels.to('cpu'))
+        f1score = f1_metric(predicted.to('cpu') , action_labels.to('cpu'))
+        # display(current_grids[1].detach().cpu().numpy(),obj_grids[1].detach().cpu().numpy(),target_grids[1].detach().cpu().numpy(),predicted_title=pos_outputs[1].detach().cpu().numpy(),target_title=action_names[action_outputs[1].detach().cpu().numpy()],folder='debug',printing=False)
+
+        pos_error = torch.mean(torch.abs(pos_outputs - pos_labels_norm)).item()
+        
+        # Log metrics
+        self.log('val_loss', total_loss, prog_bar=True, logger=True, on_epoch=True)
+        self.log('val_action_loss', action_loss, prog_bar=False, logger=True, on_epoch=True)
+        self.log('val_pos_loss', pos_loss, prog_bar=False, logger=True, on_epoch=True)
+        self.log('val_accuracy', accuracy, prog_bar=True, logger=True, on_epoch=True)
+        self.log('val_pos_error', pos_error, prog_bar=False, logger=True, on_epoch=True)
+        
+        self.log('train_f1loss', f1score, prog_bar=False, logger=True, on_epoch=True)
+        return total_loss
 
 
+    def configure_optimizers(self):
+        optimizer = torch.optim.AdamW(
+            self.parameters(), 
+            lr=self.learning_rate, 
+            weight_decay=self.weight_decay
+        )
+        
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+            optimizer, 
+            T_max=self.trainer.max_epochs
+        )
+        
+        return {
+            'optimizer': optimizer,
+            'lr_scheduler': {
+                'scheduler': scheduler,
+                'interval': 'epoch',
+                'frequency': 1
+            }
+        }
 
+    def _log_predictions(self, action_outputs, action_labels, pos_outputs, pos_labels_norm, batch_idx):
+        """Log predictions for debugging purposes"""
+        # Log action predictions
+        _, predicted_actions = action_outputs.max(1)
+        logger.debug(f'[Batch {batch_idx}] Predicted Actions: {predicted_actions.cpu().tolist()}')
+        logger.debug(f'[Batch {batch_idx}] Actual Actions: {action_labels.cpu().tolist()}')
+        
+        # Log position predictions
+        logger.debug(f'[Batch {batch_idx}] Predicted Positions: {pos_outputs.detach().cpu().numpy().tolist()}')
+        logger.debug(f'[Batch {batch_idx}] Actual Positions: {pos_labels_norm.float().cpu().tolist()}')
 
-from helper_arc import loader
+class GridDataModule(pl.LightningDataModule):
+    def __init__(
+        self,
+        input_grids,
+        obj_grids,
+        target_grids,
+        obj_positions,
+        action_labels,
+        batch_size: int = 10,
+        train_ratio: float = 0.8,
+        val_ratio: float = 0.2,
+        # test_ratio: float = 0.1
+    ):
+        super().__init__()
+        self.input_grids = input_grids
+        self.obj_grids = obj_grids
+        self.target_grids = target_grids
+        self.obj_positions = obj_positions
+        self.action_labels = action_labels
+        self.batch_size = batch_size
+        self.train_ratio = train_ratio
+        self.val_ratio = val_ratio
+        # self.test_ratio = test_ratio
 
+    def setup(self, stage: Optional[str] = None):
+        # Create dataset
+        full_dataset = GridDataset(
+            self.input_grids, 
+            self.obj_grids, 
+            self.target_grids, 
+            self.obj_positions, 
+            self.action_labels
+        )
+        
+        # Calculate split sizes
+        dataset_size = len(full_dataset)
+        print(dataset_size)
+        train_size = int(self.train_ratio * dataset_size)
+        val_size = int(self.val_ratio * dataset_size)
+        # test_size = dataset_size - train_size - val_size
+        
+        # Split dataset
+        # self.test_dataset
+        self.train_dataset, self.val_dataset = torch.utils.data.random_split(
+            full_dataset, [train_size, val_size,
+                            # test_size
+                            ]
+        )
 
-def train_mamba_model(train_dataset,save,load):
+    def train_dataloader(self):
+        return DataLoader(
+            self.train_dataset, 
+            batch_size=self.batch_size, 
+            shuffle=True, 
+            pin_memory=True,
+            persistent_workers=True,
+            num_workers=min(4, os.cpu_count() or 1)
+        )
 
-    train_losses = []
-    train_accuracies = []       
+    def val_dataloader(self):
+        return DataLoader(
+            self.val_dataset, 
+            batch_size=self.batch_size, 
+            shuffle=False, 
+            pin_memory=True,
+            persistent_workers=True,
+            num_workers=min(4, os.cpu_count() or 1)
+        )
+
+    # def test_dataloader(self):
+    #     return DataLoader(
+    #         self.test_dataset, 
+    #         batch_size=self.batch_size, 
+    #         shuffle=False, 
+    #         pin_memory=True,
+    #         persistent_workers=True,
+    #         num_workers=min(4, os.cpu_count() or 1)
+    #     )
+
+def train_mamba_model_lightning(train_dataset, save=True, load=False):
+
+    
     # Hyperparameters
-    d_model = 512
-    d_state = 16
-    d_conv = 4
-    expand = 2
-    n_layers = 2
-    n_classes = 10  # Adjust based on ARC task
-    max_seq_len = 1024
-    patch_size = 2
-    batch_size = 10
-    learning_rate = 1e-3
-    weight_decay = 0.01
-    num_epochs = 100
-
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    writer = SummaryWriter(f'runs/{timestamp}')
-    # Device
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    print(f"Using device: {device}")
-    # pos_values = [int(x * target_grid.shape[1]), int(y * target_grid.shape[0])]
-
-    # Create model
-    model = MambaSSM(
-        d_model=d_model,
-        d_state=d_state,
-        d_conv=d_conv,
-        expand=expand,
-        n_layers=n_layers,
-        n_classes=n_classes,
-        max_seq_len=max_seq_len,
-        patch_size=patch_size
-    ).to(device)
-
-    # Print model size
-    # Log hyperparameters
-    hparams = {
-        'd_model': d_model,
-        'd_state': d_state,
-        'n_layers': n_layers,
-        'learning_rate': learning_rate,
-        'batch_size': batch_size
+    config = {
+        'd_model': 512,
+        'd_state': 16,
+        'd_conv': 4,
+        'expand': 2,
+        'n_layers': 2,
+        'n_classes': 10,
+        'max_seq_len': 1024,
+        'patch_size': 2,
+        'learning_rate': 1e-3,
+        'weight_decay': 0.01,
+        'batch_size': 10,
+        'grid_size': 10,
+        'action_loss_weight': 2.0,
+        'pos_loss_weight': 1.0,
+        'max_epochs': 20 
     }
-    writer.add_hparams(hparams, {})
-
-    if load:
-        model.load_state_dict(torch.load('mamba_ssm_model.pth'))
-
-
-
+    
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    logger_tb = TensorBoardLogger(
+        save_dir='runs',
+        name=f'{timestamp}',
+        version=''
+    )
+    logger_tb.log_hyperparams(config)   
+    
+    # Create data module
+    input_grids, obj_grids, target_grids, obj_positions, action_labels = train_dataset
+    data_module = GridDataModule(
+        input_grids, obj_grids, target_grids, obj_positions, action_labels,
+        batch_size=config['batch_size']
+    )
+    
+    # Create model
+    model = MambaSSM(**{k: v for k, v in config.items() if k not in ['max_epochs']})
+    
+    # Load checkpoint if requested
+    if load and os.path.exists('mamba_ssm_model.pth'):
+        state_dict = torch.load('mamba_ssm_model.pth')
+        model.load_state_dict(state_dict)
+        print("Loaded pre-trained weights")
+    
+    # Print model size
     num_params = sum(p.numel() for p in model.parameters())
     print(f"Model parameters: {num_params:,}")
     
+    # Setup logging and callbacks
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    logger_tb = TensorBoardLogger(f'runs/{timestamp}', name='mamba_ssm')
     
-    no_of_batch = len(list(train_dataset))
-
-
-    # Loss functions
-    action_criterion = nn.CrossEntropyLoss()
-    pos_criterion = torch.nn.SmoothL1Loss()# nn.MSELoss()
-
-    # Optimizer and scheduler
-    optimizer = optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=weight_decay)
-    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=num_epochs)
+    callbacks = [
+        LearningRateMonitor(logging_interval='epoch'),
+        ModelCheckpoint(
+            dirpath=f'checkpoints/{timestamp}',
+            filename='mamba-{epoch:02d}-{val_loss:.2f}',
+            save_top_k=3,
+            monitor='val_loss',
+            mode='min'
+        ),
+        # EarlyStopping(
+        #     monitor='val_loss',
+        #     patience=10,
+        #     mode='min'        
+        # )
+    ]
     
-    # Training loop
-    best_val_acc = 0.0
-    global_step = 0
-
-    single_batch_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True,pin_memory =True)
-    single_batch = next(iter(single_batch_loader))
-
-    current_grids, obj_grids, target_grids, pos_labels, action_labels = [tensor.to(device) for tensor in single_batch]
-
-    current_grids = current_grids / 9.0
-    obj_grids = obj_grids / 9.0
-    target_grids = target_grids / 9.0
-
-
-    for epoch in range(num_epochs):
-        model.train()
-
-        train_loss = 0.0
-        train_correct = 0
-        train_total = 0
-
-
-        pbar = tqdm(single_batch_loader, desc=f'Epoch {epoch+1}/{num_epochs} [Train]')
-        
-        for batch_idx ,batchs in enumerate(pbar):
-            # current_grids, obj_grids, target_grids, pos_labels , action_labels,  = batchs
-
-            
-
-            optimizer.zero_grad()
-
-            action_outputs, pos_outputs = model(current_grids, obj_grids, target_grids)
-            
-            action_loss = action_criterion(action_outputs.float(), action_labels)
-            grid_size = 10  # Max value + 1
-            pos_labels_norm = pos_labels / (grid_size - 1)
-            # print(pos_labels)
-            pos_loss = pos_criterion(pos_outputs.float(), pos_labels_norm.float())
-
-            total_loss = action_loss + pos_loss
-
-            total_loss.backward()
-
-
-        # Add gradient checking
-            total_grad_norm = 0
-            for name, param in model.named_parameters():
-                if param.grad is not None:
-                    grad_norm = param.grad.norm().item()
-                    total_grad_norm += grad_norm
-                    if torch.isnan(param.grad).any():
-                        print(f"NaN gradients in {name}")
-
-            print(f"Gradient norm: {total_grad_norm}")
-
-            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
-            optimizer.step()
-
-                        # ========== TENSORBOARD LOGGING ==========
-
-            # After backward pass, check gradients
-            if epoch == 0 and batch_idx == 0:
-                try:
-                    # Use actual batch data instead of random
-                    writer.add_graph(model, (current_grids[:1], obj_grids[:1], target_grids[:1]))
-                except Exception as e:
-                    print(f"Failed to log graph: {e}")
-            
-            if batch_idx % 100 == 0:
-                    for name, param in model.named_parameters():
-                        print(f"Parameter {name}: shape={param.shape}, numel={param.numel()}, requires_grad={param.requires_grad}")
-                        if param.grad is not None:
-                            print(f"Gradient {name}: shape={param.grad.shape}, numel={param.grad.numel()}")
-                        
-            # Add proper checks before logging
-            if batch_idx % 100 == 0:
-                for name, param in model.named_parameters():
-                    # Check if parameter has values and is not empty
-                    if param.numel() > 0 and param.requires_grad:
-                        # Ensure tensor is on CPU for logging
-                        param_cpu = param.detach().cpu()
-                        grad_cpu = param.grad.detach().cpu() if param.grad is not None else None
-                        
-                        # Log weights
-                        if not torch.isnan(param_cpu).any() and not torch.isinf(param_cpu).any():
-                            writer. (f'Weights/{name}', param_cpu, global_step)
-                        else:
-                            print(f"Warning: NaN or Inf in weights {name}")
-                        
-                        # Log gradients
-                        if grad_cpu is not None and grad_cpu.numel() > 0:
-                            if not torch.isnan(grad_cpu).any() and not torch.isinf(grad_cpu).any():
-                                writer.add_histogram(f'Gradients/{name}', grad_cpu, global_step)
-                            else:
-                                print(f"Warning: NaN or Inf in gradients {name}")
-
-                                writer.add_histogram(f'Weights/{name}', param, global_step)
-            
-
-            
-            # Update metrics
-            _, predicted = action_outputs.max(1)
-            accuracy = (predicted == action_labels).float().mean()
-            current_lr = optimizer.param_groups[0]['lr']
-            pos_error = torch.mean(torch.abs(pos_outputs - pos_labels_norm)).item()
-
-            
-            # Log losses (per batch)
-            writer.add_scalar('Loss/total', total_loss.item(), global_step)
-            writer.add_scalar('Loss/action', action_loss.item(), global_step)
-            writer.add_scalar('Loss/position', pos_loss.item(), global_step)
-            writer.add_scalar('Accuracy/train', accuracy.item(), global_step)
-            writer.add_scalar('Error/position', pos_error, global_step)
-            writer.add_scalar('Learning_rate', current_lr, global_step)
-            global_step += 1
-
-
-        
-            # Log action predictions vs real
-            logger.debug(f'[epoch {epoch+1}] Predicted Actions: {predicted.cpu().tolist()}')
-            logger.debug(f'[epoch {epoch+1}] Actual Actions:    {action_labels.cpu().tolist()}')
-
-            # Log position predictions vs real
-            logger.debug(f'[epoch {epoch+1}] Predicted Positions: {pos_outputs.detach().cpu().numpy().tolist()}')
-            logger.debug(f'[epoch {epoch+1}] Actual Positions:    {pos_labels_norm.float().cpu().tolist()}')
-            
-            train_loss += total_loss.item()
-            train_total += action_labels.size(0)
-            train_correct += predicted.eq(action_labels).sum().item()
-
-            # Update progress bar
-            pbar.set_postfix({
-                'total_loss': f'{total_loss.item():.4f}',
-                'action_loss': f'{action_loss.item():.4f}',
-                'pos_loss': f'{pos_loss.item():.4f}',
-                'Acc': f'{100.*train_correct/train_total:.2f}%'
-            })
-
-        # Validation phase (you'll need to implement this)
-        model.eval()
-        scheduler.step()
-
-
-        total_norm = 0
-        for name, param in model.named_parameters():
-            if param.grad is not None:
-                param_norm = param.grad.data.norm(2)
-                total_norm += param_norm.item() ** 2
-                writer.add_scalar(f'Grad_norms/{name}', param_norm.item(), epoch)
-        total_norm = total_norm ** 0.5
-        writer.add_scalar('Grad_norms/total', total_norm, epoch)
-        # Print epoch results
-
-        # epoch_loss = train_loss / int(no_of_batch*(len(batchs)))
-        epoch_acc = 100. * train_correct / train_total
-        # train_losses.append(epoch_loss)
-        train_accuracies.append(epoch_acc)
-
-        print(f'Epoch {epoch+1}/{num_epochs}:')
-        # print(f'Train Loss: {epoch_loss:.4f}')
-        print(f'Train Accuracy: {epoch_acc:.2f}%')
-        print('-' * 50)
-        
-    # Final logging
-    writer.add_hparams(
-        hparams,
-        {
-            'hparam/final_accuracy': accuracy.item(),
-            'hparam/final_loss': total_loss.item()
-        }
+    # Create trainer
+    trainer = pl.Trainer(
+        max_epochs=config['max_epochs'],
+        logger=logger_tb,
+        callbacks=callbacks,
+        log_every_n_steps=1,
+        accelerator='auto',
+        # devices=1 if torch.cuda.is_available() else None,
+        enable_progress_bar=True,
+        gradient_clip_val=1.0
     )
     
-    writer.close()
-
+    # Train the model
+    trainer.fit(model, datamodule=data_module)
+    
+    # Test the model
+    # trainer.test(model, datamodule=data_module)
+    
+    # Save the final model
     if save:
-        torch.save(model.state_dict(), 'mamba_ssm_model.pth')
-    print(f'Training completed. Best validation accuracy: {best_val_acc:.2f}%')
-    # plot_metrics(train_losses, train_accuracies)
-
+        torch.save(model.state_dict(), 'mamba_ssm_model_lightning.pth')
+        print("Model saved to mamba_ssm_model_lightning.pth")
+    
+    return model, trainer
 
 if __name__ == '__main__':
-   
-    # tasks = create_dataset(
-    #     create=False,
-    #     num_simple_tasks=10,
-    #     num_intermediate_tasks=30,
-    #     grid_size=(10, 10),
-    #     num_bg_objects=5,
-    #     simple_examples_per_task=5,
-    #     intermediate_examples_per_task=10
-    # )
-
+    # Create dataset
     input_grids, obj_grids, target_grids, obj_positions, action_labels = create_dataset(
         create=False,
-        num_simple_tasks=10,
-        num_intermediate_tasks=30,
+        num_simple_tasks=20,
+        num_intermediate_tasks=80,
         grid_size=(10, 10),
         num_bg_objects=5,
         simple_examples_per_task=5,
-        intermediate_examples_per_task=0
+        intermediate_examples_per_task=5,
     )
     
-    # for x,y,z in zip(input_grids, obj_grids , target_grids):
-    #     display(x,y,z)
-
-    # Create dataset
-    dataset = GridDataset(input_grids, obj_grids, target_grids, obj_positions, action_labels)
-
-
-    train_mamba_model(dataset,save=True, load=False)
-
+    # Train using PyTorch Lightning
+    train_mamba_model_lightning(
+        (input_grids, obj_grids, target_grids, obj_positions, action_labels),
+        save=True, 
+        load=False
+    )

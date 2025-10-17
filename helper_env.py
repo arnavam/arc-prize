@@ -90,11 +90,9 @@ def placement(canvas, old_obj, new_obj, background=0):
     result = np.where(new_canvas != background, new_canvas, result)
     
     return result
-
 def place_object(grid, obj_grid, pos):
     obj_h, obj_w = obj_grid.shape
     y_top, x_left = coordinate_converter(pos, obj_grid.shape, is_center=True)
-    # y_top, x_left = pos
     
     logging.debug(f"\n,{grid},\n{obj_grid}") 
     y_start = max(0, y_top)
@@ -102,15 +100,23 @@ def place_object(grid, obj_grid, pos):
     x_start = max(0, x_left)
     x_end = min(grid.shape[1], x_left + obj_w)
     
+    # Check if the slice would be empty
+    if y_start >= y_end or x_start >= x_end:
+        return grid  # Return original grid if placement is out of bounds
+    
     obj_y_start = max(0, -y_top)
     obj_y_end = obj_y_start + (y_end - y_start)
     obj_x_start = max(0, -x_left)
     obj_x_end = obj_x_start + (x_end - x_start)
     
+    # Additional safety check for object slice bounds
+    if (obj_y_start >= obj_grid.shape[0] or obj_y_end > obj_grid.shape[0] or 
+        obj_x_start >= obj_grid.shape[1] or obj_x_end > obj_grid.shape[1]):
+        return grid  # Return original grid if object slice is out of bounds
+    
     grid[y_start:y_end, x_start:x_end] = obj_grid[obj_y_start:obj_y_end, obj_x_start:obj_x_end]
-    # logging.debug(grid)
     return grid
-
+    
 def coordinate_converter(position, obj_size, is_center=True):
     y, x = position
     obj_h, obj_w = obj_size

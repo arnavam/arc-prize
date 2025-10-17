@@ -1,0 +1,14 @@
+action_loss_weight: 2.0
+batch_size: 10
+d_conv: 4
+d_model: 512
+d_state: 16
+expand: 2
+grid_size: 10
+learning_rate: 0.001
+max_seq_len: 1024
+n_classes: 10
+n_layers: 2
+patch_size: 2
+pos_loss_weight: 1.0
+weight_decay: 0.01

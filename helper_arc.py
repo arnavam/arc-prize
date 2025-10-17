@@ -65,7 +65,7 @@ def clear(folder_path):
 
 
 # save  the  image of the input , predicted  and target in  'folder'
-def display(input, predicted, target, folder='train_outputs', printing=True):
+def display(input, predicted, target, folder='train_outputs', input_title='Input',predicted_title='Predicted',target_title='target',printing=True):
 
     if folder not in cleared_folders: # TO clear folder only once
 
@@ -77,14 +77,14 @@ def display(input, predicted, target, folder='train_outputs', printing=True):
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-    sns.heatmap(input, cmap='viridis', ax=axes[0], cbar=False)
-    axes[0].set_title('Input')
+    sns.heatmap(input, cmap=cmap, norm=norm ,ax=axes[0], cbar=False)
+    axes[0].set_title(input_title)
 
-    sns.heatmap(predicted, cmap='viridis', ax=axes[1], cbar=False)
-    axes[1].set_title('Predicted')
+    sns.heatmap(predicted, cmap=cmap,norm=norm, ax=axes[1], cbar=False)
+    axes[1].set_title(predicted_title)
 
-    sns.heatmap(target, cmap='viridis', ax=axes[2], cbar=False)
-    axes[2].set_title('Target')
+    sns.heatmap(target, cmap=cmap, norm=norm,ax=axes[2], cbar=False)
+    axes[2].set_title(target_title)
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S,%f")[:-3]
     filename = f"heatmap_{timestamp}.png"
