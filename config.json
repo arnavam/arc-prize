@@ -1,0 +1,17 @@
+{
+    "d_model": 512,
+    "d_state": 16,
+    "d_conv": 4,
+    "expand": 2,
+    "n_layers": 2,
+    "n_classes": 10,
+    "max_seq_len": 1024,
+    "patch_size": 2,
+    "learning_rate": 0.001,
+    "weight_decay": 0.01,
+    "batch_size": 10,
+    "grid_size": 10,
+    "action_loss_weight": 2.0,
+    "pos_loss_weight": 1.0,
+    "max_epochs": 20
+}
